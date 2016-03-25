@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>AIWolf.NET by AIWolfSharp</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>AIWolf.NET</h1>
+        <h2>AIWolf(Artificial Intelligence based Werewolf) library for .NET Framework.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/AIWolfSharp/AIWolf_NET/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/AIWolfSharp/AIWolf_NET/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/AIWolfSharp/AIWolf_NET" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="aiwolfnetaka-aiwolf" class="anchor" href="#aiwolfnetaka-aiwolf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AIWolf.NET(aka AIWolf#)</h1>
+
+<h2>
+<a id="net-version-of-aiwolf-library" class="anchor" href="#net-version-of-aiwolf-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>.NET version of AIWolf Library</h2>
+
+<p>AIWolf.NETとは，人狼知能プラットフォームのライブラリ群を.NET Framework 4.5用にC#で書き直したもので，
+最新バージョンは0.1.0です．</p>
+
+<ol>
+<li>
+<p>クイックスタート</p>
+
+<ol>
+<li>
+<p>AIWolf_NET-0.1.0.zipをダウンロードする</p>
+
+<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.1.0/AIWolf_NET-0.1.0.zip">AIWolf_NET-0.1.0.zip</a>は，
+ライブラリ(AIWolfLibCommon.dll, AIWolfLibClient.dll)と
+クライアントスターター(ClientStarter.exe)そしてAPIリファレンス(html)をまとめたものです．
+ライブラリのソースファイルが必要でなければ，これをダウンロードするだけで
+人狼知能エージェントを作成することができます．
+なお，Windowsではダウンロードしたファイルがブロックされるため，そのままでは動作しない場合があります．
+その場合はコンテキストメニューの「プロパティ」よりブロックを解除してください．</p>
+</li>
+<li>
+<p>必要なライブラリを入手する</p>
+
+<p>ClientStarterを使用する場合にはJson.NETが必要です．
+入手したらNewtonsoft.Json.dllをAIWolf_NET-0.1.0.zipを展開したディレクトリに置いてください．</p>
+</li>
+<li>
+<p>サンプルプレイヤーを起動してみる</p>
+
+<p>人狼知能プラットフォームを入手し，ServerStarterで人狼知能サーバーを起動しておきます．
+ここでは，サーバーがlocalhost上のポート10000番で接続を待っているとします．
+AIWolf_NET-0.1.0.zipを展開したディレクトリで，
+コマンドプロンプトから以下のコマンドを発行すると，サーバーにSampleRoleAssignPlayerが接続したことが表示されるはずです．</p>
+
+<p><code>ClientStarter.exe –h localhost –p 10000 –c AIWolf.Client.Base.Smpl.SampleRoleAssignPlayer AIWolfLibClient.dll</code></p>
+</li>
+</ol>
+</li>
+<li>
+<p>独自のエージェントを作成</p>
+
+<p>エージェント作成のチュートリアルをご覧ください．</p>
+
+<ul>
+<li><a href="http://www.slideshare.net/takots/c-59927842">C#版人狼知能エージェントの作り方（Visual Studio編）</a></li>
+<li><a href="http://www.slideshare.net/takots/cmonodevelopxamarin-studio">C#版人狼知能エージェントの作り方(MonoDevelop/Xamarin Studio編)</a></li>
+</ul>
+</li>
+</ol>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
