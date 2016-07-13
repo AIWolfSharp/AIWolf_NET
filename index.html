@@ -35,7 +35,7 @@
 <a id="net-version-of-aiwolf-library" class="anchor" href="#net-version-of-aiwolf-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>.NET version of AIWolf Library</h2>
 
 <p>AIWolf.NETとは，人狼知能プラットフォームのライブラリ群を.NET Framework 4.5用にC#で書き直したもので，
-最新バージョンは0.1.0です．</p>
+最新バージョンは0.2.0です．</p>
 
 <ol>
 <li>
@@ -43,9 +43,9 @@
 
 <ol>
 <li>
-<p>AIWolf_NET-0.1.0.zipをダウンロードする</p>
+<p>AIWolf_NET-0.2.0.zipをダウンロードする</p>
 
-<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.1.0/AIWolf_NET-0.1.0.zip">AIWolf_NET-0.1.0.zip</a>は，
+<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.2.0/AIWolf_NET-0.2.0.zip">AIWolf_NET-0.2.0.zip</a>は，
 ライブラリ(AIWolfLibCommon.dll, AIWolfLibClient.dll)と
 クライアントスターター(ClientStarter.exe)そしてAPIリファレンス(html)をまとめたものです．
 ライブラリのソースファイルが必要でなければ，これをダウンロードするだけで
@@ -56,18 +56,20 @@
 <li>
 <p>必要なライブラリを入手する</p>
 
-<p>ClientStarterを使用する場合にはJson.NET Version 8が必要です．
-入手したらNewtonsoft.Json.dllをAIWolf_NET-0.1.0.zipを展開したディレクトリに置いてください．</p>
+<p>ClientStarterを使用する場合にはJson.NET Version 9.0.1 が必要です．
+入手したらNewtonsoft.Json.dllをAIWolf_NET-0.2.0.zipを展開したディレクトリに置いてください．</p>
 </li>
 <li>
 <p>サンプルプレイヤーを起動してみる</p>
 
 <p>人狼知能プラットフォームを入手し，ServerStarterで人狼知能サーバーを起動しておきます．
 ここでは，サーバーがlocalhost上のポート10000番で接続を待っているとします．
-AIWolf_NET-0.1.0.zipを展開したディレクトリで，
-コマンドプロンプトから以下のコマンドを発行すると，サーバーにSampleRoleAssignPlayerが接続したことが表示されるはずです．</p>
+AIWolf_NET-0.2.0.zipを展開したディレクトリで，
+コマンドプロンプトから以下のコマンドを発行すると，サーバーにSampleRoleAssignPlayerが接続したことが表示されるはずです．
+AIWolf_NETバージョン0.2.0から，エージェントのリクエスト処理時間を制限するためのタイムアウトオプション <code>-t</code> が導入されました．
+タイムアウトのデフォルトは100msです．以下のコマンドではタイムアウトを200msに設定しています．</p>
 
-<p><code>ClientStarter.exe –h localhost –p 10000 –c AIWolf.Client.Base.Smpl.SampleRoleAssignPlayer AIWolfLibClient.dll</code></p>
+<p><code>ClientStarter.exe –h localhost –p 10000 -t 200 –c AIWolf.Client.Base.Smpl.SampleRoleAssignPlayer AIWolfLibClient.dll</code></p>
 </li>
 </ol>
 </li>
