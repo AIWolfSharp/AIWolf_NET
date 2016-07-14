@@ -1,41 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <title>AIWolf.NET by AIWolfSharp</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
-
-    <header>
-      <div class="container">
+    <div class="wrapper">
+      <header>
         <h1>AIWolf.NET</h1>
-        <h2>AIWolf(Artificial Intelligence based Werewolf) library for .NET Framework.</h2>
-
-        <section id="downloads">
-          <a href="https://github.com/AIWolfSharp/AIWolf_NET/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/AIWolfSharp/AIWolf_NET/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/AIWolfSharp/AIWolf_NET" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
-
-    <div class="container">
-      <section id="main_content">
+        <p>AIWolf(Artificial Intelligence based Werewolf) library for .NET Framework.</p>
+        <p class="view"><a href="https://github.com/AIWolfSharp/AIWolf_NET">View the Project on GitHub <small>AIWolfSharp/AIWolf_NET</small></a></p>
+        <ul>
+          <li><a href="https://github.com/AIWolfSharp/AIWolf_NET/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/AIWolfSharp/AIWolf_NET/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/AIWolfSharp/AIWolf_NET">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <h1>
-<a id="aiwolfnetaka-aiwolf" class="anchor" href="#aiwolfnetaka-aiwolf" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AIWolf.NET(aka AIWolf#)</h1>
+<a id="aiwolfnet" class="anchor" href="#aiwolfnet" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AIWolf.NET</h1>
 
 <h2>
 <a id="net-version-of-aiwolf-library" class="anchor" href="#net-version-of-aiwolf-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>.NET version of AIWolf Library</h2>
 
 <p>AIWolf.NETとは，人狼知能プラットフォームのライブラリ群を.NET Framework 4.5用にC#で書き直したもので，
-最新バージョンは0.2.0です．</p>
+最新バージョンは0.2.1です．</p>
 
 <ol>
 <li>
@@ -43,35 +42,31 @@
 
 <ol>
 <li>
-<p>AIWolf_NET-0.2.0.zipをダウンロードする</p>
+<p>AIWolf_NET-0.2.1.zipをダウンロードする</p>
 
-<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.2.0/AIWolf_NET-0.2.0.zip">AIWolf_NET-0.2.0.zip</a>は，
+<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.2.1/AIWolf_NET-0.2.1.zip">AIWolf_NET-0.2.1.zip</a>は，
 ライブラリ(AIWolfLibCommon.dll, AIWolfLibClient.dll)と
-クライアントスターター(ClientStarter.exe)そしてAPIリファレンス(html)をまとめたものです．
+クライアントスターター(ClientStarter.exe)
+そしてAPIリファレンス(html)をまとめたものです．
+本リリースから，Json.NET 9.0 Release 1 (Json90r1.zip)も同梱されています．
 ライブラリのソースファイルが必要でなければ，これをダウンロードするだけで
 人狼知能エージェントを作成することができます．
 なお，Windowsではダウンロードしたファイルがブロックされるため，そのままでは動作しない場合があります．
 その場合はコンテキストメニューの「プロパティ」よりブロックを解除してください．</p>
 </li>
+<li><p>AIWolf_NET-0.2.1.zipを展開し，Newtonsoft.Json.dllを展開したフォルダーに置きます． </p></li>
 <li>
-<p>必要なライブラリを入手する</p>
+<p>サンプルエージェントを試してみる</p>
 
-<p>ClientStarterを使用する場合にはJson.NET Version 9.0.1 が必要です．
-入手したらNewtonsoft.Json.dllをAIWolf_NET-0.2.0.zipを展開したディレクトリに置いてください．</p>
-</li>
-<li>
-<p>サンプルプレイヤーを起動してみる</p>
+<p><a href="http://aiwolf.org/server/">人狼知能プラットフォーム</a>をダウンロードし，
+人狼知能サーバを起動しておきます．
+localhost上のポート10000番で接続を待っているサーバに
+サンプルエージェント(SampleRoleAssignPlayer)を接続するには，
+展開したフォルダーでコマンドプロンプトから以下のコマンドを実行します．
+この例では，コマンドラインオプション <code>-t 100</code> によって，
+エージェントのリクエスト処理時間の上限を100msに制限しています．</p>
 
-<p>人狼知能プラットフォームを入手し，ServerStarterで人狼知能サーバーを起動しておきます．
-ここでは，サーバーがlocalhost上のポート10000番で接続を待っているとします．
-AIWolf_NET-0.2.0.zipを展開したディレクトリで，
-コマンドプロンプトから以下のコマンドを発行すると，サーバーにSampleRoleAssignPlayerが接続したことが表示されるはずです．
-AIWolf_NETバージョン0.2.0から，エージェントのリクエスト処理時間を制限するためのタイムアウトオプション <code>-t</code> が導入されました．
-タイムアウトのデフォルトは100msです．以下のコマンドではタイムアウトを200msに設定しています．</p>
-
-<p><code>ClientStarter.exe –h localhost –p 10000 -t 200 –c AIWolf.Client.Base.Smpl.SampleRoleAssignPlayer AIWolfLibClient.dll</code></p>
-</li>
-</ol>
+<p><code>ClientStarter.exe -h localhost -p 10000 -t 100 -c AIWolf.Client.Base.Smpl.SampleRoleAssignPlayer AIWolfLibClient.dll</code></p>
 </li>
 <li>
 <p>独自のエージェントを作成</p>
@@ -84,9 +79,48 @@ AIWolf_NETバージョン0.2.0から，エージェントのリクエスト処�
 </ul>
 </li>
 </ol>
+</li>
+<li>
+<p>更新履歴</p>
+
+<ul>
+<li>
+<p>0.1.0</p>
+
+<p>初期リリース</p>
+</li>
+<li>
+<p>0.2.0</p>
+
+<ul>
+<li><p>エージェントが例外を投げて異常終了したとき，
+ClientStarter.exe が標準エラーストリームに例外のスタックトレースを出力するようになりました．</p></li>
+<li><p>エージェントのリクエスト処理時間を制限するための <code>-t</code> オプションが ClientStarter.exe に導入されました．
+制限時間（デフォルトで100ms）を超過すると，エージェントは強制的に終了されます．</p></li>
+</ul>
+</li>
+<li>
+<p>0.2.1</p>
+
+<ul>
+<li><p>ClientStarter.exe が <code>-t</code> オプションなしで起動された場合，リクエスト処理時間を制限しないようになりました．</p></li>
+<li><p>Json.NET 9.0 Release 1 を同梱するようにしました．</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+<hr>
+
+<p>このソフトウェアは，MITライセンスのもとで公開されています．LICENSEを参照のこと．</p>
       </section>
     </div>
-
+    <footer>
+      <p>Project maintained by <a href="https://github.com/AIWolfSharp">AIWolfSharp</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
