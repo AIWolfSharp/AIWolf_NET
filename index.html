@@ -34,7 +34,7 @@
 <a id="net-version-of-aiwolf-library" class="anchor" href="#net-version-of-aiwolf-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>.NET version of AIWolf Library</h2>
 
 <p>AIWolf.NETとは，人狼知能プラットフォームのライブラリ群を.NET Framework 4.5用にC#で書き直したもので，
-最新バージョンは0.2.1です．</p>
+最新バージョンは0.2.2です．</p>
 
 <ol>
 <li>
@@ -42,9 +42,9 @@
 
 <ol>
 <li>
-<p>AIWolf_NET-0.2.1.zipをダウンロードする</p>
+<p>AIWolf_NET-0.2.2.zipをダウンロードする</p>
 
-<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.2.1/AIWolf_NET-0.2.1.zip">AIWolf_NET-0.2.1.zip</a>は，
+<p><a href="https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v0.2.2/AIWolf_NET-0.2.2.zip">AIWolf_NET-0.2.2.zip</a>は，
 ライブラリ(AIWolfLibCommon.dll, AIWolfLibClient.dll)と
 クライアントスターター(ClientStarter.exe)
 そしてAPIリファレンス(html)をまとめたものです．
@@ -54,7 +54,7 @@
 なお，Windowsではダウンロードしたファイルがブロックされるため，そのままでは動作しない場合があります．
 その場合はコンテキストメニューの「プロパティ」よりブロックを解除してください．</p>
 </li>
-<li><p>AIWolf_NET-0.2.1.zipを展開し，Newtonsoft.Json.dllを展開したフォルダーに置きます． </p></li>
+<li><p>AIWolf_NET-0.2.2.zipを展開し，Newtonsoft.Json.dllを展開したフォルダーに置きます． </p></li>
 <li>
 <p>サンプルエージェントを試してみる</p>
 
@@ -105,6 +105,14 @@ ClientStarter.exe が標準エラーストリームに例外のスタックト�
 <ul>
 <li><p>ClientStarter.exe が <code>-t</code> オプションなしで起動された場合，リクエスト処理時間を制限しないようになりました．</p></li>
 <li><p>Json.NET 9.0 Release 1 を同梱するようにしました．</p></li>
+</ul>
+</li>
+<li>
+<p>0.2.2</p>
+
+<ul>
+<li><p>例外処理を見直しました．</p></li>
+<li><p>ClientStarter.exeが従来よりもより多くの例外に関する情報を出力するようになりました．</p></li>
 </ul>
 </li>
 </ul>
