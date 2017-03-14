@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <Version>1.0.4</Version>
+    <Authors>Takashi OTSUKI</Authors>
+    <Company>AIWolfSharp</Company>
+    <Description>The AIWolf sample player.</Description>
+    <Copyright>Copyright ©  2017 Takashi OTSUKI</Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AIWolfLib" Version="1.0.4" />
+  </ItemGroup>
+
+</Project>
