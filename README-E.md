@@ -5,7 +5,8 @@
 AIWolf.NET is the AIWolf (artificial intelligence based werewolf) library for .NET.
 The current version 1.0.4 is compatible with AIWolf platform version 0.4.4.
 This version is build on .NET Standard library 1.4
-in order that it can commonly used by .NET Core agent and .NET Framework (4.6.1 and above) agent.
+in order that it can [commonly used](https://docs.microsoft.com/en-us/dotnet/articles/standard/library)
+by .NET Core agent and .NET Framework (4.6.1 and above) agent.
 
 
 1. TUTORIALS
