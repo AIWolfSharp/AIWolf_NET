@@ -1,48 +1,32 @@
-[View in Japanese](https://github.com/AIWolfSharp/AIWolfCore/blob/core/README-J.md)
-# AIWolf.NET Core
-## .NET Core version of AIWolf Library
+[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README-E.md)
+# AIWolf.NET
+## .NET版人狼知能ライブラリ
+AIWolf.NETは.NET版人狼知能ライブラリです．
+最新版はバージョン1.0.4で，人狼知能プラットフォームバージョン0.4.4互換です．
+このバージョンから.NET Standard 1.4ベースになり，.NET Coreと.NET Framework（4.6.1以上）間で
+[共用可能](https://docs.microsoft.com/ja-jp/dotnet/articles/standard/library)
+になりました．
 
-AIWolf.NET Core is the AIWolf (artificial intelligence based werewolf) library for .NET Core,
-which is compatible with AIWolf platform version 0.4.x.
-The current version number is 1.0.2.
+1. チュートリアル
+    1. .NET Frameworkの場合
+        * 現在準備中です．
+    1. .NET Coreの場合
+        * [.NET CoreとVisual Studio Codeで作る人狼知能](https://www.slideshare.net/takots/net-corevs-code-71808207)
+        をご覧ください．
 
-1. QUICK START
+1. リファレンスマニュアルは[こちら](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.2/AIWolf_NET_ReferenceManual.zip)
+からダウンロードしてください．
 
-    1. Install .NET Core SDK 1.0.3.
-    2. Though AIWolf.NET Core has two libraries (AIWolfLib and AIWolfPlayer),
-you do not have to install them manually since NuGet package manager automatically does.
-    3. AIWolf.NET Core does not have own game server, so you have to download the latest
-[AIWolf platform](http://aiwolf.org/server/)
-to run the server.
-    4. We do not distribute the executable for starting client agent,
-so you first have to build it by yourself.
-       1. Download [ClientStarter-1.0.2.zip](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.2/ClientStarter-1.0.2.zip),
-and put ClientStarter folder in the zip file
-into the place you like.
-       2. In ClientStarter folder, execute the following commands to build ClientStarter.  
-`dotnet restore`  
-`dotnet build`
-    5. After the successful build, execute the following command
-to try connecting sample agent with the local server waiting the connection at port 10000.  
-`dotnet run -d`
+1. 履歴と変更点
 
-    6. Making your own agent
-
-      * You can download [Reference Manual](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.2/AIWolf_NET_ReferenceManual.zip) to be aid in making your own agent.
-      * You can view the the tutorial [here](http://www.slideshare.net/takots/net-corevs-code-71808207) (sorry, in Japanese).
-
-1. HISTORY and CHANGES
-
-    * 1.0.0-prerelease2 : The first public prerelease.
-    * 1.0.0-prerelease3 : Extension method Shuffle() for IEnumerable is moved from namespace AIWolf.Player.Sample
-to namespace AIWolf.Lib because this method is useful in various situations.
-    * 1.0.0-prerelease4 : Make projects generate portable PDBs to debug in VS Code.
-    * 1.0.0 : Official release equivalent to prerelease4.
-    * 1.0.1 : Fix the following bugs of RequestContentBuilder.
-      * "REQUEST(REQUEST(...))" can be generated.
-      * The content, which is given as argument of the constructor, is modified .
-    * 1.0.2 : Fix AbstractRoleAssignPlayer's creating a new instance of agent every game.
-This brings the great change of AbstractRoleAssignPlayer's usage.
+    * 1.0.0 : 最初のリリース
+    * 1.0.1 : RequestContentBuilderのバグフィックス版です．修正されたバグは以下の通りです．
+      * 入れ子になったリクエスト発話が生成可能
+      * 引数として渡したContentが変更される
+    * 1.0.2 : AbstractRoleAssignPlayerで各役職エージェントのインスタンスが毎回生成されていたのを修正しました．
+それに伴ってAbstractRoleAssignPlayerの使用法が大きく変わりました．
+    * 1.0.4 : .NET Standard 1.4ベースになりました．
+      
 
 ---
-This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE).
+このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE)を参照のこと.
