@@ -9,12 +9,12 @@ in order that it can [commonly used](https://docs.microsoft.com/en-us/dotnet/art
 by .NET Core agent and .NET Framework (4.6.1 and above) agent.
 
 
-1. TUTORIALS
+1. TUTORIALS (sorry, in Japanese)
 
     1. .NET Framework
-        * Under construction.
+        * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.4版）](https://www.slideshare.net/takots/c-59927842)
     1. .NET Core
-        * [Here](http://www.slideshare.net/takots/net-corevs-code-71808207) (sorry, in Japanese).
+        * [.NET CoreとVS Codeで作る人狼知能（AIWolf.NET 1.0.4版）](http://www.slideshare.net/takots/net-corevs-code-71808207)
 
 1. DOWNLOADS
 
