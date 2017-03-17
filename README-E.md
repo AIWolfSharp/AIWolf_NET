@@ -18,8 +18,10 @@ by .NET Core agent and .NET Framework (4.6.1 and above) agent.
 
 1. DOWNLOADS
 
-    * [AIWolf_NET-1.0.4.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.4/AIWolf_NET-1.0.4.zip)
-    * [ClientStarter-1.0.4.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.4/ClientStarter-1.0.4.zip)
+    * Begin with building ClientStarter (recommended) :
+[ClientStarter-1.0.4.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.4/ClientStarter-1.0.4.zip)
+    * Don't build ClientStarter (.NET Framework only) :
+[AIWolf_NET-1.0.4.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.4/AIWolf_NET-1.0.4.zip)
 
 
 1. [REFERENCE MANUAL](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.2/AIWolf_NET_ReferenceManual.zip).
