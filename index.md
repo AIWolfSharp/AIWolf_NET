@@ -9,10 +9,9 @@ AIWolf.NETは.NET版人狼知能ライブラリです．
 
 1. チュートリアル
     1. .NET Frameworkの場合
-        * 現在準備中です．
+        * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.4版）](https://www.slideshare.net/takots/c-59927842)
     1. .NET Coreの場合
-        * [.NET CoreとVisual Studio Codeで作る人狼知能](https://www.slideshare.net/takots/net-corevs-code-71808207)
-        をご覧ください．
+        * [.NET CoreとVisual Studio Codeで作る人狼知能（AIWolf.NET 1.0.4版）](https://www.slideshare.net/takots/net-corevs-code-71808207)
 
 1. ダウンロード
 
