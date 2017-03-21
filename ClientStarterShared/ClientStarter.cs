@@ -9,7 +9,7 @@
 
 using AIWolf.Lib;
 using AIWolf.Player.Sample;
-#if !NET4
+#if NETCOREAPP1_1
 using Microsoft.Extensions.DependencyModel;
 using System.Runtime.Loader;
 #endif
@@ -158,7 +158,7 @@ namespace AIWolf
                 Assembly assembly;
                 try
                 {
-#if NET4
+#if !NETCOREAPP1_1
                     assembly = Assembly.LoadFrom(dllName);
 #else
                     assembly = new AssemblyLoader(Path.GetDirectoryName(dllName)).LoadFromAssemblyPath(Path.GetFullPath(dllName));
@@ -210,7 +210,7 @@ namespace AIWolf
         }
     }
 
-#if !NET4
+#if NETCOREAPP1_1
     class AssemblyLoader : AssemblyLoadContext
     {
         string folderPath;
