@@ -10,6 +10,7 @@
     <Authors>Takashi OTSUKI</Authors>
     <Version>1.0.4</Version>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
+    <RootNamespace>AIWolf</RootNamespace>
   </PropertyGroup>
 
   <Import Project="..\ClientStarterShared\ClientStarterShared.projitems" Label="Shared" />

@@ -10,6 +10,7 @@
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
     <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <RootNamespace>AIWolf.Lib</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

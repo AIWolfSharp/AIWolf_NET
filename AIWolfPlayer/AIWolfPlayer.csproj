@@ -8,6 +8,7 @@
     <Description>The AIWolf sample player.</Description>
     <Copyright>Copyright ©  2017 Takashi OTSUKI</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RootNamespace>AIWolf.Player</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
