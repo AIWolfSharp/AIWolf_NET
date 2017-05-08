@@ -27,6 +27,49 @@ namespace AIWolf.Lib
     [DataContract]
     public class GameInfo
     {
+        [DataMember(Name = "agent")]
+        int _agent = 0;
+
+        [DataMember(Name = "executedAgent")]
+        int _executedAgent = -1;
+
+        [DataMember(Name = "latestExecutedAgent")]
+        int _latestExecutedAgent = -1;
+
+        [DataMember(Name = "cursedFox")]
+        int _cursedFox = -1;
+
+        [DataMember(Name = "attackedAgent")]
+        int _attackedAgent = -1;
+
+        [DataMember(Name = "guardedAgent")]
+        int _guardedAgent = -1;
+
+        List<Vote> _voteList = new List<Vote>();
+        List<Vote> _latestVoteList = new List<Vote>();
+        List<Vote> _attackVoteList = new List<Vote>();
+        List<Vote> _latestAttackVoteList = new List<Vote>();
+        List<Talk> _talkList = new List<Talk>();
+        List<Whisper> _whisperList = new List<Whisper>();
+
+        [DataMember(Name = "statusMap")]
+        Dictionary<int, string> _statusMap = new Dictionary<int, string>();
+
+        [DataMember(Name = "roleMap")]
+        Dictionary<int, string> _roleMap = new Dictionary<int, string>();
+
+        [DataMember(Name = "remainTalkMap")]
+        Dictionary<int, int> _remainTalkMap = new Dictionary<int, int>();
+
+        [DataMember(Name = "remainWhisperMap")]
+        Dictionary<int, int> _remainWhisperMap = new Dictionary<int, int>();
+
+        List<Role> _existingRoleList = new List<Role>();
+
+        [DataMember(Name = "lastDeadAgentList")]
+        List<int> _lastDeadAgentList = new List<int>();
+
+
 #if JHELP
         /// <summary>
         /// 本日
@@ -37,24 +80,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "day")]
-        public int Day { get; }
-
-#if JHELP
-        /// <summary>
-        /// このゲーム情報を受け取るエージェント
-        /// </summary>
-#else
-        /// <summary>
-        /// The agent who receives this GameInfo.
-        /// </summary>
-#endif
-        public Agent Agent { get; }
-
-        /// <summary>
-        /// The index number of agent who receives this game information.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int _Agent { get; }
+        public int Day { get; set; }
 
 #if JHELP
         /// <summary>
@@ -65,13 +91,33 @@ namespace AIWolf.Lib
         /// The role of player who receives this GameInfo.
         /// </summary>
 #endif
-        public Role Role
+        public Role Role => RoleMap.ContainsKey(Agent) ? RoleMap[Agent] : Role.UNC;
+
+#if JHELP
+        /// <summary>
+        /// このゲーム情報を受け取るエージェント
+        /// </summary>
+#else
+        /// <summary>
+        /// The agent who receives this GameInfo.
+        /// </summary>
+#endif
+        public Agent Agent
         {
-            get
-            {
-                return RoleMap.ContainsKey(Agent) ? RoleMap[Agent] : Role.UNC;
-            }
+            get => Agent.GetAgent(_agent);
+            set => _agent = value == null ? -1 : value.AgentIdx;
         }
+
+#if JHELP
+        /// <summary>
+        /// エージェントのリスト
+        /// </summary>
+#else
+        /// <summary>
+        /// The list of agents.
+        /// </summary>
+#endif
+        public List<Agent> AgentList => StatusMap.Keys.ToList();
 
 #if JHELP
         /// <summary>
@@ -85,7 +131,7 @@ namespace AIWolf.Lib
         /// <remarks>Medium only.</remarks>
 #endif
         [DataMember(Name = "mediumResult")]
-        public Judge MediumResult { get; }
+        public Judge MediumResult { get; set; }
 
 #if JHELP
         /// <summary>
@@ -99,7 +145,7 @@ namespace AIWolf.Lib
         /// <remarks>Seer only.</remarks>
 #endif
         [DataMember(Name = "divineResult")]
-        public Judge DivineResult { get; }
+        public Judge DivineResult { get; set; }
 
 #if JHELP
         /// <summary>
@@ -110,13 +156,11 @@ namespace AIWolf.Lib
         /// The agent executed last night.
         /// </summary>
 #endif
-        public Agent ExecutedAgent { get; }
-
-        /// <summary>
-        /// The index number of the agent executed last night.
-        /// </summary>
-        [DataMember(Name = "executedAgent")]
-        int _ExecutedAgent { get; }
+        public Agent ExecutedAgent
+        {
+            get => Agent.GetAgent(_executedAgent);
+            set => _executedAgent = value == null ? -1 : value.AgentIdx;
+        }
 
 #if JHELP
         /// <summary>
@@ -127,13 +171,11 @@ namespace AIWolf.Lib
         /// The latest executed agent.
         /// </summary>
 #endif
-        public Agent LatestExecutedAgent { get; }
-
-        /// <summary>
-        /// The index number of the latest executed agent.
-        /// </summary>
-        [DataMember(Name = "latestExecutedAgent")]
-        int _LatestExecutedAgent { get; }
+        public Agent LatestExecutedAgent
+        {
+            get => Agent.GetAgent(_latestExecutedAgent);
+            set => _latestExecutedAgent = value == null ? -1 : value.AgentIdx;
+        }
 
 #if JHELP
         /// <summary>
@@ -144,13 +186,11 @@ namespace AIWolf.Lib
         /// The fox killed by curse.
         /// </summary>
 #endif
-        public Agent CursedFox { get; }
-
-        /// <summary>
-        /// The index number of the fox killed by curse.
-        /// </summary>
-        [DataMember(Name = "cursedFox")]
-        int _CursedFox { get; }
+        public Agent CursedFox
+        {
+            get => Agent.GetAgent(_cursedFox);
+            set => _cursedFox = value == null ? -1 : value.AgentIdx;
+        }
 
 #if JHELP
         /// <summary>
@@ -163,13 +203,11 @@ namespace AIWolf.Lib
         /// </summary>
         /// <remarks>Werewolf only.</remarks>
 #endif
-        public Agent AttackedAgent { get; }
-
-        /// <summary>
-        /// The index number of the agent decided to be attacked.
-        /// </summary>
-        [DataMember(Name = "attackedAgent")]
-        int _AttackedAgent { get; }
+        public Agent AttackedAgent
+        {
+            get => Agent.GetAgent(_attackedAgent);
+            set => _attackedAgent = value == null ? -1 : value.AgentIdx;
+        }
 
 #if JHELP
         /// <summary>
@@ -180,13 +218,11 @@ namespace AIWolf.Lib
         /// The agent guarded last night.
         /// </summary>
 #endif
-        public Agent GuardedAgent { get; }
-
-        /// <summary>
-        /// The index number of the agent guarded last night.
-        /// </summary>
-        [DataMember(Name = "guardedAgent")]
-        int _GuardedAgent { get; }
+        public Agent GuardedAgent
+        {
+            get => Agent.GetAgent(_guardedAgent);
+            set => _guardedAgent = value == null ? -1 : value.AgentIdx;
+        }
 
 #if JHELP
         /// <summary>
@@ -200,7 +236,11 @@ namespace AIWolf.Lib
         /// <remarks>You can see who votes to who.</remarks>
 #endif
         [DataMember(Name = "voteList")]
-        public List<Vote> VoteList { get; }
+        public List<Vote> VoteList
+        {
+            get => _voteList;
+            set => _voteList = value == null ? new List<Vote>() : new List<Vote>(value);
+        }
 
 #if JHELP
         /// <summary>
@@ -214,7 +254,11 @@ namespace AIWolf.Lib
         /// <remarks>You can see who votes to who.</remarks>
 #endif
         [DataMember(Name = "latestVoteList")]
-        public List<Vote> LatestVoteList { get; }
+        public List<Vote> LatestVoteList
+        {
+            get => _latestVoteList;
+            set => _latestVoteList = value == null ? new List<Vote>() : new List<Vote>(value);
+        }
 
 #if JHELP
         /// <summary>
@@ -228,7 +272,11 @@ namespace AIWolf.Lib
         /// <remarks>Werewolf only.</remarks>
 #endif
         [DataMember(Name = "attackVoteList")]
-        public List<Vote> AttackVoteList { get; }
+        public List<Vote> AttackVoteList
+        {
+            get => _attackVoteList;
+            set => _attackVoteList = value == null ? new List<Vote>() : new List<Vote>(value);
+        }
 
 #if JHELP
         /// <summary>
@@ -242,7 +290,11 @@ namespace AIWolf.Lib
         /// <remarks>Werewolf only.</remarks>
 #endif
         [DataMember(Name = "latestAttackVoteList")]
-        public List<Vote> LatestAttackVoteList { get; }
+        public List<Vote> LatestAttackVoteList
+        {
+            get => _latestAttackVoteList;
+            set => _latestAttackVoteList = value == null ? new List<Vote>() : new List<Vote>(value);
+        }
 
 #if JHELP
         /// <summary>
@@ -254,7 +306,11 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "talkList")]
-        public List<Talk> TalkList { get; }
+        public List<Talk> TalkList
+        {
+            get => _talkList;
+            set => _talkList = value == null ? new List<Talk>() : new List<Talk>(value);
+        }
 
 #if JHELP
         /// <summary>
@@ -268,36 +324,24 @@ namespace AIWolf.Lib
         /// <remarks>Werewolf only.</remarks>
 #endif
         [DataMember(Name = "whisperList")]
-        public List<Whisper> WhisperList { get; }
+        public List<Whisper> WhisperList
+        {
+            get => _whisperList;
+            set => _whisperList = value == null ? new List<Whisper>() : new List<Whisper>(value);
+        }
 
 #if JHELP
         /// <summary>
-        /// 昨夜亡くなったエージェントのリスト
+        /// 生存しているエージェントのリスト
         /// </summary>
+        /// <remarks>すべてのエージェントが死んだ場合，nullではなく空のリストを返す</remarks>
 #else
         /// <summary>
-        /// The list of agents who died last night.
+        /// The list of alive agents.
         /// </summary>
+        /// <remarks>If all agents are dead, this returns an empty list, not null.</remarks>
 #endif
-        public List<Agent> LastDeadAgentList { get; }
-
-        /// <summary>
-        /// The list of indexes of agents who died last night.
-        /// </summary>
-        [DataMember(Name = "lastDeadAgentList")]
-        List<int> _LastDeadAgentList { get; }
-
-#if JHELP
-        /// <summary>
-        /// このゲームにおいて存在する役職のリスト
-        /// </summary>
-#else
-        /// <summary>
-        /// The list of existing roles in this game.
-        /// </summary>
-#endif
-        [DataMember(Name = "existingRoleList")]
-        public List<Role> ExistingRoleList { get; }
+        public List<Agent> AliveAgentList => AgentList.Where(a => StatusMap[a] == Status.ALIVE).ToList();
 
 #if JHELP
         /// <summary>
@@ -308,13 +352,11 @@ namespace AIWolf.Lib
         /// The statuses of all agents.
         /// </summary>
 #endif
-        public Dictionary<Agent, Status> StatusMap { get; }
-
-        /// <summary>
-        /// The statuses of all agents.
-        /// </summary>
-        [DataMember(Name = "statusMap")]
-        Dictionary<int, string> _StatusMap { get; }
+        public Dictionary<Agent, Status> StatusMap
+        {
+            get => _statusMap.ToDictionary(p => Agent.GetAgent(p.Key), p => (Status)Enum.Parse(typeof(Status), p.Value));
+            set => _statusMap = value == null ? new Dictionary<int, string>() : value.ToDictionary(p => p.Key.AgentIdx, p => p.Value.ToString());
+        }
 
 #if JHELP
         /// <summary>
@@ -333,17 +375,11 @@ namespace AIWolf.Lib
         /// If you are werewolf, you know other werewolves.
         /// </remarks>
 #endif
-        public Dictionary<Agent, Role> RoleMap { get; }
-
-        /// <summary>
-        /// The known roles of agents.
-        /// </summary>
-        /// <remarks>
-        /// If you are human, you know only yourself.
-        /// If you are werewolf, you know other werewolves.
-        /// </remarks>
-        [DataMember(Name = "roleMap")]
-        Dictionary<int, string> _RoleMap { get; }
+        public Dictionary<Agent, Role> RoleMap
+        {
+            get => _roleMap.ToDictionary(p => Agent.GetAgent(p.Key), p => (Role)Enum.Parse(typeof(Role), p.Value));
+            set => _roleMap = value == null ? new Dictionary<int, string>() : value.ToDictionary(p => p.Key.AgentIdx, p => p.Value.ToString());
+        }
 
 #if JHELP
         /// <summary>
@@ -354,13 +390,11 @@ namespace AIWolf.Lib
         /// The number of opportunities to talk remaining.
         /// </summary>
 #endif
-        public Dictionary<Agent, int> RemainTalkMap { get; }
-
-        /// <summary>
-        /// The number of opportunities to talk remaining.
-        /// </summary>
-        [DataMember(Name = "remainTalkMap")]
-        Dictionary<int, int> _RemainTalkMap { get; }
+        public Dictionary<Agent, int> RemainTalkMap
+        {
+            get => _remainTalkMap.ToDictionary(p => Agent.GetAgent(p.Key), p => p.Value);
+            set => _remainTalkMap = value == null ? new Dictionary<int, int>() : value.ToDictionary(p => p.Key.AgentIdx, p => p.Value);
+        }
 
 #if JHELP
         /// <summary>
@@ -371,48 +405,48 @@ namespace AIWolf.Lib
         /// The number of opportunities to whisper remaining.
         /// </summary>
 #endif
-        public Dictionary<Agent, int> RemainWhisperMap { get; }
-
-        /// <summary>
-        /// The number of opportunities to whisper remaining.
-        /// </summary>
-        [DataMember(Name = "remainWhisperMap")]
-        Dictionary<int, int> _RemainWhisperMap { get; }
-
-#if JHELP
-        /// <summary>
-        /// エージェントのリスト
-        /// </summary>
-#else
-        /// <summary>
-        /// The list of agents.
-        /// </summary>
-#endif
-        public List<Agent> AgentList
+        public Dictionary<Agent, int> RemainWhisperMap
         {
-            get
-            {
-                return StatusMap.Keys.ToList();
-            }
+            get => _remainWhisperMap.ToDictionary(p => Agent.GetAgent(p.Key), p => p.Value);
+            set => _remainWhisperMap = value == null ? new Dictionary<int, int>() : value.ToDictionary(p => p.Key.AgentIdx, p => p.Value);
         }
 
 #if JHELP
         /// <summary>
-        /// 生存しているエージェントのリスト
+        /// このゲームにおいて存在する役職のリスト
         /// </summary>
-        /// <remarks>すべてのエージェントが死んだ場合，nullではなく空のリストを返す</remarks>
 #else
         /// <summary>
-        /// The list of alive agents.
+        /// The list of existing roles in this game.
         /// </summary>
-        /// <remarks>If all agents are dead, this returns an empty list, not null.</remarks>
 #endif
-        public List<Agent> AliveAgentList
+        [DataMember(Name = "existingRoleList")]
+        public List<Role> ExistingRoleList
         {
-            get
-            {
-                return AgentList.Where(a => StatusMap[a] == Status.ALIVE).ToList();
-            }
+            get => _existingRoleList;
+            set => _existingRoleList = value == null ? new List<Role>() : new List<Role>(value);
+        }
+
+#if JHELP
+        /// <summary>
+        /// 昨夜亡くなったエージェントのリスト
+        /// </summary>
+#else
+        /// <summary>
+        /// The list of agents who died last night.
+        /// </summary>
+#endif
+        public List<Agent> LastDeadAgentList
+        {
+            get => _lastDeadAgentList.Select(i => Agent.GetAgent(i)).ToList();
+            set => _lastDeadAgentList = value == null ? new List<int>() : value.Select(a => a.AgentIdx).ToList();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of this class.
+        /// </summary>
+        public GameInfo()
+        {
         }
 
         /// <summary>
@@ -450,113 +484,26 @@ namespace AIWolf.Lib
             Dictionary<int, int> remainTalkMap, Dictionary<int, int> remainWhisperMap)
         {
             Day = day;
-            if (Day < 0)
-            {
-                Error.RuntimeError("Invalid day " + Day + ".");
-                Error.Warning("Force it to be 0.");
-                Day = 0;
-            }
-
-            Agent = Agent.GetAgent(agent);
-            if (Agent == null)
-            {
-                Error.RuntimeError("Agent must not be null.");
-                Error.Warning("Force it to be Agent[00].");
-                Agent = Agent.GetAgent(0);
-            }
-            _Agent = Agent.AgentIdx;
-
+            _agent = agent;
             MediumResult = mediumResult;
             DivineResult = divineResult;
-
-            ExecutedAgent = Agent.GetAgent(executedAgent);
-            _ExecutedAgent = ExecutedAgent == null ? -1 : ExecutedAgent.AgentIdx;
-
-            LatestExecutedAgent = Agent.GetAgent(latestExecutedAgent);
-            _LatestExecutedAgent = LatestExecutedAgent == null ? -1 : LatestExecutedAgent.AgentIdx;
-
-            CursedFox = Agent.GetAgent(cursedFox);
-            _CursedFox = CursedFox == null ? -1 : CursedFox.AgentIdx;
-
-            AttackedAgent = Agent.GetAgent(attackedAgent);
-            _AttackedAgent = AttackedAgent == null ? -1 : AttackedAgent.AgentIdx;
-
-            GuardedAgent = Agent.GetAgent(guardedAgent);
-            _GuardedAgent = GuardedAgent == null ? -1 : GuardedAgent.AgentIdx;
-
-            VoteList = voteList == null ? new List<Vote>() : voteList;
-            LatestVoteList = latestVoteList == null ? new List<Vote>() : latestVoteList;
-            AttackVoteList = attackVoteList == null ? new List<Vote>() : attackVoteList;
-            LatestAttackVoteList = latestAttackVoteList == null ? new List<Vote>() : latestAttackVoteList;
-            TalkList = talkList == null ? new List<Talk>() : talkList;
-            WhisperList = whisperList == null ? new List<Whisper>() : whisperList;
-            ExistingRoleList = existingRoleList == null ? new List<Role>() : existingRoleList;
-
-            LastDeadAgentList = new List<Agent>();
-            if (lastDeadAgentList != null)
-            {
-                foreach (var i in lastDeadAgentList)
-                {
-                    LastDeadAgentList.Add(Agent.GetAgent(i));
-                }
-            }
-            _LastDeadAgentList = LastDeadAgentList.Select(a => a.AgentIdx).ToList();
-
-            StatusMap = new Dictionary<Agent, Status>();
-            if (statusMap != null)
-            {
-                foreach (var p in statusMap)
-                {
-                    Status status;
-                    if (!Enum.TryParse(p.Value, out status))
-                    {
-                        Error.RuntimeError("Invalid status string " + p.Value + ".");
-                        Error.Warning("Force it to be Status.ALIVE.");
-                        status = Status.ALIVE;
-                    }
-                    StatusMap[Agent.GetAgent(p.Key)] = status;
-                }
-            }
-            _StatusMap = StatusMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value.ToString());
-
-            RoleMap = new Dictionary<Agent, Role>();
-            if (roleMap != null)
-            {
-                foreach (var p in roleMap)
-                {
-                    Role role;
-                    if (!Enum.TryParse(p.Value, out role) || role == Role.UNC)
-                    {
-                        Error.RuntimeError("Invalid role string " + p.Value + ".");
-                        Error.Warning("It is removed from role map.");
-                    }
-                    else
-                    {
-                        RoleMap[Agent.GetAgent(p.Key)] = role;
-                    }
-                }
-            }
-            _RoleMap = RoleMap.Where(m => m.Value != Role.UNC).ToDictionary(m => m.Key.AgentIdx, m => m.Value.ToString());
-
-            RemainTalkMap = new Dictionary<Agent, int>();
-            if (remainTalkMap != null)
-            {
-                foreach (var p in remainTalkMap)
-                {
-                    RemainTalkMap[Agent.GetAgent(p.Key)] = p.Value;
-                }
-            }
-            _RemainTalkMap = RemainTalkMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value);
-
-            RemainWhisperMap = new Dictionary<Agent, int>();
-            if (remainWhisperMap != null)
-            {
-                foreach (var p in remainWhisperMap)
-                {
-                    RemainWhisperMap[Agent.GetAgent(p.Key)] = p.Value;
-                }
-            }
-            _RemainWhisperMap = RemainWhisperMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value);
+            _executedAgent = executedAgent;
+            _latestExecutedAgent = latestExecutedAgent;
+            _cursedFox = cursedFox;
+            _attackedAgent = attackedAgent;
+            _guardedAgent = guardedAgent;
+            _voteList = voteList;
+            _latestVoteList = latestVoteList;
+            _attackVoteList = attackVoteList;
+            _latestAttackVoteList = latestAttackVoteList;
+            _talkList = talkList;
+            _whisperList = whisperList;
+            _lastDeadAgentList = lastDeadAgentList;
+            _existingRoleList = existingRoleList;
+            _statusMap = statusMap;
+            _roleMap = roleMap;
+            _remainTalkMap = remainTalkMap;
+            _remainWhisperMap = remainWhisperMap;
         }
     }
 }
