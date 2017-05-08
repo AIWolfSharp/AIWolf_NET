@@ -24,6 +24,18 @@ namespace AIWolf.Lib
     [DataContract]
     public class Vote
     {
+        /// <summary>
+        /// The index number of the agent who voted.
+        /// </summary>
+        [DataMember(Name = "agent")]
+        int _agent;
+
+        /// <summary>
+        /// The index number of the voted agent.
+        /// </summary>
+        [DataMember(Name = "target")]
+        int _target;
+
 #if JHELP
         /// <summary>
         /// この投票の日
@@ -45,13 +57,7 @@ namespace AIWolf.Lib
         /// The agent who voted.
         /// </summary>
 #endif
-        public Agent Agent { get; }
-
-        /// <summary>
-        /// The index number of the agent who voted.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int _Agent { get; }
+        public Agent Agent => Agent.GetAgent(_agent);
 
 #if JHELP
         /// <summary>
@@ -62,13 +68,7 @@ namespace AIWolf.Lib
         /// The voted agent.
         /// </summary>
 #endif
-        public Agent Target { get; }
-
-        /// <summary>
-        /// The index number of the voted agent.
-        /// </summary>
-        [DataMember(Name = "target")]
-        int _Target { get; }
+        public Agent Target => Agent.GetAgent(_target);
 
         /// <summary>
         /// Initializes a new instance of this class.
@@ -76,7 +76,7 @@ namespace AIWolf.Lib
         /// <param name="day">The day of this vote.</param>
         /// <param name="agent">The agent who voted.</param>
         /// <param name="target">The voted agent.</param>
-        Vote(int day, Agent agent, Agent target)
+        public Vote(int day, Agent agent, Agent target)
         {
             Day = day;
             if (Day < 0)
@@ -86,23 +86,27 @@ namespace AIWolf.Lib
                 Day = 0;
             }
 
-            Agent = agent;
-            if (Agent == null)
+            if (agent == null)
             {
                 Error.RuntimeError("Agent must not be null.");
                 Error.Warning("Force it to be Agent[00].");
-                Agent = Agent.GetAgent(0);
+                _agent = 0;
             }
-            _Agent = Agent.AgentIdx;
+            else
+            {
+                _agent = agent.AgentIdx;
+            }
 
-            Target = target;
-            if (Target == null)
+            if (target == null)
             {
                 Error.RuntimeError("Target must not be null.");
                 Error.Warning("Force it to be Agent[00].");
-                Target = Agent.GetAgent(0);
+                _target = 0;
             }
-            _Target = Target.AgentIdx;
+            else
+            {
+                _target = target.AgentIdx;
+            }
         }
 
         /// <summary>
