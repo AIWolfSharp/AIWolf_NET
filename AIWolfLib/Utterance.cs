@@ -46,6 +46,12 @@ namespace AIWolf.Lib
 #endif
         public const string SKIP = "Skip";
 
+        /// <summary>
+        /// The index number of the agent who uttered.
+        /// </summary>
+        [DataMember(Name = "agent")]
+        int _agent;
+
 #if JHELP
         /// <summary>
         /// この発話のインデックス番号
@@ -91,13 +97,7 @@ namespace AIWolf.Lib
         /// The agent who uttered.
         /// </summary>
 #endif
-        public Agent Agent { get; }
-
-        /// <summary>
-        /// The index number of the agent who uttered.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int _Agent { get; }
+        public Agent Agent => Agent.GetAgent(_agent);
 
 #if JHELP
         /// <summary>
@@ -156,14 +156,16 @@ namespace AIWolf.Lib
         /// <param name="text">The text of this utterance.</param>
         protected Utterance(int idx, int day, int turn, Agent agent, string text) : this(idx, day, turn)
         {
-            Agent = agent;
-            if (Agent == null)
+            if (agent == null)
             {
                 Error.RuntimeError("Agent must not be null.");
-                Agent = Agent.GetAgent(0);
+                _agent = 0;
                 Error.Warning("Force it to be " + Agent + ".");
             }
-            _Agent = Agent.AgentIdx;
+            else
+            {
+                _agent = agent.AgentIdx;
+            }
 
             Text = text;
         }
@@ -223,7 +225,7 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this talk.</param>
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
-        Talk(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
+        public Talk(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
         {
         }
 
@@ -285,7 +287,7 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this whisper.</param>
         /// <param name="agent">The agent who whispered.</param>
         /// <param name="text">The text of this whisper.</param>
-        Whisper(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
+        public Whisper(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
         {
         }
 
