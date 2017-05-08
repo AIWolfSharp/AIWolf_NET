@@ -1,7 +1,7 @@
 ﻿//
-// Role.cs
+// Enums.cs
 //
-// Copyright (c) 2016 Takashi OTSUKI
+// Copyright (c) 2017 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -55,7 +55,7 @@ namespace AIWolf.Lib
 #endif
         FOX,
 
-        #if JHELP
+#if JHELP
         /// <summary>
         /// 共有者
         /// </summary>
@@ -124,6 +124,101 @@ namespace AIWolf.Lib
 
 #if JHELP
     /// <summary>
+    /// 陣営
+    /// </summary>
+#else
+    /// <summary>
+    /// Enumeration type for teams.
+    /// </summary>
+#endif
+    public enum Team
+    {
+#if JHELP
+        /// <summary>
+        /// 不明
+        /// </summary>
+#else
+        /// <summary>
+        /// Uncertain.
+        /// </summary>
+#endif
+        UNC,
+
+#if JHELP
+        /// <summary>
+        /// 村人陣営
+        /// </summary>
+#else
+        /// <summary>
+        /// Villager team.
+        /// </summary>
+#endif
+        VILLAGER,
+
+#if JHELP
+        /// <summary>
+        /// 人狼陣営
+        /// </summary>
+#else
+        /// <summary>
+        /// Werewolf team.
+        /// </summary>
+#endif
+        WEREWOLF,
+
+        /// <summary>
+        /// The third team.
+        /// </summary>
+        OTHERS
+    }
+
+#if JHELP
+    /// <summary>
+    /// 種族
+    /// </summary>
+#else
+    /// <summary>
+    /// Enumeration type for species.
+    /// </summary>
+#endif
+    public enum Species
+    {
+#if JHELP
+        /// <summary>
+        /// 不明
+        /// </summary>
+#else
+        /// <summary>
+        /// Uncertain.
+        /// </summary>
+#endif
+        UNC,
+
+#if JHELP
+        /// <summary>
+        /// 人間
+        /// </summary>
+#else
+        /// <summary>
+        /// Human.
+        /// </summary>
+#endif
+        HUMAN,
+
+#if JHELP
+        /// <summary>
+        /// 人狼
+        /// </summary>
+#else
+        /// <summary>
+        /// Werewolf.
+        /// </summary>
+#endif
+        WEREWOLF
+    }
+
+#if JHELP
+    /// <summary>
     /// 列挙型Roleの拡張メソッド定義
     /// </summary>
 #else
@@ -133,10 +228,21 @@ namespace AIWolf.Lib
 #endif
     public static class RoleExtensions
     {
+        static Dictionary<Role, Team> roleTeamMap = new Dictionary<Role, Team>();
         static Dictionary<Role, Species> roleSpeciesMap = new Dictionary<Role, Species>();
 
         static RoleExtensions()
         {
+            roleTeamMap[Role.UNC] = Team.UNC;
+            roleTeamMap[Role.BODYGUARD] = Team.VILLAGER;
+            roleTeamMap[Role.FOX] = Team.OTHERS;
+            roleTeamMap[Role.FREEMASON] = Team.VILLAGER;
+            roleTeamMap[Role.MEDIUM] = Team.VILLAGER;
+            roleTeamMap[Role.POSSESSED] = Team.WEREWOLF;
+            roleTeamMap[Role.SEER] = Team.VILLAGER;
+            roleTeamMap[Role.VILLAGER] = Team.VILLAGER;
+            roleTeamMap[Role.WEREWOLF] = Team.WEREWOLF;
+
             roleSpeciesMap[Role.UNC] = Species.UNC;
             roleSpeciesMap[Role.BODYGUARD] = Species.HUMAN;
             roleSpeciesMap[Role.FOX] = Species.HUMAN;
@@ -147,6 +253,21 @@ namespace AIWolf.Lib
             roleSpeciesMap[Role.VILLAGER] = Species.HUMAN;
             roleSpeciesMap[Role.WEREWOLF] = Species.WEREWOLF;
         }
+
+#if JHELP
+        /// <summary>
+        /// 役職に対応する陣営を返す
+        /// </summary>
+        /// <param name="role">役職</param>
+        /// <returns>役職に対応する陣営</returns>
+#else
+        /// <summary>
+        /// Returns the team the role belongs to.
+        /// </summary>
+        /// <param name="role">Role.</param>
+        /// <returns>The team the role belongs to.</returns>
+#endif
+        public static Team GetTeam(this Role role) => roleTeamMap[role];
 
 #if JHELP
         /// <summary>
@@ -161,9 +282,6 @@ namespace AIWolf.Lib
         /// <param name="role">Role.</param>
         /// <returns>The species the role belongs to.</returns>
 #endif
-        public static Species GetSpecies(this Role role)
-        {
-            return roleSpeciesMap[role];
-        }
+        public static Species GetSpecies(this Role role) => roleSpeciesMap[role];
     }
 }
