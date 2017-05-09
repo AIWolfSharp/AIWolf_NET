@@ -24,7 +24,7 @@ namespace AIWolf.Server
     /// AIWolf game class.
     /// </summary>
 #endif
-    class AIWolfGame
+    public class AIWolfGame
     {
         string logFileName;
 
@@ -127,7 +127,10 @@ namespace AIWolf.Server
             Dictionary<Role, List<Agent>> requestRoleMap = new Dictionary<Role, List<Agent>>();
             foreach (Role role in Enum.GetValues(typeof(Role)))
             {
-                requestRoleMap[role] = new List<Agent>();
+                if (role != Role.UNC)
+                {
+                    requestRoleMap[role] = new List<Agent>();
+                }
             }
             List<Agent> noRequestAgentList = new List<Agent>();
             foreach (Agent agent in agentList)
@@ -152,6 +155,10 @@ namespace AIWolf.Server
 
             foreach (Role role in Enum.GetValues(typeof(Role)))
             {
+                if (role == Role.UNC)
+                {
+                    continue;
+                }
                 List<Agent> requestedAgentList = requestRoleMap[role];
                 for (int i = 0; i < GameSetting.RoleNumMap[role]; i++)
                 {
@@ -835,7 +842,7 @@ namespace AIWolf.Server
             {
                 return m.Groups[1].ToString();
             }
-            return null;
+            return text;
         }
     }
 }
