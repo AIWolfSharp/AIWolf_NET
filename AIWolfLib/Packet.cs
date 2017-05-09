@@ -16,7 +16,7 @@ namespace AIWolf.Lib
     /// Packet for sending data to client.
     /// </summary>
     [DataContract]
-    class Packet
+    public class Packet
     {
         /// <summary>
         /// The request from the server.
