@@ -16,10 +16,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace AIWolf.Server
 {
-    class TcpipServer : IGameServer
+    public class TcpipServer : IGameServer
     {
         Dictionary<TcpClient, Agent> connectionAgentMap = new Dictionary<TcpClient, Agent>();
         Dictionary<Agent, TcpClient> agentConnectionMap = new Dictionary<Agent, TcpClient>();
@@ -91,7 +92,7 @@ namespace AIWolf.Server
         /// <summary>
         /// 
         /// </summary>
-        public async void WaitForConnectionAsync()
+        public void WaitForConnection()
         {
             foreach (TcpClient client in connectionAgentMap.Keys)
             {
@@ -111,7 +112,9 @@ namespace AIWolf.Server
 
             while (connectionAgentMap.Count < Limit)
             {
-                TcpClient client = await serverSocket.AcceptTcpClientAsync();
+                Task<TcpClient> task = serverSocket.AcceptTcpClientAsync();
+                task.Wait();
+                TcpClient client = task.Result;
                 lock (connectionAgentMap)
                 {
                     Agent agent = null;
