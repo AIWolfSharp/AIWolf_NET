@@ -8,6 +8,7 @@
 //
 
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -16,16 +17,79 @@ namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// ゲーム設定
+    /// ゲームの設定
     /// </summary>
 #else
     /// <summary>
-    /// Settings of game.
+    /// The settings of the game.
     /// </summary>
 #endif
     [DataContract]
     public class GameSetting
     {
+        /// <summary>
+        /// The number of agents acting as each role.
+        /// </summary>
+        static readonly Dictionary<int, Dictionary<Role, int>> defaultRoleNumMap = new Dictionary<int, Dictionary<Role, int>>()
+        {
+            {  3, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  1 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            {  4, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  2 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            {  5, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  2 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            {  6, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  3 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            {  7, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            {  8, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            {  9, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 10, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 11, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 12, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 13, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  6 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 14, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  7 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 15, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  8 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 16, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  9 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 17, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER, 10 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
+            { 18, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER, 11 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } }
+        };
+
+#if JHELP
+        /// <summary>
+        /// デフォルトのゲーム設定を返す
+        /// </summary>
+        /// <param name="agentNum">エージェント数</param>
+        /// <returns>エージェント数におけるデフォルト設定</returns>
+#else
+        /// <summary>
+        /// Returns the default GameSetting.
+        /// </summary>
+        /// <param name="agentNum">The number of agents.</param>
+        /// <returns>The default GameSetting for the given number of agents.</returns>
+#endif
+        public static GameSetting GetDefaultGameSetting(int agentNum)
+        {
+            if (!defaultRoleNumMap.ContainsKey(agentNum))
+            {
+                throw new ArgumentException("Invalid agentNum in GetDefaultGameSetting(agentNum).");
+            }
+            return new GameSetting()
+            {
+                RoleNumMap = defaultRoleNumMap[agentNum],
+                MaxTalk = 10,
+                MaxTalkTurn = 20,
+                MaxWhisper = 10,
+                MaxWhisperTurn = 20,
+                MaxSkip = 2,
+                EnableNoAttack = false,
+                VoteVisible = true,
+                VotableOnFirstDay = false,
+                EnableNoExecution = false,
+                TalkOnFirstDay = false,
+                ValidateUtterance = true,
+                WhisperBeforeRevote = false,
+                TimeLimit = -1,
+                MaxRevote = 1,
+                MaxAttackRevote = 1,
+            };
+        }
+
 #if JHELP
         /// <summary>
         /// 各役職の人数
@@ -36,7 +100,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "roleNumMap")]
-        public Dictionary<Role, int> RoleNumMap { get; } //= new Dictionary<Role, int>();
+        public Dictionary<Role, int> RoleNumMap { get; set; }
 
 #if JHELP
         /// <summary>
@@ -48,7 +112,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxTalk")]
-        public int MaxTalk { get; }
+        public int MaxTalk { get; set; }
 
 #if JHELP
         /// <summary>
@@ -60,7 +124,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxTalkTurn")]
-        public int MaxTalkTurn { get; }
+        public int MaxTalkTurn { get; set; }
 
 #if JHELP
         /// <summary>
@@ -72,7 +136,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxWhisper")]
-        public int MaxWhisper { get; }
+        public int MaxWhisper { get; set; }
 
 #if JHELP
         /// <summary>
@@ -84,7 +148,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxWhisperTurn")]
-        public int MaxWhisperTurn { get; }
+        public int MaxWhisperTurn { get; set; }
 
 #if JHELP
         /// <summary>
@@ -96,7 +160,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxSkip")]
-        public int MaxSkip { get; }
+        public int MaxSkip { get; set; }
 
 #if JHELP
         /// <summary>
@@ -108,7 +172,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxRevote")]
-        public int MaxRevote { get; }
+        public int MaxRevote { get; set; }
 
 #if JHELP
         /// <summary>
@@ -120,7 +184,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "maxAttackRevote")]
-        public int MaxAttackRevote { get; }
+        public int MaxAttackRevote { get; set; }
 
 #if JHELP
         /// <summary>
@@ -132,7 +196,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "enableNoAttack")]
-        public bool EnableNoAttack { get; }
+        public bool EnableNoAttack { get; set; }
 
 #if JHELP
         /// <summary>
@@ -144,7 +208,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "voteVisible")]
-        public bool VoteVisible { get; }
+        public bool VoteVisible { get; set; }
 
 #if JHELP
         /// <summary>
@@ -156,7 +220,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "votableInFirstDay")]
-        public bool VotableOnFirstDay { get; }
+        public bool VotableOnFirstDay { get; set; }
 
 #if JHELP
         /// <summary>
@@ -168,7 +232,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "enableNoExecution")]
-        public bool EnableNoExecution { get; }
+        public bool EnableNoExecution { get; set; }
 
 #if JHELP
         /// <summary>
@@ -180,7 +244,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "talkOnFirstDay")]
-        public bool TalkOnFirstDay { get; }
+        public bool TalkOnFirstDay { get; set; }
 
 #if JHELP
         /// <summary>
@@ -192,7 +256,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "validateUtterance")]
-        public bool ValidateUtterance { get; }
+        public bool ValidateUtterance { get; set; }
 
 #if JHELP
         /// <summary>
@@ -204,7 +268,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "whisperBeforeRevote")]
-        public bool WhisperBeforeRevote { get; }
+        public bool WhisperBeforeRevote { get; set; }
 
 #if JHELP
         /// <summary>
@@ -216,7 +280,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "randomSeed")]
-        public long RandomSeed { get; }
+        public long RandomSeed { get; set; }
 
 #if JHELP
         /// <summary>
@@ -228,7 +292,7 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         [DataMember(Name = "timeLimit")]
-        public int TimeLimit { get; }
+        public int TimeLimit { get; set; }
 
 #if JHELP
         /// <summary>
@@ -247,6 +311,11 @@ namespace AIWolf.Lib
                 return RoleNumMap == null ? 0 : RoleNumMap.Values.Sum();
             }
         }
+
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        GameSetting() { }
 
         /// <summary>
         /// Initializes a new instance.
