@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace AIWolf.Server
 {
-    class GameData
+    public class GameData
     {
         int talkIdx = 0;
         int whisperIdx = 0;

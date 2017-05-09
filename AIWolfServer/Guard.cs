@@ -14,7 +14,7 @@ namespace AIWolf.Server
     /// <summary>
     /// Guard class.
     /// </summary>
-    class Guard
+    public class Guard
     {
         public int Day { get; }
 

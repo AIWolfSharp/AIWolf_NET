@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace AIWolf.Server
 {
-    interface IGameServer
+    public interface IGameServer
     {
         /// <summary>
         /// The list of agents connecting to this server.

@@ -15,7 +15,7 @@ namespace AIWolf.Server
     /// <summary>
     /// GameLogger using file.
     /// </summary>
-    class FileGameLogger
+    public class FileGameLogger
     {
         string fileName;
         TextWriter writer;
