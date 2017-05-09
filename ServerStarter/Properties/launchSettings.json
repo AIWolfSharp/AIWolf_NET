@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ServerStarter": {
+      "commandName": "Project",
+      "commandLineArgs": "-n 5"
+    }
+  }
+}
