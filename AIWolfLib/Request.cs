@@ -12,7 +12,7 @@ namespace AIWolf.Lib
     /// <summary>
     /// Enumeration type for requests.
     /// </summary>
-    enum Request
+    public enum Request
     {
         /// <summary>
         /// No request.
