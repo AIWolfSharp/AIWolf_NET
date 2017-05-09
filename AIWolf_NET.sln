@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4810C81-6979-4882-8F05-F0CC88725796}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,6 +21,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientStarter", "ClientStarter\ClientStarter.csproj", "{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientStarter4", "ClientStarter4\ClientStarter4.csproj", "{32997635-ED38-43DF-B293-C44EF82CB722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIWolfServer", "AIWolfServer\AIWolfServer.csproj", "{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -96,6 +98,18 @@ Global
 		{32997635-ED38-43DF-B293-C44EF82CB722}.Release|x64.Build.0 = Release|Any CPU
 		{32997635-ED38-43DF-B293-C44EF82CB722}.Release|x86.ActiveCfg = Release|Any CPU
 		{32997635-ED38-43DF-B293-C44EF82CB722}.Release|x86.Build.0 = Release|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Debug|x64.Build.0 = Debug|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Debug|x86.Build.0 = Debug|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Release|x64.ActiveCfg = Release|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Release|x64.Build.0 = Release|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Release|x86.ActiveCfg = Release|Any CPU
+		{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

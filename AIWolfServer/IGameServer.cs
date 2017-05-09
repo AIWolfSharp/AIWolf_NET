@@ -22,12 +22,12 @@ namespace AIWolf.Server
         /// <summary>
         /// The setting of the game.
         /// </summary>
-        GameSetting GameSetting { get; set; }
+        GameSetting GameSetting { set; }
 
         /// <summary>
         /// The game data.
         /// </summary>
-        GameData GameData { get; set; }
+        GameData GameData { set; }
 
         /// <summary>
         /// Initializes the agents.
