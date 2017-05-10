@@ -189,7 +189,7 @@ namespace AIWolf.Server
                 LatestAttackVoteList = agent == null || role == Role.WEREWOLF ? LatestAttackVoteList : null,
                 TalkList = TalkList,
                 StatusMap = StatusMap,
-                ExistingRoleList = RoleMap.Values.ToList(),
+                ExistingRoleList = RoleMap.Values.Distinct().ToList(),
                 RemainTalkMap = RemainTalkMap,
                 RemainWhisperMap = role == Role.WEREWOLF ? RemainWhisperMap : null,
                 WhisperList = agent == null || role == Role.WEREWOLF ? WhisperList : null,
