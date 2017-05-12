@@ -9,7 +9,6 @@
 
 using AIWolf.Lib;
 using System;
-using System.Threading.Tasks;
 
 namespace AIWolf.Server
 {
@@ -43,6 +42,7 @@ namespace AIWolf.Server
             TcpipServer server = new TcpipServer(port, agentNum, gameSetting);
             server.WaitForConnection();
             AIWolfGame game = new AIWolfGame(gameSetting, server);
+            game.GameLogger = new FileGameLogger(".");
             game.Rand = new Random();
             game.Start();
         }
