@@ -3,26 +3,19 @@
 ## .NET version of AIWolf Library
 
 AIWolf.NET is the AIWolf (artificial intelligence based werewolf) library for .NET.
-The current version 1.0.4 is compatible with AIWolf platform version 0.4.4.
-This version is build on .NET Standard library 1.4
-in order that it can [commonly used](https://docs.microsoft.com/en-us/dotnet/articles/standard/library)
-by .NET Core agent and .NET Framework (4.6.1 and above) agent.
-
+The current version 1.0.6 is compatible with AIWolf platform version 0.4.5.
 
 1. TUTORIALS (sorry, in Japanese)
 
-    1. .NET Framework
-        * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.4版）](https://www.slideshare.net/takots/c-59927842)
-    1. .NET Core
-        * [.NET CoreとVS Codeで作る人狼知能（AIWolf.NET 1.0.4版）](http://www.slideshare.net/takots/net-corevs-code-71808207)
+    1. Visual Studio 2017
+        * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.6版）](https://www.slideshare.net/takots/c-59927842)
+    1. VIsual Studio Code
+        * [.NET CoreとVS Codeで作る人狼知能（AIWolf.NET 1.0.6版）](http://www.slideshare.net/takots/net-corevs-code-71808207)
 
 1. DOWNLOADS
 
-    * Begin with building ClientStarter (recommended) :
-[ClientStarter-1.0.4.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.4/ClientStarter-1.0.4.zip)
-    * Don't build ClientStarter (.NET Framework only) :
-[AIWolf_NET-1.0.4.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.4/AIWolf_NET-1.0.4.zip)
-
+    * ClientStarter :
+[ClientStarter-1.0.6.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.6/ClientStarter-1.0.6.zip)
 
 1. [REFERENCE MANUAL](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.2/AIWolf_NET_ReferenceManual.zip).
 
@@ -35,6 +28,8 @@ by .NET Core agent and .NET Framework (4.6.1 and above) agent.
     * 1.0.2 : Fix AbstractRoleAssignPlayer's creating a new instance of agent every game.
 This brings the great change of AbstractRoleAssignPlayer's usage.
     * 1.0.4 : Rebuilt on .NET Standard library 1.4.
+    * 1.0.6 : Modifications for the coming AIWolfServer library.
+      * Introduce enumeration type Team.
 
 ---
 This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE).

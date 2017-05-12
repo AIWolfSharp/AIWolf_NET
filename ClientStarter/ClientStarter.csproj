@@ -3,12 +3,12 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <AssemblyVersion>1.0.4.0</AssemblyVersion>
-    <FileVersion>1.0.4.0</FileVersion>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
+    <FileVersion>1.0.6.0</FileVersion>
     <Description>The starter for AIWolf client.</Description>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
-    <Version>1.0.4</Version>
+    <Version>1.0.6</Version>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf</RootNamespace>
   </PropertyGroup>
@@ -16,9 +16,8 @@
   <Import Project="..\ClientStarterShared\ClientStarterShared.projitems" Label="Shared" />
 
   <ItemGroup>
-    <PackageReference Include="AIWolfLib" Version="1.0.4" />
-    <PackageReference Include="AIWolfPlayer" Version="1.0.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.1" />
+    <PackageReference Include="AIWolfPlayer" Version="1.0.6" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
