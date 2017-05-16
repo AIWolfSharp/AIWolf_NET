@@ -161,7 +161,7 @@ namespace AIWolf
 #if !NETCOREAPP1_1
                     assembly = Assembly.LoadFrom(dllName);
 #else
-                    assembly = new AssemblyLoader(Path.GetDirectoryName(dllName)).LoadFromAssemblyPath(Path.GetFullPath(dllName));
+                    assembly = new AssemblyLoader(Path.GetDirectoryName(Path.GetFullPath(dllName))).LoadFromAssemblyPath(Path.GetFullPath(dllName));
 #endif
                 }
                 catch (Exception e)
