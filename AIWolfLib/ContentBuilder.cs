@@ -46,7 +46,7 @@ namespace AIWolf.Lib
 
 #if JHELP
     /// <summary>
-    /// Contentクラスビルダーの抽象クラス
+    /// 発話内容クラスビルダーの抽象クラス
     /// </summary>
 #else
     /// <summary>

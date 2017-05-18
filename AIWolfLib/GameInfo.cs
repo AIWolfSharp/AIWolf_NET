@@ -442,9 +442,15 @@ namespace AIWolf.Lib
             set => _lastDeadAgentList = value == null ? new List<int>() : value.Select(a => a.AgentIdx).ToList();
         }
 
+#if JHELP
+        /// <summary>
+        /// GameInfoクラスの新しいインスタンスを初期化する
+        /// </summary>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
+#endif
         public GameInfo()
         {
         }
