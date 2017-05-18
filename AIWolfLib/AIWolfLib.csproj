@@ -14,6 +14,16 @@
     <FileVersion>1.0.6.0</FileVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.4\AIWolfLib.xml</DocumentationFile>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\AIWolfLib.xml</DocumentationFile>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_4;JHELP</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
   </ItemGroup>

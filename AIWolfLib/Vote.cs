@@ -70,12 +70,21 @@ namespace AIWolf.Lib
 #endif
         public Agent Target => Agent.GetAgent(_target);
 
+#if JHELP
+        /// <summary>
+        /// 追放投票情報の新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="day">投票日</param>
+        /// <param name="agent">投票したエージェント</param>
+        /// <param name="target">投票されたエージェント</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
         /// <param name="day">The day of this vote.</param>
         /// <param name="agent">The agent who voted.</param>
         /// <param name="target">The voted agent.</param>
+#endif
         public Vote(int day, Agent agent, Agent target)
         {
             Day = day;

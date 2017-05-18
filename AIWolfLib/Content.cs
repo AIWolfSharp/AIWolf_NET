@@ -16,7 +16,7 @@ namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// Contentクラス
+    /// 発話内容クラス
     /// </summary>
 #else
     /// <summary>

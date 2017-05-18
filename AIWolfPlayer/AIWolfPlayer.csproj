@@ -11,6 +11,15 @@
     <RootNamespace>AIWolf.Player</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.4\AIWolfPlayer.xml</DocumentationFile>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.4\AIWolfPlayer.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AIWolfLib" Version="1.0.6" />
   </ItemGroup>

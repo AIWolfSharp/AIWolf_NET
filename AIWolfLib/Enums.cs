@@ -166,9 +166,15 @@ namespace AIWolf.Lib
 #endif
         WEREWOLF,
 
+#if JHELP
+        /// <summary>
+        /// 第三陣営
+        /// </summary>
+#else
         /// <summary>
         /// The third team.
         /// </summary>
+#endif
         OTHERS
     }
 

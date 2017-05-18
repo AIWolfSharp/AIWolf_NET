@@ -54,7 +54,7 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
-        /// この発話のインデックス番号
+        /// 発話のインデックス
         /// </summary>
 #else
         /// <summary>
@@ -66,7 +66,7 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
-        /// この発話の日
+        /// 発話日
         /// </summary>
 #else
         /// <summary>
@@ -78,7 +78,7 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
-        /// この発話のターン（オプション，未指定の場合-1）
+        /// 発話ターン（オプション，未指定の場合-1）
         /// </summary>
 #else
         /// <summary>
@@ -90,7 +90,7 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
-        /// 発話したエージェント
+        /// 発話エージェント
         /// </summary>
 #else
         /// <summary>
@@ -101,7 +101,7 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
-        /// この発話の内容文字列
+        /// 発話テキスト
         /// </summary>
 #else
         /// <summary>
@@ -111,11 +111,19 @@ namespace AIWolf.Lib
         [DataMember(Name = "text")]
         public string Text { get; }
 
+#if JHELP
+        /// <summary>
+        /// 発話の新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="idx">発話のインデックス</param>
+        /// <param name="day">発話日</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
         /// <param name="idx">The index of this utterance.</param>
         /// <param name="day">The day of this utterance.</param>
+#endif
         protected Utterance(int idx, int day)
         {
             Idx = idx;
@@ -135,17 +143,36 @@ namespace AIWolf.Lib
             }
         }
 
+#if JHELP
+        /// <summary>
+        /// 発話の新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="idx">発話のインデックス</param>
+        /// <param name="day">発話日</param>
+        /// <param name="turn">発話ターン</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
         /// <param name="idx">The index of this utterance.</param>
         /// <param name="day">The day of this utterance.</param>
         /// <param name="turn">The turn of this utterance.</param>
+#endif
         protected Utterance(int idx, int day, int turn) : this(idx, day)
         {
             Turn = turn;
         }
 
+#if JHELP
+        /// <summary>
+        /// 発話の新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="idx">発話のインデックス</param>
+        /// <param name="day">発話日</param>
+        /// <param name="turn">発話ターン</param>
+        /// <param name="agent">発話エージェント</param>
+        /// <param name="text">発話テキスト</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
@@ -154,6 +181,7 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this utterance.</param>
         /// <param name="agent">The agent who uttered.</param>
         /// <param name="text">The text of this utterance.</param>
+#endif
         protected Utterance(int idx, int day, int turn, Agent agent, string text) : this(idx, day, turn)
         {
             if (agent == null)
@@ -170,6 +198,16 @@ namespace AIWolf.Lib
             Text = text;
         }
 
+#if JHELP
+        /// <summary>
+        /// 発話の新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="idx">発話のインデックス</param>
+        /// <param name="day">発話日</param>
+        /// <param name="turn">発話ターン</param>
+        /// <param name="agent">発話エージェント番号</param>
+        /// <param name="text">発話テキスト</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
@@ -178,6 +216,7 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this utterance.</param>
         /// <param name="agent">The index of agent who uttered.</param>
         /// <param name="text">The text of this utterance.</param>
+#endif
         [JsonConstructor]
         protected Utterance(int idx, int day, int turn, int agent, string text) : this(idx, day, turn, Agent.GetAgent(agent), text)
         {
@@ -217,6 +256,16 @@ namespace AIWolf.Lib
         {
         }
 
+#if JHELP
+        /// <summary>
+        /// 会話の新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="idx">この会話のインデックス</param>
+        /// <param name="day">この会話の発話日</param>
+        /// <param name="turn">この会話の発話ターン</param>
+        /// <param name="agent">この会話の発話エージェント</param>
+        /// <param name="text">この会話の発話テキスト</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
@@ -225,6 +274,7 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this talk.</param>
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
+#endif
         public Talk(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
         {
         }
@@ -279,14 +329,25 @@ namespace AIWolf.Lib
         {
         }
 
+#if JHELP
+        /// <summary>
+        /// 囁きの新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="idx">この囁きのインデックス</param>
+        /// <param name="day">この囁きの発話日</param>
+        /// <param name="turn">この囁きの発話ターン</param>
+        /// <param name="agent">この囁きの発話エージェント</param>
+        /// <param name="text">この囁きの発話テキスト</param>
+#else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="idx">The index of this whisper.</param>
-        /// <param name="day">The day of this whisper.</param>
-        /// <param name="turn">The turn of this whisper.</param>
-        /// <param name="agent">The agent who whispered.</param>
-        /// <param name="text">The text of this whisper.</param>
+        /// <param name="idx">The index of this talk.</param>
+        /// <param name="day">The day of this talk.</param>
+        /// <param name="turn">The turn of this talk.</param>
+        /// <param name="agent">The agent who talked.</param>
+        /// <param name="text">The text of this talk.</param>
+#endif
         public Whisper(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
         {
         }

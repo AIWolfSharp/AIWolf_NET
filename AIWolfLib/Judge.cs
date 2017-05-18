@@ -89,6 +89,15 @@ namespace AIWolf.Lib
         [DataMember(Name = "result")]
         string _Result { get; }
 
+#if JHELP
+        /// <summary>
+        /// Judgeクラスの新しいインスタンスを初期化する
+        /// </summary>
+        /// <param name="day">判定の日</param>
+        /// <param name="agent">判定を下したエージェント</param>
+        /// <param name="target">判定されたエージェント</param>
+        /// <param name="result">判定結果</param>
+#else
         /// <summary>
         /// Initializes a new instance of Judge class.
         /// </summary>
@@ -96,6 +105,7 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who judged.</param>
         /// <param name="target">The judged agent.</param>
         /// <param name="result">The result of this judge.</param>
+#endif
         public Judge(int day, Agent agent, Agent target, Species result)
         {
             Day = day;
