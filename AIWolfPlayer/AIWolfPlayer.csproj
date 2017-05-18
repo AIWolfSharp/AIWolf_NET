@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AIWolfLib" Version="1.0.6" />
+    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
   </ItemGroup>
 
 </Project>
