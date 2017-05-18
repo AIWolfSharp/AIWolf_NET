@@ -15,7 +15,7 @@ AIWolf.NETは.NET版人狼知能ライブラリです．
     * クライアントスタータ：
 [ClientStarter-1.0.7.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.7/ClientStarter-1.0.7.zip)
 
-1. リファレンスマニュアルは[こちら](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.7/AIWolf_NET_1.0.7_ReferenceManual_J.zip)
+1. リファレンスマニュアルは[こちら](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.7/AIWolf_NET_1.0.7_ReferenceManual_J.zip)
 からダウンロードしてください．
 
 1. 履歴と変更点

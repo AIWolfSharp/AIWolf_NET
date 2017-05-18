@@ -17,7 +17,7 @@ The current version 1.0.7 is compatible with AIWolf platform version 0.4.6.
     * ClientStarter :
 [ClientStarter-1.0.7.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.7/ClientStarter-1.0.7.zip)
 
-1. [REFERENCE MANUAL](https://github.com/AIWolfSharp/AIWolfCore/releases/download/v1.0.7/AIWolf_NET_1.0.7_ReferenceManual_E.zip).
+1. [REFERENCE MANUAL](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.7/AIWolf_NET_1.0.7_ReferenceManual_E.zip).
 
 1. HISTORY and CHANGES
 
