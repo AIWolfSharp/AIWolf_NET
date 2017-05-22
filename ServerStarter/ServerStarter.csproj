@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RuntimeIdentifiers>centos.7-x64;fedora.24-x64;win10-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
