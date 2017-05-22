@@ -2,7 +2,7 @@
   "profiles": {
     "ServerStarter": {
       "commandName": "Project",
-      "commandLineArgs": "-n 5"
+      "commandLineArgs": "-cl -l log -g 100 -n 15"
     }
   }
 }
