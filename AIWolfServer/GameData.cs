@@ -221,7 +221,7 @@ namespace AIWolf.Server
                     gameInfo.AttackedAgent = DayBefore.Attacked;
                     gameInfo.AttackVoteList = DayBefore.AttackVoteList;
                 }
-                gameInfo.GuardedAgent = agent == null || role == Role.BODYGUARD ? DayBefore.Guard.Target : null;
+                gameInfo.GuardedAgent = (agent == null || role == Role.BODYGUARD) && DayBefore.Guard != null ? DayBefore.Guard.Target : null;
                 gameInfo.CursedFox = agent == null ? DayBefore.CursedFox : null;
             }
 
