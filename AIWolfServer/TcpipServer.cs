@@ -9,6 +9,7 @@
 
 using AIWolf.Lib;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -85,7 +86,9 @@ namespace AIWolf.Server
             Port = port;
             Limit = limit;
             TimeLimit = GameSetting.TimeLimit != -1 ? GameSetting.TimeLimit : 1000;
-            ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
+            //ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
+            ILoggerFactory loggerFactory = new LoggerFactory();
+            loggerFactory.AddProvider(new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Critical, true));
             serverLogger = loggerFactory.CreateLogger(GetType().ToString());
         }
 
