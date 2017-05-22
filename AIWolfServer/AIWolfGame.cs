@@ -397,7 +397,7 @@ namespace AIWolf.Server
 
         void Night()
         {
-            foreach (Agent agent in AgentList)
+            foreach (Agent agent in AliveAgentList)
             {
                 GameServer.DayFinish(agent);
             }
