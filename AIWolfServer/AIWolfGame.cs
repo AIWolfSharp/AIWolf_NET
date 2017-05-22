@@ -737,7 +737,7 @@ namespace AIWolf.Server
             foreach (Agent agent in AliveAgentList)
             {
                 Agent target = GameServer.RequestVote(agent);
-                if (StatusOf(target) == Status.DEAD || target == null || agent == target)
+                if (target == null || StatusOf(target) == Status.DEAD || agent == target)
                 {
                     target = AliveAgentList.Where(a => a != agent).Shuffle().First();
                 }
@@ -757,7 +757,7 @@ namespace AIWolf.Server
             {
                 Agent target = GameServer.RequestDivineTarget(agent);
                 Role targetRole = RoleOf(target);
-                if (StatusOf(target) == Status.DEAD || target == null || targetRole == Role.UNC)
+                if (target == null || StatusOf(target) == Status.DEAD || targetRole == Role.UNC)
                 {
                     // Do nothing.
                 }
@@ -806,8 +806,8 @@ namespace AIWolf.Server
             }
         }
 
-        Role RoleOf(Agent agent) => GameData.RoleMap[agent];
-        Status StatusOf(Agent agent) => GameData.StatusMap[agent];
+        Role RoleOf(Agent agent) => agent == null ? Role.UNC : GameData.RoleMap[agent];
+        Status StatusOf(Agent agent) => agent == null ? Status.UNC : GameData.StatusMap[agent];
 
         void AttackVote()
         {
@@ -815,7 +815,7 @@ namespace AIWolf.Server
             foreach (Agent agent in AliveWolfList)
             {
                 Agent target = GameServer.RequestAttackTarget(agent);
-                if (StatusOf(target) == Status.DEAD || RoleOf(target) == Role.WEREWOLF || target == null)
+                if (target == null || StatusOf(target) == Status.DEAD || RoleOf(target) == Role.WEREWOLF)
                 {
                     // Do nothing.
                 }
