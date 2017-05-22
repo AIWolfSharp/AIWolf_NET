@@ -52,7 +52,7 @@ namespace AIWolf.Server
         /// Whether or not the console logs are shown.
         /// </summary>
 #endif
-        bool ShowConsoleLog { get; set; } = true;
+        public bool ShowConsoleLog { get; set; } = true;
 
 #if JHELP
         /// <summary>
