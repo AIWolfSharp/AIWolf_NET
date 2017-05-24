@@ -8,10 +8,9 @@
 //
 
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization;
 
 namespace AIWolf.Lib
 {
@@ -24,72 +23,8 @@ namespace AIWolf.Lib
     /// The settings of the game.
     /// </summary>
 #endif
-    [DataContract]
     public class GameSetting
     {
-        /// <summary>
-        /// The number of agents acting as each role.
-        /// </summary>
-        static readonly Dictionary<int, Dictionary<Role, int>> defaultRoleNumMap = new Dictionary<int, Dictionary<Role, int>>()
-        {
-            {  3, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  1 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  4, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  2 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  5, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  2 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  6, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  3 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  7, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  8, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  9, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 10, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 11, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 12, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 13, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  6 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 14, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  7 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 15, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  8 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 16, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  9 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 17, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER, 10 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 18, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER, 11 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } }
-        };
-
-#if JHELP
-        /// <summary>
-        /// デフォルトのゲーム設定を返す
-        /// </summary>
-        /// <param name="agentNum">エージェント数</param>
-        /// <returns>エージェント数におけるデフォルト設定</returns>
-#else
-        /// <summary>
-        /// Returns the default GameSetting.
-        /// </summary>
-        /// <param name="agentNum">The number of agents.</param>
-        /// <returns>The default GameSetting for the given number of agents.</returns>
-#endif
-        public static GameSetting GetDefaultGameSetting(int agentNum)
-        {
-            if (!defaultRoleNumMap.ContainsKey(agentNum))
-            {
-                throw new ArgumentException("Invalid agentNum in GetDefaultGameSetting(agentNum).");
-            }
-            return new GameSetting()
-            {
-                RoleNumMap = defaultRoleNumMap[agentNum],
-                MaxTalk = 10,
-                MaxTalkTurn = 20,
-                MaxWhisper = 10,
-                MaxWhisperTurn = 20,
-                MaxSkip = 2,
-                EnableNoAttack = false,
-                VoteVisible = true,
-                VotableOnFirstDay = false,
-                EnableNoExecution = false,
-                TalkOnFirstDay = false,
-                ValidateUtterance = true,
-                WhisperBeforeRevote = false,
-                TimeLimit = -1,
-                MaxRevote = 1,
-                MaxAttackRevote = 1,
-            };
-        }
-
 #if JHELP
         /// <summary>
         /// 各役職の人数
@@ -99,8 +34,7 @@ namespace AIWolf.Lib
         /// The number of each role.
         /// </summary>
 #endif
-        [DataMember(Name = "roleNumMap")]
-        public Dictionary<Role, int> RoleNumMap { get; set; }
+        public IDictionary<Role, int> RoleNumMap { get; }
 
 #if JHELP
         /// <summary>
@@ -111,8 +45,7 @@ namespace AIWolf.Lib
         /// The maximum number of talks.
         /// </summary>
 #endif
-        [DataMember(Name = "maxTalk")]
-        public int MaxTalk { get; set; }
+        public int MaxTalk { get; }
 
 #if JHELP
         /// <summary>
@@ -123,8 +56,7 @@ namespace AIWolf.Lib
         /// The maximum number of turns of talk.
         /// </summary>
 #endif
-        [DataMember(Name = "maxTalkTurn")]
-        public int MaxTalkTurn { get; set; }
+        public int MaxTalkTurn { get; }
 
 #if JHELP
         /// <summary>
@@ -135,8 +67,7 @@ namespace AIWolf.Lib
         /// The maximum number of whispers a day.
         /// </summary>
 #endif
-        [DataMember(Name = "maxWhisper")]
-        public int MaxWhisper { get; set; }
+        public int MaxWhisper { get; }
 
 #if JHELP
         /// <summary>
@@ -147,8 +78,7 @@ namespace AIWolf.Lib
         /// The maximum number of turns of whisper.
         /// </summary>
 #endif
-        [DataMember(Name = "maxWhisperTurn")]
-        public int MaxWhisperTurn { get; set; }
+        public int MaxWhisperTurn { get; }
 
 #if JHELP
         /// <summary>
@@ -159,8 +89,7 @@ namespace AIWolf.Lib
         /// The maximum permissible length of the succession of SKIPs.
         /// </summary>
 #endif
-        [DataMember(Name = "maxSkip")]
-        public int MaxSkip { get; set; }
+        public int MaxSkip { get; }
 
 #if JHELP
         /// <summary>
@@ -171,8 +100,7 @@ namespace AIWolf.Lib
         /// The maximum number of revotes.
         /// </summary>
 #endif
-        [DataMember(Name = "maxRevote")]
-        public int MaxRevote { get; set; }
+        public int MaxRevote { get; }
 
 #if JHELP
         /// <summary>
@@ -183,8 +111,7 @@ namespace AIWolf.Lib
         /// The maximum number of revotes for attack.
         /// </summary>
 #endif
-        [DataMember(Name = "maxAttackRevote")]
-        public int MaxAttackRevote { get; set; }
+        public int MaxAttackRevote { get; }
 
 #if JHELP
         /// <summary>
@@ -195,8 +122,7 @@ namespace AIWolf.Lib
         /// Whether or not the game permit to attack no one.
         /// </summary>
 #endif
-        [DataMember(Name = "enableNoAttack")]
-        public bool EnableNoAttack { get; set; }
+        public bool EnableNoAttack { get; }
 
 #if JHELP
         /// <summary>
@@ -207,8 +133,7 @@ namespace AIWolf.Lib
         /// Whether or not agent can see who vote to who.
         /// </summary>
 #endif
-        [DataMember(Name = "voteVisible")]
-        public bool VoteVisible { get; set; }
+        public bool VoteVisible { get; }
 
 #if JHELP
         /// <summary>
@@ -219,8 +144,7 @@ namespace AIWolf.Lib
         /// Whether or not there is vote on the first day.
         /// </summary>
 #endif
-        [DataMember(Name = "votableInFirstDay")]
-        public bool VotableOnFirstDay { get; set; }
+        public bool VotableOnFirstDay { get; }
 
 #if JHELP
         /// <summary>
@@ -231,8 +155,7 @@ namespace AIWolf.Lib
         /// Whether or not executing nobody is allowed.
         /// </summary>
 #endif
-        [DataMember(Name = "enableNoExecution")]
-        public bool EnableNoExecution { get; set; }
+        public bool EnableNoExecution { get; }
 
 #if JHELP
         /// <summary>
@@ -243,8 +166,7 @@ namespace AIWolf.Lib
         /// Whether or not there are talks on the first day.
         /// </summary>
 #endif
-        [DataMember(Name = "talkOnFirstDay")]
-        public bool TalkOnFirstDay { get; set; }
+        public bool TalkOnFirstDay { get; }
 
 #if JHELP
         /// <summary>
@@ -255,8 +177,7 @@ namespace AIWolf.Lib
         /// Whether or not the uttered text is validated.
         /// </summary>
 #endif
-        [DataMember(Name = "validateUtterance")]
-        public bool ValidateUtterance { get; set; }
+        public bool ValidateUtterance { get; }
 
 #if JHELP
         /// <summary>
@@ -267,8 +188,7 @@ namespace AIWolf.Lib
         /// Whether or not werewolf can whisper before the revote for attack.
         /// </summary>
 #endif
-        [DataMember(Name = "whisperBeforeRevote")]
-        public bool WhisperBeforeRevote { get; set; }
+        public bool WhisperBeforeRevote { get; }
 
 #if JHELP
         /// <summary>
@@ -279,8 +199,7 @@ namespace AIWolf.Lib
         /// The random seed.
         /// </summary>
 #endif
-        [DataMember(Name = "randomSeed")]
-        public long RandomSeed { get; set; }
+        public long RandomSeed { get; }
 
 #if JHELP
         /// <summary>
@@ -291,8 +210,7 @@ namespace AIWolf.Lib
         /// The upper limit for the response time to the request.
         /// </summary>
 #endif
-        [DataMember(Name = "timeLimit")]
-        public int TimeLimit { get; set; }
+        public int TimeLimit { get; }
 
 #if JHELP
         /// <summary>
@@ -303,19 +221,7 @@ namespace AIWolf.Lib
         /// The number of players.
         /// </summary>
 #endif
-        [DataMember(Name = "playerNum")]
-        public int PlayerNum
-        {
-            get
-            {
-                return RoleNumMap == null ? 0 : RoleNumMap.Values.Sum();
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance.
-        /// </summary>
-        GameSetting() { }
+        public int PlayerNum { get; }
 
         /// <summary>
         /// Initializes a new instance.
@@ -326,7 +232,7 @@ namespace AIWolf.Lib
             bool voteVisible, bool votableInFirstDay, bool enableNoExecution, bool talkOnFirstDay,
             bool validateUtterance, bool whisperBeforeRevote, long randomSeed, int timeLimit)
         {
-            RoleNumMap = roleNumMap;
+            RoleNumMap = roleNumMap == null ? new ReadOnlyDictionary<Role, int>(new Dictionary<Role, int>()) : new ReadOnlyDictionary<Role, int>(roleNumMap);
             MaxTalk = maxTalk;
             MaxTalkTurn = maxTalkTurn;
             MaxWhisper = maxWhisper;
@@ -343,6 +249,7 @@ namespace AIWolf.Lib
             WhisperBeforeRevote = whisperBeforeRevote;
             RandomSeed = randomSeed;
             TimeLimit = timeLimit;
+            PlayerNum = RoleNumMap.Values.Sum();
         }
     }
 }
