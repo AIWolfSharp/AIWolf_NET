@@ -25,7 +25,7 @@ namespace AIWolf.Lib
     /// Converts object into JSON string and vice versa.
     /// </summary>
 #endif
-    public static class DataConverter
+    static class DataConverter
     {
         static JsonSerializerSettings serializerSetting;
 
