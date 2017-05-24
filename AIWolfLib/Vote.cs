@@ -28,13 +28,13 @@ namespace AIWolf.Lib
         /// The index number of the agent who voted.
         /// </summary>
         [DataMember(Name = "agent")]
-        int _agent;
+        int _Agent { get; }
 
         /// <summary>
         /// The index number of the voted agent.
         /// </summary>
         [DataMember(Name = "target")]
-        int _target;
+        int _Target { get; }
 
 #if JHELP
         /// <summary>
@@ -57,7 +57,7 @@ namespace AIWolf.Lib
         /// The agent who voted.
         /// </summary>
 #endif
-        public Agent Agent => Agent.GetAgent(_agent);
+        public Agent Agent { get; }
 
 #if JHELP
         /// <summary>
@@ -68,7 +68,7 @@ namespace AIWolf.Lib
         /// The voted agent.
         /// </summary>
 #endif
-        public Agent Target => Agent.GetAgent(_target);
+        public Agent Target { get; }
 
 #if JHELP
         /// <summary>
@@ -99,22 +99,26 @@ namespace AIWolf.Lib
             {
                 Error.RuntimeError("Agent must not be null.");
                 Error.Warning("Force it to be Agent[00].");
-                _agent = 0;
+                Agent = Agent.GetAgent(0);
+                _Agent = 0;
             }
             else
             {
-                _agent = agent.AgentIdx;
+                Agent = agent;
+                _Agent = Agent.AgentIdx;
             }
 
             if (target == null)
             {
                 Error.RuntimeError("Target must not be null.");
                 Error.Warning("Force it to be Agent[00].");
-                _target = 0;
+                Target = Agent.GetAgent(0);
+                _Target = 0;
             }
             else
             {
-                _target = target.AgentIdx;
+                Target = target;
+                _Target = Target.AgentIdx;
             }
         }
 
@@ -140,9 +144,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return Agent + "voted" + Target + "@" + Day;
-        }
+        public override string ToString() => Agent + "voted" + Target + "@" + Day;
     }
 }
