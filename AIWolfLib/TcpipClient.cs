@@ -32,15 +32,11 @@ namespace AIWolf.Lib
         int timeout;
         Role requestRole;
         string playerName;
-
         bool running = false;
         TcpClient tcpClient;
         IPlayer player;
         GameInfo gameInfo;
         GameInfo lastGameInfo;
-        int day = -1;
-        Dictionary<int, List<Talk>> dayTalkMap = new Dictionary<int, List<Talk>>();
-        Dictionary<int, List<Whisper>> dayWhisperMap = new Dictionary<int, List<Whisper>>();
 
 #if JHELP
         /// <summary>
@@ -109,7 +105,7 @@ namespace AIWolf.Lib
                         {
                             sw.WriteLine(obj);
                         }
-                        else
+                        else // Maybe obj is Agent.
                         {
                             sw.WriteLine(DataConverter.Serialize(obj));
                         }
@@ -142,16 +138,6 @@ namespace AIWolf.Lib
             if (packet.GameInfo != null)
             {
                 gameInfo = packet.GameInfo;
-                if (gameInfo.Day == day + 1) // New day.
-                {
-                    if (gameInfo.Day > 0)
-                    {
-                        // Save yesterday's talks/whispers.
-                        dayTalkMap[day] = lastGameInfo.TalkList;
-                        dayWhisperMap[day] = lastGameInfo.WhisperList;
-                    }
-                    day = gameInfo.Day;
-                }
                 lastGameInfo = gameInfo;
             }
             else
@@ -161,22 +147,24 @@ namespace AIWolf.Lib
 
             if (packet.TalkHistory != null)
             {
-                foreach (var t in packet.TalkHistory)
+                foreach (Talk t in packet.TalkHistory)
                 {
                     if (IsNew(t))
                     {
-                        gameInfo.TalkList.Add(t);
+                        // 読み込み専用のTalkListプロパティの背後にあるtalkListフィールドに追加
+                        gameInfo.AddTalk(t);
                     }
                 }
             }
 
             if (packet.WhisperHistory != null)
             {
-                foreach (var w in packet.WhisperHistory)
+                foreach (Whisper w in packet.WhisperHistory)
                 {
                     if (IsNew(w))
                     {
-                        gameInfo.WhisperList.Add(w);
+                        // 読み込み専用のWhisperListプロパティの背後にあるwhisperListフィールドに追加
+                        gameInfo.AddWhisper(w);
                     }
                 }
             }
@@ -268,9 +256,6 @@ namespace AIWolf.Lib
                         player.Update(gameInfo);
                         player.Finish();
                         running = false;
-                        day = -1;
-                        dayTalkMap.Clear();
-                        dayWhisperMap.Clear();
                         break;
                     default:
                         break;
