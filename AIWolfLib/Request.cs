@@ -18,7 +18,7 @@ namespace AIWolf.Lib
     /// Enumeration type for requests.
     /// </summary>
 #endif
-    public enum Request
+    enum Request
     {
 #if JHELP
         /// <summary>
@@ -201,9 +201,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="request">Request.</param>
         /// <returns>True if the request waits for return value, otherwise, false.</returns>
-        public static bool HasReturn(this Request request)
-        {
-            return ((int)request > 10);
-        }
+        public static bool HasReturn(this Request request) => ((int)request > 10);
     }
 }
