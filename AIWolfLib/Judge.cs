@@ -152,17 +152,8 @@ namespace AIWolf.Lib
         /// <param name="target">The index of judged agent.</param>
         /// <param name="result">The result of this judge.</param>
         [JsonConstructor]
-        Judge(int day, int agent, int target, string result) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), Species.HUMAN)
+        Judge(int day, int agent, int target, string result) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), (Species)Enum.Parse(typeof(Species), result))
         {
-            Species r;
-            if (!Enum.TryParse(result, out r) || r == Species.UNC)
-            {
-                Error.RuntimeError("Invalid result string " + result + ".");
-                r = Species.HUMAN;
-                Error.Warning("Force it to be " + r + ".");
-            }
-            Result = r;
-            _Result = r.ToString();
         }
 
 #if JHELP
@@ -176,9 +167,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return Agent + "->" + Target + "@" + Day + ":" + Result;
-        }
+        public override string ToString() => Agent + "->" + Target + "@" + Day + ":" + Result;
     }
 }
