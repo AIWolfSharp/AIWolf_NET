@@ -147,28 +147,28 @@ namespace AIWolf.Server
             try
             {
                 string message;
-                if (request == Lib.Request.DAILY_INITIALIZE || request == Lib.Request.INITIALIZE)
+                if (request == Server.Request.DAILY_INITIALIZE || request == Server.Request.INITIALIZE)
                 {
                     lastTalkIdxMap.Clear();
                     lastWhisperIdxMap.Clear();
                     message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent), GameSetting));
                 }
-                else if (request == Lib.Request.NAME || request == Lib.Request.ROLE)
+                else if (request == Server.Request.NAME || request == Server.Request.ROLE)
                 {
                     message = DataConverter.Serialize(new Packet(request));
                 }
-                else if (request != Lib.Request.FINISH)
+                else if (request != Server.Request.FINISH)
                 {
-                    if (request == Lib.Request.VOTE && GameData.LatestVoteList.Count != 0)
+                    if (request == Server.Request.VOTE && GameData.LatestVoteList.Count != 0)
                     {
                         message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent)));
                     }
-                    else if (request == Lib.Request.ATTACK && GameData.LatestAttackVoteList.Count != 0)
+                    else if (request == Server.Request.ATTACK && GameData.LatestAttackVoteList.Count != 0)
                     {
                         message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent)));
                     }
-                    else if (GameData.Executed != null && (request == Lib.Request.DIVINE || request == Lib.Request.GUARD
-                        || request == Lib.Request.WHISPER || request == Lib.Request.ATTACK))
+                    else if (GameData.Executed != null && (request == Server.Request.DIVINE || request == Server.Request.GUARD
+                        || request == Server.Request.WHISPER || request == Server.Request.ATTACK))
                     {
                         message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent)));
                     }
@@ -224,11 +224,11 @@ namespace AIWolf.Server
                 {
                     line = null;
                 }
-                if (request == Lib.Request.NAME || request == Lib.Request.ROLE)
+                if (request == Server.Request.NAME || request == Server.Request.ROLE)
                 {
                     return line;
                 }
-                else if (request == Lib.Request.TALK || request == Lib.Request.WHISPER)
+                else if (request == Server.Request.TALK || request == Server.Request.WHISPER)
                 {
                     if (GameSetting.ValidateUtterance)
                     {
@@ -239,7 +239,7 @@ namespace AIWolf.Server
                         return line;
                     }
                 }
-                else if (request == Lib.Request.ATTACK || request == Lib.Request.DIVINE || request == Lib.Request.GUARD || request == Lib.Request.VOTE)
+                else if (request == Server.Request.ATTACK || request == Server.Request.DIVINE || request == Server.Request.GUARD || request == Server.Request.VOTE)
                 {
                     if (line == null) return null;
                     Match m = regexToAgent.Match(line);
@@ -264,24 +264,24 @@ namespace AIWolf.Server
 
         public void Init(Agent agent)
         {
-            Send(agent, Lib.Request.INITIALIZE);
+            Send(agent, Server.Request.INITIALIZE);
         }
 
         public void DayStart(Agent agent)
         {
-            Send(agent, Lib.Request.DAILY_INITIALIZE);
+            Send(agent, Server.Request.DAILY_INITIALIZE);
         }
 
         public void DayFinish(Agent agent)
         {
-            Send(agent, Lib.Request.DAILY_FINISH);
+            Send(agent, Server.Request.DAILY_FINISH);
         }
 
         public string RequestName(Agent agent)
         {
             if (!nameMap.ContainsKey(agent))
             {
-                nameMap[agent] = (string)Request(agent, Lib.Request.NAME);
+                nameMap[agent] = (string)Request(agent, Server.Request.NAME);
             }
             return nameMap[agent];
         }
@@ -289,7 +289,7 @@ namespace AIWolf.Server
         public Role RequestRequestRole(Agent agent)
         {
             Role role;
-            if (Enum.TryParse<Role>((string)Request(agent, Lib.Request.ROLE), out role))
+            if (Enum.TryParse<Role>((string)Request(agent, Server.Request.ROLE), out role))
             {
                 return role;
             }
@@ -298,37 +298,37 @@ namespace AIWolf.Server
 
         public string RequestTalk(Agent agent)
         {
-            return (string)Request(agent, Lib.Request.TALK);
+            return (string)Request(agent, Server.Request.TALK);
         }
 
         public string RequestWhisper(Agent agent)
         {
-            return (string)Request(agent, Lib.Request.WHISPER);
+            return (string)Request(agent, Server.Request.WHISPER);
         }
 
         public Agent RequestVote(Agent agent)
         {
-            return (Agent)Request(agent, Lib.Request.VOTE);
+            return (Agent)Request(agent, Server.Request.VOTE);
         }
 
         public Agent RequestDivineTarget(Agent agent)
         {
-            return (Agent)Request(agent, Lib.Request.DIVINE);
+            return (Agent)Request(agent, Server.Request.DIVINE);
         }
 
         public Agent RequestGuardTarget(Agent agent)
         {
-            return (Agent)Request(agent, Lib.Request.GUARD);
+            return (Agent)Request(agent, Server.Request.GUARD);
         }
 
         public Agent RequestAttackTarget(Agent agent)
         {
-            return (Agent)Request(agent, Lib.Request.ATTACK);
+            return (Agent)Request(agent, Server.Request.ATTACK);
         }
 
         public void Finish(Agent agent)
         {
-            Send(agent, Lib.Request.FINISH);
+            Send(agent, Server.Request.FINISH);
         }
 
         public void Close()
