@@ -39,9 +39,6 @@ namespace AIWolf.Lib
         /// <param name="s">IEnumerable of T.</param>
         /// <returns>Shuffled IEnumerable of T.</returns>
 #endif
-        public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> s)
-        {
-            return s.OrderBy(x => Guid.NewGuid());
-        }
+        public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> s) => s.OrderBy(x => Guid.NewGuid());
     }
 }
