@@ -144,7 +144,7 @@ namespace AIWolf.Lib
         /// The list of the operands in the Content.
         /// </summary>
 #endif
-        public List<Content> ContentList { get; }
+        public IList<Content> ContentList { get; }
 
 #if JHELP
         /// <summary>
@@ -157,7 +157,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="content">Original content.</param>
 #endif
-        public Content(Content content)
+        internal Content(Content content)
         {
             Text = content.Text;
             Topic = content.Topic;
