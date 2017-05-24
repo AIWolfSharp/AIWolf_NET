@@ -46,14 +46,14 @@ namespace AIWolf.Lib
 
 #if JHELP
     /// <summary>
-    /// 発話内容クラスビルダーの抽象クラス
+    /// 発話内容クラスビルダー
     /// </summary>
 #else
     /// <summary>
     /// Abstract class of the builder for Content class.
     /// </summary>
 #endif
-    public abstract class ContentBuilder
+    public class ContentBuilder
     {
 #if JHELP
         /// <summary>
@@ -64,7 +64,7 @@ namespace AIWolf.Lib
         /// The text representation of the Content.
         /// </summary>
 #endif
-        internal abstract string Text { get; }
+        internal string Text { get; set; }
 
 #if JHELP
         /// <summary>
@@ -152,7 +152,7 @@ namespace AIWolf.Lib
         /// The list of the operands in the Content.
         /// </summary>
 #endif
-        internal List<Content> ContentList { get; set; }
+        internal IList<Content> ContentList { get; set; }
     }
 
 #if JHELP
@@ -192,19 +192,7 @@ namespace AIWolf.Lib
             {
                 Utterance = new Whisper(talkID, talkDay);
             }
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                string talkType = "TALK";
-                if (Utterance is Whisper)
-                {
-                    talkType = "WHISPER";
-                }
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), talkType, "day" + Utterance.Day, "ID:" + Utterance.Idx }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), utteranceType.ToString(), "day" + Utterance.Day, "ID:" + Utterance.Idx }).Trim();
         }
     }
 
@@ -245,19 +233,7 @@ namespace AIWolf.Lib
             {
                 Utterance = new Whisper(talkID, talkDay);
             }
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                string talkType = "TALK";
-                if (Utterance is Whisper)
-                {
-                    talkType = "WHISPER";
-                }
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), talkType, "day" + Utterance.Day, "ID:" + Utterance.Idx }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), utteranceType.ToString(), "day" + Utterance.Day, "ID:" + Utterance.Idx }).Trim();
         }
     }
 
@@ -287,14 +263,7 @@ namespace AIWolf.Lib
         {
             Topic = Topic.ATTACK;
             Target = target;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -324,14 +293,7 @@ namespace AIWolf.Lib
         {
             Topic = Topic.DIVINATION;
             Target = target;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -361,14 +323,7 @@ namespace AIWolf.Lib
         {
             Topic = Topic.GUARD;
             Target = target;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -398,14 +353,7 @@ namespace AIWolf.Lib
         {
             Topic = Topic.GUARDED;
             Target = target;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -435,14 +383,7 @@ namespace AIWolf.Lib
         {
             Topic = Topic.VOTE;
             Target = target;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -475,14 +416,7 @@ namespace AIWolf.Lib
             Topic = Topic.COMINGOUT;
             Target = target;
             Role = role;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
         }
     }
 
@@ -515,14 +449,7 @@ namespace AIWolf.Lib
             Topic = Topic.ESTIMATE;
             Target = target;
             Role = role;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
         }
     }
 
@@ -555,14 +482,7 @@ namespace AIWolf.Lib
             Topic = Topic.DIVINED;
             Target = target;
             Result = result;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
         }
     }
 
@@ -595,14 +515,7 @@ namespace AIWolf.Lib
             Topic = Topic.IDENTIFIED;
             Target = target;
             Result = result;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
         }
     }
 
@@ -634,19 +547,15 @@ namespace AIWolf.Lib
         {
             Topic = Topic.OPERATOR;
             Operator = Operator.REQUEST;
-            Content cloneContent = new Content(content);
-            cloneContent.Subject = agent;
-            cloneContent.Text = string.Join(" ", new string[] { agent == null ? "" : agent.ToString(), content.Text }).Trim();
-            ContentList = new List<Content>();
-            ContentList.Add(cloneContent);
-        }
-
-        internal override string Text
-        {
-            get
+            ContentList = new List<Content>
             {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Operator + "(" + ContentList[0].Text + ")" }).Trim();
-            }
+                new Content(content)
+                {
+                    Subject = agent,
+                    Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), content.Text }).Trim()
+                }
+            }.AsReadOnly();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Operator + "(" + ContentList[0].Text + ")" }).Trim();
         }
     }
 
@@ -673,14 +582,7 @@ namespace AIWolf.Lib
         public SkipContentBuilder()
         {
             Topic = Topic.Skip;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Utterance.SKIP }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Utterance.SKIP }).Trim();
         }
     }
 
@@ -707,14 +609,7 @@ namespace AIWolf.Lib
         public OverContentBuilder()
         {
             Topic = Topic.Over;
-        }
-
-        internal override string Text
-        {
-            get
-            {
-                return string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Utterance.OVER }).Trim();
-            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Utterance.OVER }).Trim();
         }
     }
 }
