@@ -33,7 +33,7 @@ namespace AIWolf.Lib
         /// There is nothing to utter.
         /// </summary>
 #endif
-        public const string OVER = "Over";
+        public static readonly string OVER = "Over";
 
 #if JHELP
         /// <summary>
@@ -44,13 +44,13 @@ namespace AIWolf.Lib
         /// Skip this turn though there is something to utter.
         /// </summary>
 #endif
-        public const string SKIP = "Skip";
+        public static readonly string SKIP = "Skip";
 
         /// <summary>
         /// The index number of the agent who uttered.
         /// </summary>
         [DataMember(Name = "agent")]
-        int _agent;
+        int _Agent { get; } = -1;
 
 #if JHELP
         /// <summary>
@@ -97,7 +97,7 @@ namespace AIWolf.Lib
         /// The agent who uttered.
         /// </summary>
 #endif
-        public Agent Agent => Agent.GetAgent(_agent);
+        public Agent Agent { get; }
 
 #if JHELP
         /// <summary>
@@ -117,14 +117,16 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="idx">発話のインデックス</param>
         /// <param name="day">発話日</param>
+        /// <param name="turn">発話ターン</param>
 #else
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
         /// <param name="idx">The index of this utterance.</param>
         /// <param name="day">The day of this utterance.</param>
+        /// <param name="turn">The turn of this utterance.</param>
 #endif
-        protected Utterance(int idx, int day)
+        protected Utterance(int idx = 0, int day = 0, int turn = -1)
         {
             Idx = idx;
             if (Idx < 0)
@@ -141,25 +143,6 @@ namespace AIWolf.Lib
                 Day = 0;
                 Error.Warning("Force it to be " + Day + ".");
             }
-        }
-
-#if JHELP
-        /// <summary>
-        /// 発話の新しいインスタンスを初期化する
-        /// </summary>
-        /// <param name="idx">発話のインデックス</param>
-        /// <param name="day">発話日</param>
-        /// <param name="turn">発話ターン</param>
-#else
-        /// <summary>
-        /// Initializes a new instance of this class.
-        /// </summary>
-        /// <param name="idx">The index of this utterance.</param>
-        /// <param name="day">The day of this utterance.</param>
-        /// <param name="turn">The turn of this utterance.</param>
-#endif
-        protected Utterance(int idx, int day, int turn) : this(idx, day)
-        {
             Turn = turn;
         }
 
@@ -187,12 +170,14 @@ namespace AIWolf.Lib
             if (agent == null)
             {
                 Error.RuntimeError("Agent must not be null.");
-                _agent = 0;
+                Agent = Agent.GetAgent(0);
+                _Agent = 0;
                 Error.Warning("Force it to be " + Agent + ".");
             }
             else
             {
-                _agent = agent.AgentIdx;
+                Agent = agent;
+                _Agent = Agent.AgentIdx;
             }
 
             Text = text;
@@ -303,10 +288,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return string.Format("Talk: Day{0:D2} {1:D2}[{2:D3}]\t{3}\t{4}", Day, Turn, Idx, Agent, Text);
-        }
+        public override string ToString() => string.Format("Talk: Day{0:D2} {1:D2}[{2:D3}]\t{3}\t{4}", Day, Turn, Idx, Agent, Text);
     }
 
 #if JHELP
@@ -376,10 +358,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return string.Format("Whisper: Day{0:D2} {1:D2}[{2:D3}]\t{3}\t{4}", Day, Turn, Idx, Agent, Text);
-        }
+        public override string ToString() => string.Format("Whisper: Day{0:D2} {1:D2}[{2:D3}]\t{3}\t{4}", Day, Turn, Idx, Agent, Text);
     }
-
 }
