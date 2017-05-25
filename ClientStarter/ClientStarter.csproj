@@ -14,8 +14,6 @@
     <RuntimeIdentifiers>centos.7-x64;fedora.24-x64;win10-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
-  <Import Project="..\ClientStarterShared\ClientStarterShared.projitems" Label="Shared" />
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
