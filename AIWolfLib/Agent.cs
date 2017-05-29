@@ -69,10 +69,7 @@ namespace AIWolf.Lib
         /// Initializes a new instance of Agent class with given index number.
         /// </summary>
         /// <param name="idx">The index number of this agent.</param>
-        Agent(int idx)
-        {
-            AgentIdx = idx;
-        }
+        Agent(int idx) => AgentIdx = idx;
 
 #if JHELP
         /// <summary>
@@ -85,9 +82,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return string.Format("Agent[{0:00}]", AgentIdx);
-        }
+        public override string ToString() => $"Agent[{AgentIdx:00}]";
     }
 }
