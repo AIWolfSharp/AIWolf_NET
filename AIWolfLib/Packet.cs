@@ -88,10 +88,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="request">Request given.</param>
 #endif
-        public Packet(Request request)
-        {
-            Request = request;
-        }
+        public Packet(Request request) => Request = request;
 
 #if JHELP
         /// <summary>
@@ -106,10 +103,7 @@ namespace AIWolf.Lib
         /// <param name="request">Request given.</param>
         /// <param name="gameInfo">Game information given.</param>
 #endif
-        public Packet(Request request, GameInfo gameInfo) : this(request)
-        {
-            GameInfo = gameInfo;
-        }
+        public Packet(Request request, GameInfo gameInfo) : this(request) => GameInfo = gameInfo;
 
 #if JHELP
         /// <summary>
@@ -126,10 +120,7 @@ namespace AIWolf.Lib
         /// <param name="gameInfo">Game information given.</param>
         /// <param name="gameSetting">GameSetting representation of setting of game given.</param>
 #endif
-        public Packet(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo)
-        {
-            GameSetting = gameSetting;
-        }
+        public Packet(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo) => GameSetting = gameSetting;
 
 #if JHELP
         /// <summary>
