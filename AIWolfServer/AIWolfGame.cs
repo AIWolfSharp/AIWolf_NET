@@ -243,9 +243,9 @@ namespace AIWolf.Server
             {
                 foreach (Agent agent in OrderedAgentList)
                 {
-                    GameLogger.Log(string.Format("{0},status,{1},{2},{3},{4}", Day, agent.AgentIdx, RoleOf(agent), StatusOf(agent), AgentNameMap[agent]));
+                    GameLogger.Log($"{Day},status,{agent.AgentIdx},{RoleOf(agent)},{StatusOf(agent)},{AgentNameMap[agent]}");
                 }
-                GameLogger.Log(string.Format("{0},result,{1},{2},{3}", Day, AliveHumanList.Count, AliveWolfList.Count, GetWinner()));
+                GameLogger.Log($"{Day},result,{AliveHumanList.Count},{AliveWolfList.Count},{GetWinner()}");
                 GameLogger.Close();
             }
 
@@ -310,7 +310,7 @@ namespace AIWolf.Server
             Console.WriteLine("=============================================");
             if (yesterday != null)
             {
-                Console.WriteLine("Day {0:00}", yesterday.Day);
+                Console.WriteLine($"Day {yesterday.Day:00}");
                 Console.WriteLine("========talk========");
                 foreach (Talk talk in yesterday.TalkList)
                 {
@@ -325,41 +325,41 @@ namespace AIWolf.Server
                 Console.WriteLine("========Actions========");
                 foreach (Vote vote in yesterday.VoteList)
                 {
-                    Console.WriteLine("Vote:{0}->{1}", vote.Agent, vote.Target);
+                    Console.WriteLine($"Vote:{vote.Agent}->{vote.Target}");
                 }
 
                 foreach (Vote vote in yesterday.AttackVoteList)
                 {
-                    Console.WriteLine("AttackVote:{0}->{1}", vote.Agent, vote.Target);
+                    Console.WriteLine($"AttackVote:{vote.Agent}->{vote.Target}");
                 }
 
-                Console.WriteLine("{0} executed", yesterday.Executed);
+                Console.WriteLine($"{yesterday.Executed} executed");
 
                 Judge divine = yesterday.Divine;
                 if (divine != null)
                 {
-                    Console.WriteLine("{0} divine {1}. Result is {2}", divine.Agent, divine.Target, divine.Result);
+                    Console.WriteLine($"{divine.Agent} divine {divine.Target}. Result is {divine.Result}");
                 }
 
                 if (yesterday.Guard != null)
                 {
-                    Console.WriteLine("{0} guarded", yesterday.Guard);
+                    Console.WriteLine($"{yesterday.Guard} guarded");
                 }
 
                 if (yesterday.AttackedDead != null)
                 {
-                    Console.WriteLine("{0} attacked", yesterday.AttackedDead);
+                    Console.WriteLine($"{yesterday.AttackedDead} attacked");
                 }
 
                 if (yesterday.CursedFox != null)
                 {
-                    Console.WriteLine("{0} cursed", yesterday.CursedFox);
+                    Console.WriteLine($"{yesterday.CursedFox} cursed");
                 }
             }
             Console.WriteLine("======");
             foreach (Agent agent in OrderedAgentList)
             {
-                Console.Write("{0}\t{1}\t{2}\t{3}", agent, AgentNameMap[agent], StatusOf(agent), RoleOf(agent));
+                Console.Write($"{agent}\t{AgentNameMap[agent]}\t{StatusOf(agent)}\t{RoleOf(agent)}");
                 if (yesterday != null)
                 {
                     if (agent == yesterday.Executed)
@@ -387,10 +387,10 @@ namespace AIWolf.Server
                 }
                 Console.WriteLine();
             }
-            Console.Write("Human:{0}\nWerewolf:{1}\n", AliveHumanList.Count, AliveWolfList.Count);
+            Console.Write($"Human:{AliveHumanList.Count}\nWerewolf:{AliveWolfList.Count}\n");
             if (GameSetting.RoleNumMap[Role.FOX] != 0)
             {
-                Console.Write("Others:{0}\n", AliveAgentList.Where(a => RoleOf(a).GetTeam() == Team.OTHERS).Count());
+                Console.Write($"Others:{AliveAgentList.Count(a => RoleOf(a).GetTeam() == Team.OTHERS)}\n");
             }
             Console.WriteLine("=============================================");
         }
@@ -433,7 +433,7 @@ namespace AIWolf.Server
                     GameData.Executed = executed;
                     if (GameLogger != null)
                     {
-                        GameLogger.Log(string.Format("{0},execute,{1},{2}", Day, executed.AgentIdx, RoleOf(executed)));
+                        GameLogger.Log($"{Day},execute,{executed.AgentIdx},{RoleOf(executed)}");
                     }
                 }
             }
@@ -488,21 +488,21 @@ namespace AIWolf.Server
                         GameData.AddLastDeadAgent(attacked);
                         if (GameLogger != null)
                         {
-                            GameLogger.Log(string.Format("{0},attack,{1},true", Day, attacked.AgentIdx));
+                            GameLogger.Log($"{Day},attack,{attacked.AgentIdx},true");
                         }
                     }
                     else if (attacked != null)
                     {
                         if (GameLogger != null)
                         {
-                            GameLogger.Log(string.Format("{0},attack,{1},false", Day, attacked.AgentIdx));
+                            GameLogger.Log($"{Day},attack,{attacked.AgentIdx},false");
                         }
                     }
                     else
                     {
                         if (GameLogger != null)
                         {
-                            GameLogger.Log(string.Format("{0},attack,-1,false", Day));
+                            GameLogger.Log($"{Day},attack,-1,false");
                         }
 
                     }
@@ -582,7 +582,7 @@ namespace AIWolf.Server
             {
                 foreach (Agent agent in OrderedAgentList)
                 {
-                    GameLogger.Log(string.Format("{0},status,{1},{2},{3},{4}", Day, agent.AgentIdx, RoleOf(agent), StatusOf(agent), AgentNameMap[agent]));
+                    GameLogger.Log($"{Day},status,{agent.AgentIdx},{RoleOf(agent)},{StatusOf(agent)},{AgentNameMap[agent]}");
                 }
             }
 
@@ -645,7 +645,7 @@ namespace AIWolf.Server
                     GameData.AddTalk(talk.Agent, talk);
                     if (GameLogger != null)
                     {
-                        GameLogger.Log(string.Format("{0},talk,{1},{2},{3},{4}", Day, talk.Idx, talk.Turn, talk.Agent.AgentIdx, talk.Text));
+                        GameLogger.Log($"{Day},talk,{talk.Idx},{talk.Turn},{talk.Agent.AgentIdx},{talk.Text}");
                     }
                     if (talk.Text != Utterance.OVER)
                     {
@@ -717,7 +717,7 @@ namespace AIWolf.Server
                     GameData.AddWhisper(whisper.Agent, whisper);
                     if (GameLogger != null)
                     {
-                        GameLogger.Log(string.Format("{0},whisper,{1},{2},{3},{4}", Day, whisper.Idx, whisper.Turn, whisper.Agent.AgentIdx, whisper.Text));
+                        GameLogger.Log($"{Day},whisper,{whisper.Idx},{whisper.Turn},{ whisper.Agent.AgentIdx},{whisper.Text}");
                     }
                     if (whisper.Text != Utterance.OVER)
                     {
@@ -745,7 +745,7 @@ namespace AIWolf.Server
                 GameData.VoteList.Add(vote);
                 if (GameLogger != null)
                 {
-                    GameLogger.Log(string.Format("{0},vote,{1},{2}", Day, agent.AgentIdx, target.AgentIdx));
+                    GameLogger.Log($"{Day},vote,{agent.AgentIdx},{target.AgentIdx}");
                 }
             }
             GameData.LatestVoteList = new List<Vote>(GameData.VoteList);
@@ -774,7 +774,7 @@ namespace AIWolf.Server
 
                     if (GameLogger != null)
                     {
-                        GameLogger.Log(string.Format("{0},divine,{1},{2},{3}", Day, agent.AgentIdx, target.AgentIdx, divine.Result));
+                        GameLogger.Log($"{Day},divine,{agent.AgentIdx},{target.AgentIdx},{divine.Result}");
                     }
                 }
             }
@@ -800,7 +800,7 @@ namespace AIWolf.Server
 
                     if (GameLogger != null)
                     {
-                        GameLogger.Log(string.Format("{0},guard,{1},{2},{3}", Day, agent.AgentIdx, target.AgentIdx, RoleOf(target)));
+                        GameLogger.Log($"{Day},guard,{agent.AgentIdx},{target.AgentIdx},{RoleOf(target)}");
                     }
                 }
             }
@@ -826,7 +826,7 @@ namespace AIWolf.Server
 
                     if (GameLogger != null)
                     {
-                        GameLogger.Log(string.Format("{0},attackVote,{1},{2}", Day, attackVote.Agent.AgentIdx, attackVote.Target.AgentIdx));
+                        GameLogger.Log($"{Day},attackVote,{attackVote.Agent.AgentIdx},{attackVote.Target.AgentIdx}");
                     }
                 }
             }
