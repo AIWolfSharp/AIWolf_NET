@@ -39,7 +39,7 @@ namespace AIWolf.Server
 #endif
         public Random Rand { get; set; } = new Random();
 
-        GameSetting GameSetting { get; }
+        GameSettingToSend GameSetting { get; }
         IGameServer GameServer { get; }
         GameData GameData { get; set; }
 
@@ -95,7 +95,7 @@ namespace AIWolf.Server
         /// <param name="gameSetting">The setting of this game.</param>
         /// <param name="gameServer">The game server.</param>
 #endif
-        public AIWolfGame(GameSetting gameSetting, IGameServer gameServer)
+        public AIWolfGame(GameSettingToSend gameSetting, IGameServer gameServer)
         {
             GameSetting = gameSetting;
             GameServer = gameServer;

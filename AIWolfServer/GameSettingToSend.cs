@@ -26,7 +26,7 @@ namespace AIWolf.Server
     /// </summary>
 #endif
     [DataContract]
-    public class GameSetting
+    public class GameSettingToSend
     {
         /// <summary>
         /// The number of agents acting as each role.
@@ -64,13 +64,13 @@ namespace AIWolf.Server
         /// <param name="agentNum">The number of agents.</param>
         /// <returns>The default GameSetting for the given number of agents.</returns>
 #endif
-        public static GameSetting GetDefaultGameSetting(int agentNum)
+        public static GameSettingToSend GetDefaultGameSetting(int agentNum)
         {
             if (!defaultRoleNumMap.ContainsKey(agentNum))
             {
                 throw new ArgumentException("Invalid agentNum in GetDefaultGameSetting(agentNum).");
             }
-            return new GameSetting()
+            return new GameSettingToSend()
             {
                 RoleNumMap = defaultRoleNumMap[agentNum],
                 MaxTalk = 10,
@@ -316,13 +316,13 @@ namespace AIWolf.Server
         /// <summary>
         /// Initializes a new instance.
         /// </summary>
-        GameSetting() { }
+        GameSettingToSend() { }
 
         /// <summary>
         /// Initializes a new instance.
         /// </summary>
         [JsonConstructor]
-        GameSetting(Dictionary<Role, int> roleNumMap, int maxTalk, int maxTalkTurn, int maxWhisper,
+        GameSettingToSend(Dictionary<Role, int> roleNumMap, int maxTalk, int maxTalkTurn, int maxWhisper,
             int maxWhisperTurn, int maxSkip, int maxRevote, int maxAttackRevote, bool enableNoAttack,
             bool voteVisible, bool votableInFirstDay, bool enableNoExecution, bool talkOnFirstDay,
             bool validateUtterance, bool whisperBeforeRevote, long randomSeed, int timeLimit)

@@ -20,7 +20,7 @@ namespace AIWolf.Server
         Agent attackedDead;
         Agent cursedFox;
         Agent executed;
-        GameSetting gameSetting;
+        GameSettingToSend gameSetting;
 
         /// <summary>
         /// The day.
@@ -167,7 +167,7 @@ namespace AIWolf.Server
         /// Initializes a new instance of this class.
         /// </summary>
         /// <param name="gameSetting">The setting of the game.</param>
-        public GameData(GameSetting gameSetting)
+        public GameData(GameSettingToSend gameSetting)
         {
             this.gameSetting = gameSetting;
         }

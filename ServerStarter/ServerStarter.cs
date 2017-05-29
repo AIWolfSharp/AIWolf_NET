@@ -55,7 +55,7 @@ namespace AIWolf.Server
             }
 
             Console.WriteLine("Start AIWolf.NET Server port:{0} playerNum:{1} gameNum:{2}", port, agentNum, gameNum);
-            GameSetting gameSetting = GameSetting.GetDefaultGameSetting(agentNum);
+            GameSettingToSend gameSetting = GameSettingToSend.GetDefaultGameSetting(agentNum);
 
             TcpipServer server = new TcpipServer(port, agentNum, gameSetting);
             server.WaitForConnection();

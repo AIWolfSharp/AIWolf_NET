@@ -59,7 +59,7 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         [DataMember(Name = "gameSetting")]
-        public GameSetting GameSetting { get; }
+        public GameSettingToSend GameSetting { get; }
 
 #if JHELP
         /// <summary>
@@ -134,7 +134,7 @@ namespace AIWolf.Server
         /// <param name="gameInfo">Game information given.</param>
         /// <param name="gameSetting">GameSetting representation of setting of game given.</param>
 #endif
-        public Packet(Request request, GameInfoToSend gameInfo, GameSetting gameSetting) : this(request, gameInfo)
+        public Packet(Request request, GameInfoToSend gameInfo, GameSettingToSend gameSetting) : this(request, gameInfo)
         {
             GameSetting = gameSetting;
         }
