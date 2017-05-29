@@ -234,31 +234,31 @@ namespace AIWolf.Lib
 #endif
     public static class RoleExtensions
     {
-        static Dictionary<Role, Team> roleTeamMap = new Dictionary<Role, Team>();
-        static Dictionary<Role, Species> roleSpeciesMap = new Dictionary<Role, Species>();
-
-        static RoleExtensions()
+        static Dictionary<Role, Team> roleTeamMap = new Dictionary<Role, Team>
         {
-            roleTeamMap[Role.UNC] = Team.UNC;
-            roleTeamMap[Role.BODYGUARD] = Team.VILLAGER;
-            roleTeamMap[Role.FOX] = Team.OTHERS;
-            roleTeamMap[Role.FREEMASON] = Team.VILLAGER;
-            roleTeamMap[Role.MEDIUM] = Team.VILLAGER;
-            roleTeamMap[Role.POSSESSED] = Team.WEREWOLF;
-            roleTeamMap[Role.SEER] = Team.VILLAGER;
-            roleTeamMap[Role.VILLAGER] = Team.VILLAGER;
-            roleTeamMap[Role.WEREWOLF] = Team.WEREWOLF;
+            [Role.UNC] = Team.UNC,
+            [Role.BODYGUARD] = Team.VILLAGER,
+            [Role.FOX] = Team.OTHERS,
+            [Role.FREEMASON] = Team.VILLAGER,
+            [Role.MEDIUM] = Team.VILLAGER,
+            [Role.POSSESSED] = Team.WEREWOLF,
+            [Role.SEER] = Team.VILLAGER,
+            [Role.VILLAGER] = Team.VILLAGER,
+            [Role.WEREWOLF] = Team.WEREWOLF,
+        };
 
-            roleSpeciesMap[Role.UNC] = Species.UNC;
-            roleSpeciesMap[Role.BODYGUARD] = Species.HUMAN;
-            roleSpeciesMap[Role.FOX] = Species.HUMAN;
-            roleSpeciesMap[Role.FREEMASON] = Species.HUMAN;
-            roleSpeciesMap[Role.MEDIUM] = Species.HUMAN;
-            roleSpeciesMap[Role.POSSESSED] = Species.HUMAN;
-            roleSpeciesMap[Role.SEER] = Species.HUMAN;
-            roleSpeciesMap[Role.VILLAGER] = Species.HUMAN;
-            roleSpeciesMap[Role.WEREWOLF] = Species.WEREWOLF;
-        }
+        static Dictionary<Role, Species> roleSpeciesMap = new Dictionary<Role, Species>
+        {
+            [Role.UNC] = Species.UNC,
+            [Role.BODYGUARD] = Species.HUMAN,
+            [Role.FOX] = Species.HUMAN,
+            [Role.FREEMASON] = Species.HUMAN,
+            [Role.MEDIUM] = Species.HUMAN,
+            [Role.POSSESSED] = Species.HUMAN,
+            [Role.SEER] = Species.HUMAN,
+            [Role.VILLAGER] = Species.HUMAN,
+            [Role.WEREWOLF] = Species.WEREWOLF,
+        };
 
 #if JHELP
         /// <summary>
