@@ -26,7 +26,7 @@ namespace AIWolf.Server
     /// </summary>
 #endif
     [DataContract]
-    public class GameInfo
+    public class GameInfoToSend
     {
         [DataMember(Name = "agent")]
         int _agent = 0;
@@ -452,7 +452,7 @@ namespace AIWolf.Server
         /// Initializes a new instance of this class.
         /// </summary>
 #endif
-        public GameInfo()
+        public GameInfoToSend()
         {
         }
 
@@ -481,7 +481,7 @@ namespace AIWolf.Server
         /// <param name="remainTalkMap">The map between agent and its number of remaining talks.</param>
         /// <param name="remainWhisperMap">The map between agent and its number of remaining whispers.</param>
         [JsonConstructor]
-        GameInfo(int day, int agent, Judge mediumResult, Judge divineResult, int executedAgent,
+        GameInfoToSend(int day, int agent, Judge mediumResult, Judge divineResult, int executedAgent,
             int latestExecutedAgent, int cursedFox, int attackedAgent, int guardedAgent,
             List<Vote> voteList, List<Vote> latestVoteList,
             List<Vote> attackVoteList, List<Vote> latestAttackVoteList,

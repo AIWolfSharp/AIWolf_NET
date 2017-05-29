@@ -178,10 +178,10 @@ namespace AIWolf.Server
         /// <param name="agent">The owner of the GameInfo.</param>
         /// <returns>The instance of GameInfo.</returns>
         /// <remarks>If agent is null, stuff the GameInfo with the all information available.</remarks>
-        public GameInfo GetGameInfo(Agent agent)
+        public GameInfoToSend GetGameInfo(Agent agent)
         {
             Role role = agent != null ? RoleMap[agent] : Role.UNC;
-            GameInfo gameInfo = new GameInfo()
+            GameInfoToSend gameInfo = new GameInfoToSend()
             {
                 Agent = agent,
                 LatestVoteList = gameSetting.VoteVisible ? LatestVoteList : null,
@@ -234,9 +234,9 @@ namespace AIWolf.Server
         /// <param name="agent">The owner of the GameInfo.</param>
         /// <returns>The instance of GameInfo.</returns>
         /// <remarks>If agent is null, stuff the GameInfo with the all information available.</remarks>
-        public GameInfo GetFinalGameInfo(Agent agent)
+        public GameInfoToSend GetFinalGameInfo(Agent agent)
         {
-            GameInfo gameInfo = GetGameInfo(agent);
+            GameInfoToSend gameInfo = GetGameInfo(agent);
             gameInfo.RoleMap = RoleMap;
             return gameInfo;
         }
