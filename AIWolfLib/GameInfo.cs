@@ -26,8 +26,8 @@ namespace AIWolf.Lib
 #endif
     public class GameInfo
     {
-        List<Talk> _TalkList { get; }
-        List<Whisper> _WhisperList { get; }
+        List<Talk> talkList;
+        List<Whisper> whisperList;
 
 #if JHELP
         /// <summary>
@@ -366,10 +366,10 @@ namespace AIWolf.Lib
             LatestVoteList = latestVoteList.AsReadOnly();
             AttackVoteList = attackVoteList.AsReadOnly();
             LatestAttackVoteList = latestAttackVoteList.AsReadOnly();
-            this._TalkList = talkList;
-            TalkList = this._TalkList.AsReadOnly();
-            this._WhisperList = whisperList;
-            WhisperList = this._WhisperList.AsReadOnly();
+            this.talkList = talkList;
+            TalkList = this.talkList.AsReadOnly();
+            this.whisperList = whisperList;
+            WhisperList = this.whisperList.AsReadOnly();
             LastDeadAgentList = lastDeadAgentList.Select(i => Agent.GetAgent(i)).ToList().AsReadOnly();
             ExistingRoleList = existingRoleList.AsReadOnly();
             StatusMap = new ReadOnlyDictionary<Agent, Status>(statusMap.ToDictionary(p => Agent.GetAgent(p.Key), p => (Status)Enum.Parse(typeof(Status), p.Value)));
@@ -383,14 +383,8 @@ namespace AIWolf.Lib
             AliveAgentList = AgentList.Where(a => StatusMap[a] == Status.ALIVE).ToList().AsReadOnly();
         }
 
-        internal void AddTalk(Talk talk)
-        {
-            _TalkList.Add(talk);
-        }
+        internal void AddTalk(Talk talk) => talkList.Add(talk);
 
-        internal void AddWhisper(Whisper whisper)
-        {
-            _WhisperList.Add(whisper);
-        }
+        internal void AddWhisper(Whisper whisper) => whisperList.Add(whisper);
     }
 }
