@@ -25,6 +25,24 @@ namespace AIWolf.Lib
     [DataContract]
     public class Judge
     {
+        /// <summary>
+        /// The index number of the agent who judged.
+        /// </summary>
+        [DataMember(Name = "agent")]
+        int agent;
+
+        /// <summary>
+        /// The index nunmber of the judged agent.
+        /// </summary>
+        [DataMember(Name = "target")]
+        int target;
+
+        /// <summary>
+        /// The result of this judge in string.
+        /// </summary>
+        [DataMember(Name = "result")]
+        string result;
+
 #if JHELP
         /// <summary>
         /// 判定した日
@@ -48,12 +66,6 @@ namespace AIWolf.Lib
 #endif
         public Agent Agent { get; }
 
-        /// <summary>
-        /// The index number of the agent who judged.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int _Agent { get; }
-
 #if JHELP
         /// <summary>
         /// 判定されたエージェント
@@ -65,13 +77,6 @@ namespace AIWolf.Lib
 #endif
         public Agent Target { get; }
 
-        /// <summary>
-        /// The index nunmber of the judged agent.
-        /// </summary>
-        [DataMember(Name = "target")]
-        int _Target { get; }
-
-
 #if JHELP
         /// <summary>
         /// 判定結果
@@ -82,12 +87,6 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         public Species Result { get; }
-
-        /// <summary>
-        /// The result of this judge in string.
-        /// </summary>
-        [DataMember(Name = "result")]
-        string _Result { get; }
 
 #if JHELP
         /// <summary>
@@ -106,42 +105,15 @@ namespace AIWolf.Lib
         /// <param name="target">The judged agent.</param>
         /// <param name="result">The result of this judge.</param>
 #endif
-        public Judge(int day, Agent agent, Agent target, Species result)
+        public Judge(int day, Agent agent, Agent target, Species result = Species.UNC)
         {
             Day = day;
-            if (Day < 0)
-            {
-                Error.RuntimeError("Invalid day " + Day + ".");
-                Day = 0;
-                Error.Warning("Force it to be " + Day + ".");
-            }
-
             Agent = agent;
-            if (Agent == null)
-            {
-                Error.RuntimeError("Agent must not be null.");
-                Agent = Agent.GetAgent(0);
-                Error.Warning("Force it to be " + Agent + ".");
-            }
-            _Agent = Agent.AgentIdx;
-
+            this.agent = Agent.AgentIdx;
             Target = target;
-            if (Target == null)
-            {
-                Error.RuntimeError("Target must not be null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning("Force it to be " + Target + ".");
-            }
-            _Target = Target.AgentIdx;
-
+            this.target = Target.AgentIdx;
             Result = result;
-            if (Result == Species.UNC)
-            {
-                Error.RuntimeError("Invalid result " + Result + ".");
-                Result = Species.HUMAN;
-                Error.Warning("Force it to be " + Result + ".");
-            }
-            _Result = Result.ToString();
+            this.result = Result.ToString();
         }
 
         /// <summary>
