@@ -50,7 +50,7 @@ namespace AIWolf.Lib
         /// The index number of the agent who uttered.
         /// </summary>
         [DataMember(Name = "agent")]
-        int _Agent { get; } = -1;
+        int agent = -1;
 
 #if JHELP
         /// <summary>
@@ -129,20 +129,7 @@ namespace AIWolf.Lib
         protected Utterance(int idx = 0, int day = 0, int turn = -1)
         {
             Idx = idx;
-            if (Idx < 0)
-            {
-                Error.RuntimeError("Invalid idx " + Idx + ".");
-                Idx = 0;
-                Error.Warning("Force it to be " + Idx + ".");
-            }
-
             Day = day;
-            if (Day < 0)
-            {
-                Error.RuntimeError("Invalid day " + Day + ".");
-                Day = 0;
-                Error.Warning("Force it to be " + Day + ".");
-            }
             Turn = turn;
         }
 
@@ -167,19 +154,8 @@ namespace AIWolf.Lib
 #endif
         protected Utterance(int idx, int day, int turn, Agent agent, string text) : this(idx, day, turn)
         {
-            if (agent == null)
-            {
-                Error.RuntimeError("Agent must not be null.");
-                Agent = Agent.GetAgent(0);
-                _Agent = 0;
-                Error.Warning("Force it to be " + Agent + ".");
-            }
-            else
-            {
-                Agent = agent;
-                _Agent = Agent.AgentIdx;
-            }
-
+            Agent = agent;
+            this.agent = Agent.AgentIdx;
             Text = text;
         }
 
@@ -288,7 +264,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString() => string.Format("Talk: Day{0:D2} {1:D2}[{2:D3}]\t{3}\t{4}", Day, Turn, Idx, Agent, Text);
+        public override string ToString() => $"Talk: Day{Day:D2} {Turn:D2}[{Idx:D3}]\t{Agent}\t{Text}";
     }
 
 #if JHELP
@@ -358,6 +334,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString() => string.Format("Whisper: Day{0:D2} {1:D2}[{2:D3}]\t{3}\t{4}", Day, Turn, Idx, Agent, Text);
+        public override string ToString() => $"Whisper: Day{Day:D2} {Turn:D2}[{Idx:D3}]\t{Agent}\t{Text}";
     }
 }
