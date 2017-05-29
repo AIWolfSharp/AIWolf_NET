@@ -181,7 +181,7 @@ namespace AIWolf.Lib
         /// <param name="talkDay">The day of the utterance agreed with.</param>
         /// <param name="talkID">The ID of the utterance agreed with.</param>
 #endif
-        public AgreeContentBuilder(UtteranceType utteranceType, int talkDay, int talkID)
+        public AgreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
         {
             Topic = Topic.AGREE;
             if (utteranceType == UtteranceType.TALK)
@@ -222,7 +222,7 @@ namespace AIWolf.Lib
         /// <param name="talkDay">The day of the utterance disagreed with.</param>
         /// <param name="talkID">The ID of the utterance disagreed with.</param>
 #endif
-        public DisagreeContentBuilder(UtteranceType utteranceType, int talkDay, int talkID)
+        public DisagreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
         {
             Topic = Topic.DISAGREE;
             if (utteranceType == UtteranceType.TALK)
