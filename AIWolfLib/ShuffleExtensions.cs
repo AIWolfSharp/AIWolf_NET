@@ -26,19 +26,19 @@ namespace AIWolf.Lib
     {
 #if JHELP
         /// <summary>
-        /// IEnumerableをシャッフルしたものを返す
+        /// IEnumerableをシャッフルしたIListを返す
         /// </summary>
         /// <typeparam name="T">IEnumerableの要素の型</typeparam>
         /// <param name="s">TのIEnumerable</param>
-        /// <returns>シャッフルされたIEnumerable</returns>
+        /// <returns>シャッフルされたTのIList</returns>
 #else
         /// <summary>
-        /// Returns shuffled IEnumerable of T.
+        /// Returns shuffled IList of T.
         /// </summary>
         /// <typeparam name="T">Type of element of IEnumerable.</typeparam>
         /// <param name="s">IEnumerable of T.</param>
-        /// <returns>Shuffled IEnumerable of T.</returns>
+        /// <returns>Shuffled IList of T.</returns>
 #endif
-        public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> s) => s.OrderBy(x => Guid.NewGuid());
+        public static IList<T> Shuffle<T>(this IEnumerable<T> s) => s.OrderBy(x => Guid.NewGuid()).ToList();
     }
 }
