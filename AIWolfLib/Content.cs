@@ -208,29 +208,23 @@ namespace AIWolf.Lib
         public Content(string text)
         {
             Text = text;
-            string sentence = GetSentence(Text);
+            var sentence = GetSentence(Text);
             if (sentence != null) // Complex sentence.
             {
                 Topic = Topic.OPERATOR;
                 Operator = Operator.REQUEST;
-                ContentList = new List<Content>();
-                ContentList.Add(new Content(sentence));
+                ContentList = new List<Content> { new Content(sentence) }.AsReadOnly();
             }
             else // Simple sentence.
             {
-                string[] split = Text.Split();
-                int offset = 0;
+                var split = Text.Split();
+                var offset = 0;
                 if (split[0].StartsWith("Agent"))
                 {
                     Subject = Agent.GetAgent(GetInt(split[0]));
                     offset = 1;
                 }
-                Topic topic;
-                if (!Enum.TryParse(split[0 + offset], out topic))
-                {
-                    throw new AIWolfLibException("Content: Can't find any topic in " + split[0 + offset]);
-                }
-                Topic = topic;
+                Topic = (Topic)Enum.Parse(typeof(Topic), split[0 + offset]);
                 if (split.Length >= 2 + offset && split[1 + offset].StartsWith("Agent"))
                 {
                     Target = Agent.GetAgent(GetInt(split[1 + offset]));
@@ -242,7 +236,7 @@ namespace AIWolf.Lib
                         break;
                     case Topic.AGREE:
                     case Topic.DISAGREE:
-                        if (split[1 + offset].Equals("TALK"))
+                        if(split[1 + offset] == "TALK")
                         {
                             Utterance = new Talk(GetInt(split[3 + offset]), GetInt(split[2 + offset]));
                         }
@@ -253,21 +247,11 @@ namespace AIWolf.Lib
                         break;
                     case Topic.ESTIMATE:
                     case Topic.COMINGOUT:
-                        Role role;
-                        if (!Enum.TryParse(split[2 + offset], out role))
-                        {
-                            throw new AIWolfLibException("Content: Can't find any role in " + split[2 + offset]);
-                        }
-                        Role = role;
+                        Role = (Role)Enum.Parse(typeof(Role), split[2 + offset]);
                         break;
                     case Topic.DIVINED:
                     case Topic.IDENTIFIED:
-                        Species species;
-                        if (!Enum.TryParse(split[2 + offset], out species))
-                        {
-                            throw new AIWolfLibException("Content: Can't find any species in " + split[2 + offset]);
-                        }
-                        Result = species;
+                        Result = (Species)Enum.Parse(typeof(Species), split[2 + offset]);
                         break;
                     case Topic.ATTACK:
                     case Topic.DIVINATION:
@@ -554,5 +538,4 @@ namespace AIWolf.Lib
 #endif
         OR
     }
-
 }
