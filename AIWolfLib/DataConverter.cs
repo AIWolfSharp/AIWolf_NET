@@ -9,9 +9,6 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace AIWolf.Lib
@@ -25,23 +22,16 @@ namespace AIWolf.Lib
     /// Converts object into JSON string and vice versa.
     /// </summary>
 #endif
-    static class DataConverter
+    public static class DataConverter
     {
-        static JsonSerializerSettings serializerSetting;
-
-        /// <summary>
-        /// Initializes this class.
-        /// </summary>
-        static DataConverter()
+        static JsonSerializerSettings serializerSetting = new JsonSerializerSettings
         {
-            serializerSetting = new JsonSerializerSettings()
+            Converters = new List<JsonConverter>
             {
-                // Sort.
-                ContractResolver = new OrderedContractResolver()
-            };
-            // Do not convert enum into integer.
-            serializerSetting.Converters.Add(new StringEnumConverter());
-        }
+                // Do not convert enum into integer.
+                new StringEnumConverter()
+            }
+        };
 
 #if JHELP
         /// <summary>
@@ -74,11 +64,5 @@ namespace AIWolf.Lib
         /// <returns>The object of type T deserialized from the JSON string.</returns>
 #endif
         public static T Deserialize<T>(string json) => JsonConvert.DeserializeObject<T>(json, serializerSetting);
-
-        class OrderedContractResolver : DefaultContractResolver
-        {
-            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
-                => base.CreateProperties(type, memberSerialization).OrderBy(p => p.PropertyName).ToList();
-        }
     }
 }
