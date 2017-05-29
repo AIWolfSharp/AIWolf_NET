@@ -31,24 +31,24 @@ namespace AIWolf.Server
         /// <summary>
         /// The number of agents acting as each role.
         /// </summary>
-        static readonly Dictionary<int, Dictionary<Role, int>> defaultRoleNumMap = new Dictionary<int, Dictionary<Role, int>>()
+        static readonly Dictionary<int, Dictionary<Role, int>> defaultRoleNumMap = new Dictionary<int, Dictionary<Role, int>>
         {
-            {  3, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  1 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  4, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  2 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  5, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  2 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  6, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  3 }, { Role.WEREWOLF, 1 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  7, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 0 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  8, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            {  9, new Dictionary<Role, int>() { { Role.BODYGUARD, 0 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 0 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 10, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  4 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 11, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 2 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 12, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  5 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 13, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  6 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 14, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  7 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 15, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  8 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 16, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER,  9 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 17, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER, 10 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } },
-            { 18, new Dictionary<Role, int>() { { Role.BODYGUARD, 1 }, { Role.MEDIUM, 1 }, { Role.POSSESSED, 1 }, { Role.SEER, 1 }, { Role.VILLAGER, 11 }, { Role.WEREWOLF, 3 }, { Role.FREEMASON, 0 }, { Role.FOX, 0 } } }
+            [3] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 0, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 1, [Role.WEREWOLF] = 1, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [4] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 0, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 2, [Role.WEREWOLF] = 1, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [5] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 0, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 2, [Role.WEREWOLF] = 1, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [6] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 0, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 3, [Role.WEREWOLF] = 1, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [7] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 0, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [8] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 1, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [9] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 1, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [10] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [11] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [12] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [13] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 6, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [14] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 7, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [15] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 8, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [16] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 9, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [17] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] =10, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+           [18] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] =11, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
         };
 
 #if JHELP
