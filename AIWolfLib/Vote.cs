@@ -28,13 +28,13 @@ namespace AIWolf.Lib
         /// The index number of the agent who voted.
         /// </summary>
         [DataMember(Name = "agent")]
-        int _Agent { get; }
+        int agent;
 
         /// <summary>
         /// The index number of the voted agent.
         /// </summary>
         [DataMember(Name = "target")]
-        int _Target { get; }
+        int target;
 
 #if JHELP
         /// <summary>
@@ -88,38 +88,10 @@ namespace AIWolf.Lib
         public Vote(int day, Agent agent, Agent target)
         {
             Day = day;
-            if (Day < 0)
-            {
-                Error.RuntimeError("Invalid day " + Day + ".");
-                Error.Warning("Force it to be 0.");
-                Day = 0;
-            }
-
-            if (agent == null)
-            {
-                Error.RuntimeError("Agent must not be null.");
-                Error.Warning("Force it to be Agent[00].");
-                Agent = Agent.GetAgent(0);
-                _Agent = 0;
-            }
-            else
-            {
-                Agent = agent;
-                _Agent = Agent.AgentIdx;
-            }
-
-            if (target == null)
-            {
-                Error.RuntimeError("Target must not be null.");
-                Error.Warning("Force it to be Agent[00].");
-                Target = Agent.GetAgent(0);
-                _Target = 0;
-            }
-            else
-            {
-                Target = target;
-                _Target = Target.AgentIdx;
-            }
+            Agent = agent;
+            this.agent = Agent.AgentIdx;
+            Target = target;
+            this.target = Target.AgentIdx;
         }
 
         /// <summary>
