@@ -59,7 +59,7 @@ namespace AIWolf
                         Usage();
                     }
                 }
-                else if (args[i].Equals("-t"))
+                else if (args[i] == "-t")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
