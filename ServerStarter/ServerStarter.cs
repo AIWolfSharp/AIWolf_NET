@@ -7,7 +7,6 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
-using AIWolf.Lib;
 using System;
 using System.IO;
 
