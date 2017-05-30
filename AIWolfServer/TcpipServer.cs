@@ -174,8 +174,8 @@ namespace AIWolf.Server
                     }
                     else
                     {
-                        List<Talk> talkList = GameData.GetGameInfo(agent).TalkList;
-                        List<Whisper> whisperList = GameData.GetGameInfo(agent).WhisperList;
+                        List<Talk> talkList = new List<Talk>(GameData.GetGameInfo(agent).TalkList);
+                        List<Whisper> whisperList = new List<Whisper>(GameData.GetGameInfo(agent).WhisperList);
                         talkList = Minimize(agent, talkList, lastTalkIdxMap);
                         whisperList = Minimize(agent, whisperList, lastWhisperIdxMap);
                         message = DataConverter.Serialize(new PacketToSend(request, talkList, whisperList));

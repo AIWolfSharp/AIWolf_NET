@@ -101,7 +101,7 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         [DataMember(Name = "roleNumMap")]
-        public Dictionary<Role, int> RoleNumMap { get; set; }
+        public IDictionary<Role, int> RoleNumMap { get; set; }
 
 #if JHELP
         /// <summary>

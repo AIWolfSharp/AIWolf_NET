@@ -71,7 +71,7 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         [DataMember(Name = "talkHistory")]
-        public List<Talk> TalkHistory { get; }
+        public IList<Talk> TalkHistory { get; }
 
 #if JHELP
         /// <summary>
@@ -83,7 +83,7 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         [DataMember(Name = "whisperHistory")]
-        public List<Whisper> WhisperHistory { get; }
+        public IList<Whisper> WhisperHistory { get; }
 
 #if JHELP
         /// <summary>
@@ -154,7 +154,7 @@ namespace AIWolf.Server
         /// <param name="talkHistoryList">History of talk given.</param>
         /// <param name="whisperHistoryList">History of whisper given.</param>
 #endif
-        public PacketToSend(Request request, List<Talk> talkHistoryList, List<Whisper> whisperHistoryList) : this(request)
+        public PacketToSend(Request request, IList<Talk> talkHistoryList, IList<Whisper> whisperHistoryList) : this(request)
         {
             TalkHistory = talkHistoryList;
             WhisperHistory = whisperHistoryList;

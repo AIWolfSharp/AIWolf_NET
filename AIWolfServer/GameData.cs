@@ -30,52 +30,52 @@ namespace AIWolf.Server
         /// <summary>
         /// The map between the agent and its status.
         /// </summary>
-        public Dictionary<Agent, Status> StatusMap { get; private set; } = new Dictionary<Agent, Status>();
+        public IDictionary<Agent, Status> StatusMap { get; private set; } = new Dictionary<Agent, Status>();
 
         /// <summary>
         /// The map between the agent and its role.
         /// </summary>
-        public Dictionary<Agent, Role> RoleMap { get; private set; } = new Dictionary<Agent, Role>();
+        public IDictionary<Agent, Role> RoleMap { get; private set; } = new Dictionary<Agent, Role>();
 
         /// <summary>
         /// The list of talks.
         /// </summary>
-        public List<Talk> TalkList { get; } = new List<Talk>();
+        public IList<Talk> TalkList { get; } = new List<Talk>();
 
         /// <summary>
         /// The list of whispers.
         /// </summary>
-        public List<Whisper> WhisperList { get; } = new List<Whisper>();
+        public IList<Whisper> WhisperList { get; } = new List<Whisper>();
 
         /// <summary>
         /// The list of votes.
         /// </summary>
-        public List<Vote> VoteList { get; } = new List<Vote>();
+        public IList<Vote> VoteList { get; } = new List<Vote>();
 
         /// <summary>
         /// The list of the latest votes.
         /// </summary>
-        public List<Vote> LatestVoteList { get; set; } = new List<Vote>();
+        public IList<Vote> LatestVoteList { get; set; } = new List<Vote>();
 
         /// <summary>
         /// The list of votes for attack.
         /// </summary>
-        public List<Vote> AttackVoteList { get; } = new List<Vote>();
+        public IList<Vote> AttackVoteList { get; } = new List<Vote>();
 
         /// <summary>
         /// The list of the latest votes for attack.
         /// </summary>
-        public List<Vote> LatestAttackVoteList { get; set; } = new List<Vote>();
+        public IList<Vote> LatestAttackVoteList { get; set; } = new List<Vote>();
 
         /// <summary>
         /// The map between the agent and its chances of talk remaining.
         /// </summary>
-        public Dictionary<Agent, int> RemainTalkMap { get; } = new Dictionary<Agent, int>();
+        public IDictionary<Agent, int> RemainTalkMap { get; } = new Dictionary<Agent, int>();
 
         /// <summary>
         /// Thae map between the agent and its chances of whispers remaining.
         /// </summary>
-        public Dictionary<Agent, int> RemainWhisperMap { get; } = new Dictionary<Agent, int>();
+        public IDictionary<Agent, int> RemainWhisperMap { get; } = new Dictionary<Agent, int>();
 
         /// <summary>
         /// The latest divination.
@@ -122,7 +122,7 @@ namespace AIWolf.Server
         /// <summary>
         /// The list of agents that died yesterday.
         /// </summary>
-        List<Agent> LastDeadAgentList { get; } = new List<Agent>();
+        IList<Agent> LastDeadAgentList { get; } = new List<Agent>();
 
         /// <summary>
         /// The game data of yesterday.
@@ -132,7 +132,7 @@ namespace AIWolf.Server
         /// <summary>
         /// The list of agents.
         /// </summary>
-        public List<Agent> AgentList => new List<Agent>(RoleMap.Keys);
+        public IList<Agent> AgentList => new List<Agent>(RoleMap.Keys);
 
         /// <summary>
         /// GameData for tomorrow.

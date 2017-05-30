@@ -65,11 +65,11 @@ namespace AIWolf.Server
         public FileGameLogger GameLogger { get; set; }
 
         int Day => gameData.Day;
-        List<Agent> AgentList => gameData.AgentList;
-        List<Agent> OrderedAgentList => AgentList.OrderBy(x => x.AgentIdx).ToList();
-        List<Agent> AliveAgentList => AgentList.Where(a => StatusOf(a) == Status.ALIVE).ToList();
-        List<Agent> AliveHumanList => AliveAgentList.Where(a => RoleOf(a).GetSpecies() == Species.HUMAN).ToList();
-        List<Agent> AliveWolfList => AliveAgentList.Where(a => RoleOf(a) == Role.WEREWOLF).ToList();
+        IList<Agent> AgentList => gameData.AgentList;
+        IList<Agent> OrderedAgentList => AgentList.OrderBy(x => x.AgentIdx).ToList();
+        IList<Agent> AliveAgentList => AgentList.Where(a => StatusOf(a) == Status.ALIVE).ToList();
+        IList<Agent> AliveHumanList => AliveAgentList.Where(a => RoleOf(a).GetSpecies() == Species.HUMAN).ToList();
+        IList<Agent> AliveWolfList => AliveAgentList.Where(a => RoleOf(a) == Role.WEREWOLF).ToList();
         bool GameFinished => GetWinner() != Team.UNC;
 
 #if JHELP
@@ -367,9 +367,9 @@ namespace AIWolf.Server
             }
 
             Agent executed = null;
-            List<Agent> candidates = null;
             if (Day != 0)
             {
+                IList<Agent> candidates = null;
                 for (var i = 0; i <= gameSetting.MaxRevote; i++)
                 {
                     Vote();
@@ -407,6 +407,7 @@ namespace AIWolf.Server
                 Agent attacked = null;
                 if (!(AliveWolfList.Count == 1 && RoleOf(gameData.Executed) == Role.WEREWOLF))
                 {
+                    IList<Agent> candidates = null;
                     for (var i = 0; i <= gameSetting.MaxAttackRevote; i++)
                     {
                         if (i > 0 && gameSetting.WhisperBeforeRevote)
@@ -470,7 +471,7 @@ namespace AIWolf.Server
             gameServer.GameData = gameData;
         }
 
-        List<Agent> GetVotedCandidates(List<Vote> voteList)
+        IList<Agent> GetVotedCandidates(IList<Vote> voteList)
         {
             var counter = new Dictionary<Agent, int>();
             foreach (var vote in voteList.Where(v => StatusOf(v.Target) == Status.ALIVE))
@@ -488,7 +489,7 @@ namespace AIWolf.Server
             return counter.Keys.Where(a => counter[a] == max).ToList();
         }
 
-        List<Agent> GetAttackVotedCandidates(List<Vote> voteList)
+        IList<Agent> GetAttackVotedCandidates(IList<Vote> voteList)
         {
             var counter = new Dictionary<Agent, int>();
             foreach (var vote in voteList.Where(v => StatusOf(v.Target) == Status.ALIVE && RoleOf(v.Target) != Role.WEREWOLF))
