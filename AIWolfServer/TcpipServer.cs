@@ -23,32 +23,17 @@ namespace AIWolf.Server
 {
     public class TcpipServer : IGameServer
     {
+        ILogger serverLogger;
         Dictionary<TcpClient, Agent> connectionAgentMap = new Dictionary<TcpClient, Agent>();
         Dictionary<Agent, TcpClient> agentConnectionMap = new Dictionary<Agent, TcpClient>();
-
-        ILogger serverLogger;
-
         Dictionary<Agent, string> nameMap = new Dictionary<Agent, string>();
         Dictionary<Agent, int> lastTalkIdxMap = new Dictionary<Agent, int>();
         Dictionary<Agent, int> lastWhisperIdxMap = new Dictionary<Agent, int>();
         TcpListener serverSocket;
-
-        /// <summary>
-        /// Server Port.
-        /// </summary>
-        int Port { get; }
-
-        /// <summary>
-        /// IP Address
-        /// </summary>
-        IPAddress Address { get; } = IPAddress.Parse("127.0.0.1");
-
-        /// <summary>
-        /// Connection limit.
-        /// </summary>
-        int Limit { get; }
-
-        int TimeLimit { get; }
+        int port;
+        IPAddress address = IPAddress.Parse("127.0.0.1");
+        int connectionLimit;
+        int timeLimit;
 
         /// <summary>
         /// Current game data.
@@ -83,9 +68,9 @@ namespace AIWolf.Server
         public TcpipServer(int port, int limit, GameSettingToSend gameSetting)
         {
             GameSetting = gameSetting;
-            Port = port;
-            Limit = limit;
-            TimeLimit = GameSetting.TimeLimit != -1 ? GameSetting.TimeLimit : 1000;
+            this.port = port;
+            connectionLimit = limit;
+            timeLimit = GameSetting.TimeLimit != -1 ? GameSetting.TimeLimit : 1000;
             //ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Critical, true));
@@ -110,10 +95,10 @@ namespace AIWolf.Server
             nameMap.Clear();
 
             Console.WriteLine("Waiting for connection...");
-            serverSocket = new TcpListener(Address, Port);
+            serverSocket = new TcpListener(address, port);
             serverSocket.Start();
 
-            while (connectionAgentMap.Count < Limit)
+            while (connectionAgentMap.Count < connectionLimit)
             {
                 Task<TcpClient> task = serverSocket.AcceptTcpClientAsync();
                 task.Wait();
@@ -121,7 +106,7 @@ namespace AIWolf.Server
                 lock (connectionAgentMap)
                 {
                     Agent agent = null;
-                    for (int i = 1; i <= Limit; i++)
+                    for (int i = 1; i <= connectionLimit; i++)
                     {
                         if (!connectionAgentMap.ContainsValue(Agent.GetAgent(i)))
                         {
