@@ -3,25 +3,22 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
-    <FileVersion>1.0.7.0</FileVersion>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <FileVersion>1.1.0.0</FileVersion>
     <Description>The starter for AIWolf client.</Description>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
-    <Version>1.0.7</Version>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionSuffix>alpha2</VersionSuffix>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf</RootNamespace>
     <RuntimeIdentifiers>centos.7-x64;fedora.24-x64;win10-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AIWolfPlayer" Version="1.1.0-alpha2" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
-    <ProjectReference Include="..\AIWolfPlayer\AIWolfPlayer.csproj" />
   </ItemGroup>
 
 </Project>

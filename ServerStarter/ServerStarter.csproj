@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
-    <ProjectReference Include="..\AIWolfServer\AIWolfServer.csproj" />
+    <Folder Include="log\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AIWolfServer" Version="1.1.0-alpha2" />
   </ItemGroup>
 
 </Project>
