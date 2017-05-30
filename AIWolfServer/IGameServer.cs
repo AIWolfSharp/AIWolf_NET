@@ -17,7 +17,7 @@ namespace AIWolf.Server
         /// <summary>
         /// The list of agents connecting to this server.
         /// </summary>
-        List<Agent> ConnectedAgentList { get; }
+        IList<Agent> ConnectedAgentList { get; }
 
         /// <summary>
         /// The setting of the game.

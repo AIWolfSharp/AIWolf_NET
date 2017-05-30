@@ -63,7 +63,7 @@ namespace AIWolf.Server
         /// <summary>
         /// The list of agents connecting to this server.
         /// </summary>
-        public List<Agent> ConnectedAgentList
+        public IList<Agent> ConnectedAgentList
         {
             get
             {
@@ -194,7 +194,7 @@ namespace AIWolf.Server
             }
             catch (IOException e)
             {
-                throw new LostClientException("Lost connection with " + agent, e, agent);
+                throw new Exception("Lost connection with " + agent, e);
             }
         }
 
@@ -256,7 +256,7 @@ namespace AIWolf.Server
             }
             catch (IOException e)
             {
-                throw new LostClientException("Lost connection with " + agent, e, agent);
+                throw new Exception("Lost connection with " + agent, e);
             }
         }
 
