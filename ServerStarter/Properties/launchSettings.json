@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ServerStarter": {
-      "commandName": "Project",
-      "commandLineArgs": "-cl -l log -g 100 -n 15"
-    }
-  }
-}
