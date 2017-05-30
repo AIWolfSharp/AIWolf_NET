@@ -26,7 +26,10 @@ namespace AIWolf.Server
 #endif
     public class AIWolfGame
     {
-        string logFileName;
+        GameSettingToSend gameSetting;
+        IGameServer gameServer;
+        GameData gameData;
+        Dictionary<Agent, string> agentNameMap = new Dictionary<Agent, string>();
 
 #if JHELP
         /// <summary>
@@ -38,10 +41,6 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         public Random Rand { get; set; } = new Random();
-
-        GameSettingToSend GameSetting { get; }
-        IGameServer GameServer { get; }
-        GameData GameData { get; set; }
 
 #if JHELP
         /// <summary>
@@ -65,22 +64,13 @@ namespace AIWolf.Server
 #endif
         public FileGameLogger GameLogger { get; set; }
 
-        Dictionary<Agent, string> AgentNameMap { get; set; }
-
-        string LogFileName
-        {
-            get => logFileName;
-            set => GameLogger = new FileGameLogger(logFileName = value);
-        }
-
-        int Day => GameData.Day;
-        List<Agent> AgentList => GameData.AgentList;
+        int Day => gameData.Day;
+        List<Agent> AgentList => gameData.AgentList;
         List<Agent> OrderedAgentList => AgentList.OrderBy(x => x.AgentIdx).ToList();
         List<Agent> AliveAgentList => AgentList.Where(a => StatusOf(a) == Status.ALIVE).ToList();
         List<Agent> AliveHumanList => AliveAgentList.Where(a => RoleOf(a).GetSpecies() == Species.HUMAN).ToList();
         List<Agent> AliveWolfList => AliveAgentList.Where(a => RoleOf(a) == Role.WEREWOLF).ToList();
         bool GameFinished => GetWinner() != Team.UNC;
-
 
 #if JHELP
         /// <summary>
@@ -97,8 +87,8 @@ namespace AIWolf.Server
 #endif
         public AIWolfGame(GameSettingToSend gameSetting, IGameServer gameServer)
         {
-            GameSetting = gameSetting;
-            GameServer = gameServer;
+            this.gameSetting = gameSetting;
+            this.gameServer = gameServer;
         }
 
 #if JHELP
@@ -112,74 +102,54 @@ namespace AIWolf.Server
 #endif
         void Init()
         {
-            GameData = new GameData(GameSetting);
-            AgentNameMap = new Dictionary<Agent, string>();
-            GameServer.GameData = GameData;
+            gameData = new GameData(gameSetting);
+            gameServer.GameData = gameData;
+            agentNameMap.Clear();
 
-            List<Agent> agentList = GameServer.ConnectedAgentList;
+            var agentList = gameServer.ConnectedAgentList.Shuffle();
 
-            if (agentList.Count != GameSetting.PlayerNum)
+            if (agentList.Count != gameSetting.PlayerNum)
             {
-                throw new Exception("Player num is " + GameSetting.PlayerNum + " but connected agent is " + agentList.Count);
+                throw new Exception($"Player num is {gameSetting.PlayerNum} but connected agent is {agentList.Count}.");
             }
-            agentList = agentList.Shuffle().ToList();
 
-            Dictionary<Role, List<Agent>> requestRoleMap = new Dictionary<Role, List<Agent>>();
-            foreach (Role role in Enum.GetValues(typeof(Role)))
+            // 希望役職を優先して配役する
+            var vacantMap = gameSetting.RoleNumMap.Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value);
+            var noRequestAgentQueue = new Queue<Agent>();
+            foreach (var agent in agentList)
             {
-                if (role != Role.UNC)
+                var requestedRole = gameServer.RequestRequestRole(agent);
+                if (vacantMap.ContainsKey(requestedRole))
                 {
-                    requestRoleMap[role] = new List<Agent>();
-                }
-            }
-            List<Agent> noRequestAgentList = new List<Agent>();
-            foreach (Agent agent in agentList)
-            {
-                Role requestedRole = GameServer.RequestRequestRole(agent);
-                if (requestedRole != Role.UNC)
-                {
-                    if (requestRoleMap[requestedRole].Count < GameSetting.RoleNumMap[requestedRole])
+                    if (vacantMap[requestedRole] > 0)
                     {
-                        requestRoleMap[requestedRole].Add(agent);
+                        gameData.AddAgent(agent, Status.ALIVE, requestedRole);
+                        vacantMap[requestedRole]--;
                     }
                     else
                     {
-                        noRequestAgentList.Add(agent);
+                        noRequestAgentQueue.Enqueue(agent);
                     }
                 }
                 else
                 {
-                    noRequestAgentList.Add(agent);
+                    noRequestAgentQueue.Enqueue(agent);
                 }
             }
 
-            foreach (Role role in Enum.GetValues(typeof(Role)))
+            foreach (var pair in vacantMap.Where(p => p.Value > 0))
             {
-                if (role == Role.UNC)
+                for (var i = 0; i < pair.Value; i++)
                 {
-                    continue;
-                }
-                List<Agent> requestedAgentList = requestRoleMap[role];
-                for (int i = 0; i < GameSetting.RoleNumMap[role]; i++)
-                {
-                    if (requestedAgentList.Count == 0)
-                    {
-                        GameData.AddAgent(noRequestAgentList[0], Status.ALIVE, role);
-                        noRequestAgentList.RemoveAt(0);
-                    }
-                    else
-                    {
-                        GameData.AddAgent(requestedAgentList[0], Status.ALIVE, role);
-                        requestedAgentList.RemoveAt(0);
-                    }
+                    gameData.AddAgent(noRequestAgentQueue.Dequeue(), Status.ALIVE, pair.Key);
                 }
             }
 
-            GameServer.GameSetting = GameSetting;
-            foreach (Agent agent in agentList)
+            gameServer.GameSetting = gameSetting;
+            foreach (var agent in agentList)
             {
-                GameServer.Init(agent);
-                AgentNameMap[agent] = GameServer.RequestName(agent);
+                gameServer.Init(agent);
+                agentNameMap[agent] = gameServer.RequestName(agent);
             }
         }
 
@@ -188,49 +158,38 @@ namespace AIWolf.Server
         /// </summary>
         public void Start()
         {
-            try
-            {
-                Init();
+            Init();
 
-                while (!GameFinished)
+            while (!GameFinished)
+            {
+                ConsoleLog();
+                // Day phase.
+                DayStart();
+                if (Day == 0)
                 {
-                    ConsoleLog();
-                    // Day phase.
-                    DayStart();
-                    if (Day == 0)
+                    if (gameSetting.TalkOnFirstDay)
                     {
-                        if (GameSetting.TalkOnFirstDay)
-                        {
-                            Whisper();
-                            Talk();
-                        }
-                    }
-                    else
-                    {
+                        Whisper();
                         Talk();
                     }
-                    // Night phase.
-                    Night();
-                    if (GameLogger != null)
-                    {
-                        GameLogger.Flush();
-                    }
                 }
-                ConsoleLog();
-                Finish();
-
-                if (ShowConsoleLog)
+                else // Day > 0
                 {
-                    Console.WriteLine("Winner:" + GetWinner());
+                    Talk();
                 }
-            }
-            catch (LostClientException e)
-            {
+                // Night phase.
+                Night();
                 if (GameLogger != null)
                 {
-                    GameLogger.Log("Lost Connection of " + e.Agent);
+                    GameLogger.Flush();
                 }
-                throw e;
+            }
+            ConsoleLog();
+            Finish();
+
+            if (ShowConsoleLog)
+            {
+                Console.WriteLine("Winner:" + GetWinner());
             }
         }
 
@@ -241,17 +200,17 @@ namespace AIWolf.Server
         {
             if (GameLogger != null)
             {
-                foreach (Agent agent in OrderedAgentList)
+                foreach (var agent in OrderedAgentList)
                 {
-                    GameLogger.Log($"{Day},status,{agent.AgentIdx},{RoleOf(agent)},{StatusOf(agent)},{AgentNameMap[agent]}");
+                    GameLogger.Log($"{Day},status,{agent.AgentIdx},{RoleOf(agent)},{StatusOf(agent)},{agentNameMap[agent]}");
                 }
                 GameLogger.Log($"{Day},result,{AliveHumanList.Count},{AliveWolfList.Count},{GetWinner()}");
                 GameLogger.Close();
             }
 
-            foreach (Agent agent in AgentList)
+            foreach (var agent in AgentList)
             {
-                GameServer.Finish(agent);
+                gameServer.Finish(agent);
             }
         }
 
@@ -261,10 +220,10 @@ namespace AIWolf.Server
         /// <returns>The team which wins.</returns>
         Team GetWinner()
         {
-            int humanSide = 0;
-            int wolfSide = 0;
-            int otherSide = 0;
-            foreach (Agent agent in AliveAgentList)
+            var humanSide = 0;
+            var wolfSide = 0;
+            var otherSide = 0;
+            foreach (var agent in AliveAgentList)
             {
                 switch (RoleOf(agent))
                 {
@@ -305,37 +264,37 @@ namespace AIWolf.Server
                 return;
             }
 
-            GameData yesterday = GameData.DayBefore;
+            var yesterday = gameData.DayBefore;
 
             Console.WriteLine("=============================================");
             if (yesterday != null)
             {
                 Console.WriteLine($"Day {yesterday.Day:00}");
                 Console.WriteLine("========talk========");
-                foreach (Talk talk in yesterday.TalkList)
+                foreach (var talk in yesterday.TalkList)
                 {
                     Console.WriteLine(talk);
                 }
                 Console.WriteLine("========Whisper========");
-                foreach (Whisper whisper in yesterday.WhisperList)
+                foreach (var whisper in yesterday.WhisperList)
                 {
                     Console.WriteLine(whisper);
                 }
 
                 Console.WriteLine("========Actions========");
-                foreach (Vote vote in yesterday.VoteList)
+                foreach (var vote in yesterday.VoteList)
                 {
                     Console.WriteLine($"Vote:{vote.Agent}->{vote.Target}");
                 }
 
-                foreach (Vote vote in yesterday.AttackVoteList)
+                foreach (var vote in yesterday.AttackVoteList)
                 {
                     Console.WriteLine($"AttackVote:{vote.Agent}->{vote.Target}");
                 }
 
                 Console.WriteLine($"{yesterday.Executed} executed");
 
-                Judge divine = yesterday.Divine;
+                var divine = yesterday.Divine;
                 if (divine != null)
                 {
                     Console.WriteLine($"{divine.Agent} divine {divine.Target}. Result is {divine.Result}");
@@ -357,9 +316,9 @@ namespace AIWolf.Server
                 }
             }
             Console.WriteLine("======");
-            foreach (Agent agent in OrderedAgentList)
+            foreach (var agent in OrderedAgentList)
             {
-                Console.Write($"{agent}\t{AgentNameMap[agent]}\t{StatusOf(agent)}\t{RoleOf(agent)}");
+                Console.Write($"{agent}\t{agentNameMap[agent]}\t{StatusOf(agent)}\t{RoleOf(agent)}");
                 if (yesterday != null)
                 {
                     if (agent == yesterday.Executed)
@@ -370,12 +329,12 @@ namespace AIWolf.Server
                     {
                         Console.Write("\tattacked");
                     }
-                    Judge divine = yesterday.Divine;
+                    var divine = yesterday.Divine;
                     if (divine != null && agent == divine.Target)
                     {
                         Console.Write("\tdivined");
                     }
-                    Guard guard = yesterday.Guard;
+                    var guard = yesterday.Guard;
                     if (guard != null && agent == guard.Target)
                     {
                         Console.Write("\tguarded");
@@ -388,7 +347,7 @@ namespace AIWolf.Server
                 Console.WriteLine();
             }
             Console.Write($"Human:{AliveHumanList.Count}\nWerewolf:{AliveWolfList.Count}\n");
-            if (GameSetting.RoleNumMap[Role.FOX] != 0)
+            if (gameSetting.RoleNumMap[Role.FOX] != 0)
             {
                 Console.Write($"Others:{AliveAgentList.Count(a => RoleOf(a).GetTeam() == Team.OTHERS)}\n");
             }
@@ -397,12 +356,12 @@ namespace AIWolf.Server
 
         void Night()
         {
-            foreach (Agent agent in AliveAgentList)
+            foreach (var agent in AliveAgentList)
             {
-                GameServer.DayFinish(agent);
+                gameServer.DayFinish(agent);
             }
 
-            if (!GameSetting.TalkOnFirstDay && Day == 0)
+            if (!gameSetting.TalkOnFirstDay && Day == 0)
             {
                 Whisper();
             }
@@ -411,10 +370,10 @@ namespace AIWolf.Server
             List<Agent> candidates = null;
             if (Day != 0)
             {
-                for (int i = 0; i <= GameSetting.MaxRevote; i++)
+                for (var i = 0; i <= gameSetting.MaxRevote; i++)
                 {
                     Vote();
-                    candidates = GetVotedCandidates(GameData.VoteList);
+                    candidates = GetVotedCandidates(gameData.VoteList);
                     if (candidates.Count == 1)
                     {
                         executed = candidates[0];
@@ -423,14 +382,14 @@ namespace AIWolf.Server
                 }
 
                 // In case of multiple candidates.
-                if (executed == null && !GameSetting.EnableNoExecution)
+                if (executed == null && !gameSetting.EnableNoExecution)
                 {
                     executed = candidates.Shuffle().First();
                 }
 
                 if (executed != null)
                 {
-                    GameData.Executed = executed;
+                    gameData.Executed = executed;
                     if (GameLogger != null)
                     {
                         GameLogger.Log($"{Day},execute,{executed.AgentIdx},{RoleOf(executed)}");
@@ -446,16 +405,16 @@ namespace AIWolf.Server
                 Guard();
 
                 Agent attacked = null;
-                if (!(AliveWolfList.Count == 1 && RoleOf(GameData.Executed) == Role.WEREWOLF))
+                if (!(AliveWolfList.Count == 1 && RoleOf(gameData.Executed) == Role.WEREWOLF))
                 {
-                    for (int i = 0; i <= GameSetting.MaxAttackRevote; i++)
+                    for (var i = 0; i <= gameSetting.MaxAttackRevote; i++)
                     {
-                        if (i > 0 && GameSetting.WhisperBeforeRevote)
+                        if (i > 0 && gameSetting.WhisperBeforeRevote)
                         {
                             Whisper();
                         }
                         AttackVote();
-                        candidates = GetAttackVotedCandidates(GameData.AttackVoteList.Where(v => v.Agent != executed).ToList());
+                        candidates = GetAttackVotedCandidates(gameData.AttackVoteList.Where(v => v.Agent != executed).ToList());
                         if (candidates.Count == 1)
                         {
                             attacked = candidates[0];
@@ -464,19 +423,19 @@ namespace AIWolf.Server
                     }
 
                     // In case of multiple candidates.
-                    if (attacked == null && !GameSetting.EnableNoAttack)
+                    if (attacked == null && !gameSetting.EnableNoAttack)
                     {
                         attacked = candidates.Shuffle().First();
                     }
 
-                    GameData.Attacked = attacked;
+                    gameData.Attacked = attacked;
 
-                    bool guarded = false;
-                    if (GameData.Guard != null)
+                    var guarded = false;
+                    if (gameData.Guard != null)
                     {
-                        if (GameData.Guard.Target == attacked && attacked != null)
+                        if (gameData.Guard.Target == attacked && attacked != null)
                         {
-                            if (GameData.Executed == null || GameData.Executed != GameData.Guard.Agent)
+                            if (gameData.Executed == null || gameData.Executed != gameData.Guard.Agent)
                             {
                                 guarded = true;
                             }
@@ -484,8 +443,8 @@ namespace AIWolf.Server
                     }
                     if (!guarded && attacked != null && RoleOf(attacked) != Role.FOX)
                     {
-                        GameData.AttackedDead = attacked;
-                        GameData.AddLastDeadAgent(attacked);
+                        gameData.AttackedDead = attacked;
+                        gameData.AddLastDeadAgent(attacked);
                         if (GameLogger != null)
                         {
                             GameLogger.Log($"{Day},attack,{attacked.AgentIdx},true");
@@ -504,62 +463,48 @@ namespace AIWolf.Server
                         {
                             GameLogger.Log($"{Day},attack,-1,false");
                         }
-
                     }
-
                 }
-
             }
-
-            GameData = GameData.NextDay;
-            GameServer.GameData = GameData;
+            gameData = gameData.NextDay;
+            gameServer.GameData = gameData;
         }
 
         List<Agent> GetVotedCandidates(List<Vote> voteList)
         {
-            Dictionary<Agent, int> counter = new Dictionary<Agent, int>();
-            foreach (Vote vote in voteList)
+            var counter = new Dictionary<Agent, int>();
+            foreach (var vote in voteList.Where(v => StatusOf(v.Target) == Status.ALIVE))
             {
-                if (StatusOf(vote.Target) == Status.ALIVE)
+                if (counter.ContainsKey(vote.Target))
                 {
-                    if (counter.ContainsKey(vote.Target))
-                    {
-                        counter[vote.Target]++;
-                    }
-                    else
-                    {
-                        counter[vote.Target] = 1;
-                    }
+                    counter[vote.Target]++;
+                }
+                else
+                {
+                    counter[vote.Target] = 1;
                 }
             }
-            int max = 0;
-            if (counter.Count > 0)
-            {
-                max = counter.OrderBy(p => p.Value).Last().Value;
-            }
+            var max = counter.Count == 0 ? 0 : counter.Max(p => p.Value);
             return counter.Keys.Where(a => counter[a] == max).ToList();
         }
 
         List<Agent> GetAttackVotedCandidates(List<Vote> voteList)
         {
-            Dictionary<Agent, int> counter = new Dictionary<Agent, int>();
-            foreach (Vote vote in voteList)
+            var counter = new Dictionary<Agent, int>();
+            foreach (var vote in voteList.Where(v => StatusOf(v.Target) == Status.ALIVE && RoleOf(v.Target) != Role.WEREWOLF))
             {
-                if (StatusOf(vote.Target) == Status.ALIVE && RoleOf(vote.Target) != Role.WEREWOLF)
+                if (counter.ContainsKey(vote.Target))
                 {
-                    if (counter.ContainsKey(vote.Target))
-                    {
-                        counter[vote.Target]++;
-                    }
-                    else
-                    {
-                        counter[vote.Target] = 1;
-                    }
+                    counter[vote.Target]++;
+                }
+                else
+                {
+                    counter[vote.Target] = 1;
                 }
             }
-            if (!GameSetting.EnableNoAttack)
+            if (!gameSetting.EnableNoAttack)
             {
-                foreach (Agent agent in AliveHumanList)
+                foreach (var agent in AliveHumanList)
                 {
                     if (counter.ContainsKey(agent))
                     {
@@ -571,44 +516,39 @@ namespace AIWolf.Server
                     }
                 }
             }
-
-            int max = counter.OrderBy(p => p.Value).Last().Value;
+            var max = counter.Count == 0 ? 0 : counter.Max(p => p.Value);
             return counter.Keys.Where(a => counter[a] == max).ToList();
         }
 
         void DayStart()
         {
-            if (GameLogger != null)
+            foreach (var agent in OrderedAgentList)
             {
-                foreach (Agent agent in OrderedAgentList)
+                gameServer.DayStart(agent);
+                if (GameLogger != null)
                 {
-                    GameLogger.Log($"{Day},status,{agent.AgentIdx},{RoleOf(agent)},{StatusOf(agent)},{AgentNameMap[agent]}");
+                    GameLogger.Log($"{Day},status,{agent.AgentIdx},{RoleOf(agent)},{StatusOf(agent)},{agentNameMap[agent]}");
                 }
-            }
-
-            foreach (Agent agent in AliveAgentList)
-            {
-                GameServer.DayStart(agent);
             }
         }
 
         void Talk()
         {
-            foreach (Agent agent in AliveAgentList)
+            foreach (var agent in AliveAgentList)
             {
-                GameData.RemainTalkMap[agent] = GameSetting.MaxTalk;
+                gameData.RemainTalkMap[agent] = gameSetting.MaxTalk;
             }
 
-            Dictionary<Agent, int> skipCounter = new Dictionary<Agent, int>();
-            for (int turn = 0; turn < GameSetting.MaxTalkTurn; turn++)
+            var skipCounter = new Dictionary<Agent, int>();
+            for (var turn = 0; turn < gameSetting.MaxTalkTurn; turn++)
             {
-                List<Talk> talkList = new List<Talk>();
-                foreach (Agent agent in AliveAgentList.Shuffle())
+                var talkList = new List<Talk>();
+                foreach (var agent in AliveAgentList.Shuffle())
                 {
-                    string text = Utterance.OVER;
-                    if (GameData.RemainTalkMap[agent] > 0)
+                    var text = Utterance.OVER;
+                    if (gameData.RemainTalkMap[agent] > 0)
                     {
-                        text = GameServer.RequestTalk(agent);
+                        text = gameServer.RequestTalk(agent);
                     }
                     if (text == null || text.Length == 0)
                     {
@@ -628,21 +568,21 @@ namespace AIWolf.Server
                         {
                             skipCounter[agent] = 1;
                         }
-                        if (skipCounter[agent] > GameSetting.MaxSkip)
+                        if (skipCounter[agent] > gameSetting.MaxSkip)
                         {
                             text = Utterance.OVER;
                         }
                     }
-                    talkList.Add(new Talk(GameData.NextTalkIdx, Day, turn, agent, text));
+                    talkList.Add(new Talk(gameData.NextTalkIdx, Day, turn, agent, text));
                     if (text != Utterance.OVER && text != Utterance.SKIP)
                     {
                         skipCounter[agent] = 0;
                     }
                 }
-                bool continueTalk = false;
-                foreach (Talk talk in talkList)
+                var continueTalk = false;
+                foreach (var talk in talkList)
                 {
-                    GameData.AddTalk(talk.Agent, talk);
+                    gameData.AddTalk(talk.Agent, talk);
                     if (GameLogger != null)
                     {
                         GameLogger.Log($"{Day},talk,{talk.Idx},{talk.Turn},{talk.Agent.AgentIdx},{talk.Text}");
@@ -666,21 +606,21 @@ namespace AIWolf.Server
             {
                 return;
             }
-            foreach (Agent agent in AliveWolfList)
+            foreach (var agent in AliveWolfList)
             {
-                GameData.RemainWhisperMap[agent] = GameSetting.MaxWhisper;
+                gameData.RemainWhisperMap[agent] = gameSetting.MaxWhisper;
             }
 
-            Dictionary<Agent, int> skipCounter = new Dictionary<Agent, int>();
-            for (int turn = 0; turn < GameSetting.MaxWhisperTurn; turn++)
+            var skipCounter = new Dictionary<Agent, int>();
+            for (var turn = 0; turn < gameSetting.MaxWhisperTurn; turn++)
             {
-                List<Whisper> whisperList = new List<Whisper>();
-                foreach (Agent agent in AliveWolfList.Shuffle())
+                var whisperList = new List<Whisper>();
+                foreach (var agent in AliveWolfList.Shuffle())
                 {
-                    string text = Utterance.OVER;
-                    if (GameData.RemainWhisperMap[agent] > 0)
+                    var text = Utterance.OVER;
+                    if (gameData.RemainWhisperMap[agent] > 0)
                     {
-                        text = GameServer.RequestWhisper(agent);
+                        text = gameServer.RequestWhisper(agent);
                     }
                     if (text == null || text.Length == 0)
                     {
@@ -700,21 +640,21 @@ namespace AIWolf.Server
                         {
                             skipCounter[agent] = 1;
                         }
-                        if (skipCounter[agent] > GameSetting.MaxSkip)
+                        if (skipCounter[agent] > gameSetting.MaxSkip)
                         {
                             text = Utterance.OVER;
                         }
                     }
-                    whisperList.Add(new Whisper(GameData.NextWhisperIdx, Day, turn, agent, text));
+                    whisperList.Add(new Whisper(gameData.NextWhisperIdx, Day, turn, agent, text));
                     if (text != Utterance.OVER && text != Utterance.SKIP)
                     {
                         skipCounter[agent] = 0;
                     }
                 }
-                bool continueWhisper = false;
-                foreach (Whisper whisper in whisperList)
+                var continueWhisper = false;
+                foreach (var whisper in whisperList)
                 {
-                    GameData.AddWhisper(whisper.Agent, whisper);
+                    gameData.AddWhisper(whisper.Agent, whisper);
                     if (GameLogger != null)
                     {
                         GameLogger.Log($"{Day},whisper,{whisper.Idx},{whisper.Turn},{ whisper.Agent.AgentIdx},{whisper.Text}");
@@ -733,43 +673,43 @@ namespace AIWolf.Server
 
         void Vote()
         {
-            GameData.VoteList.Clear();
-            foreach (Agent agent in AliveAgentList)
+            gameData.VoteList.Clear();
+            foreach (var agent in AliveAgentList)
             {
-                Agent target = GameServer.RequestVote(agent);
+                var target = gameServer.RequestVote(agent);
                 if (target == null || StatusOf(target) == Status.DEAD || agent == target)
                 {
                     target = AliveAgentList.Where(a => a != agent).Shuffle().First();
                 }
-                Vote vote = new Vote(Day, agent, target);
-                GameData.VoteList.Add(vote);
+                var vote = new Vote(Day, agent, target);
+                gameData.VoteList.Add(vote);
                 if (GameLogger != null)
                 {
                     GameLogger.Log($"{Day},vote,{agent.AgentIdx},{target.AgentIdx}");
                 }
             }
-            GameData.LatestVoteList = new List<Vote>(GameData.VoteList);
+            gameData.LatestVoteList = new List<Vote>(gameData.VoteList);
         }
 
         void Divine()
         {
-            foreach (Agent agent in AliveAgentList.Where(a => RoleOf(a) == Role.SEER))
+            foreach (var agent in AliveAgentList.Where(a => RoleOf(a) == Role.SEER))
             {
-                Agent target = GameServer.RequestDivineTarget(agent);
-                Role targetRole = RoleOf(target);
+                var target = gameServer.RequestDivineTarget(agent);
+                var targetRole = RoleOf(target);
                 if (target == null || StatusOf(target) == Status.DEAD || targetRole == Role.UNC)
                 {
                     // Do nothing.
                 }
                 else
                 {
-                    Judge divine = new Judge(Day, agent, target, targetRole.GetSpecies());
-                    GameData.Divine = divine;
+                    var divine = new Judge(Day, agent, target, targetRole.GetSpecies());
+                    gameData.Divine = divine;
 
                     if (targetRole == Role.FOX)
                     {
-                        GameData.AddLastDeadAgent(target);
-                        GameData.CursedFox = target;
+                        gameData.AddLastDeadAgent(target);
+                        gameData.CursedFox = target;
                     }
 
                     if (GameLogger != null)
@@ -782,21 +722,21 @@ namespace AIWolf.Server
 
         void Guard()
         {
-            foreach (Agent agent in AliveAgentList.Where(a => RoleOf(a) == Role.BODYGUARD))
+            foreach (var agent in AliveAgentList.Where(a => RoleOf(a) == Role.BODYGUARD))
             {
-                if (agent == GameData.Executed)
+                if (agent == gameData.Executed)
                 {
                     continue;
                 }
-                Agent target = GameServer.RequestGuardTarget(agent);
+                var target = gameServer.RequestGuardTarget(agent);
                 if (target == null || agent == target)
                 {
                     // Do nothing.
                 }
                 else
                 {
-                    Guard guard = new Guard(Day, agent, target);
-                    GameData.Guard = guard;
+                    var guard = new Guard(Day, agent, target);
+                    gameData.Guard = guard;
 
                     if (GameLogger != null)
                     {
@@ -806,23 +746,23 @@ namespace AIWolf.Server
             }
         }
 
-        Role RoleOf(Agent agent) => agent == null ? Role.UNC : GameData.RoleMap[agent];
-        Status StatusOf(Agent agent) => agent == null ? Status.UNC : GameData.StatusMap[agent];
+        Role RoleOf(Agent agent) => agent == null ? Role.UNC : gameData.RoleMap[agent];
+        Status StatusOf(Agent agent) => agent == null ? Status.UNC : gameData.StatusMap[agent];
 
         void AttackVote()
         {
-            GameData.AttackVoteList.Clear();
-            foreach (Agent agent in AliveWolfList)
+            gameData.AttackVoteList.Clear();
+            foreach (var agent in AliveWolfList)
             {
-                Agent target = GameServer.RequestAttackTarget(agent);
+                var target = gameServer.RequestAttackTarget(agent);
                 if (target == null || StatusOf(target) == Status.DEAD || RoleOf(target) == Role.WEREWOLF)
                 {
                     // Do nothing.
                 }
                 else
                 {
-                    Vote attackVote = new Vote(Day, agent, target);
-                    GameData.AttackVoteList.Add(attackVote);
+                    var attackVote = new Vote(Day, agent, target);
+                    gameData.AttackVoteList.Add(attackVote);
 
                     if (GameLogger != null)
                     {
@@ -830,7 +770,7 @@ namespace AIWolf.Server
                     }
                 }
             }
-            GameData.LatestAttackVoteList = new List<Vote>(GameData.AttackVoteList);
+            gameData.LatestAttackVoteList = new List<Vote>(gameData.AttackVoteList);
         }
 
         static readonly Regex regexStripText = new Regex(@"^Agent\[.+?\] (.+)");
