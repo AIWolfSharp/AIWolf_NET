@@ -45,11 +45,11 @@ namespace AIWolf
 
             for (int i = 0; i < args.Length; i++)
             {
-                if (args[i].Equals("-d"))
+                if (args[i] == "-d")
                 {
                     useDefaultPlayer = true;
                 }
-                else if (args[i].Equals("-p"))
+                else if (args[i] == "-p")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
@@ -65,7 +65,7 @@ namespace AIWolf
                         Usage();
                     }
                 }
-                else if (args[i].Equals("-h"))
+                else if (args[i] == "-h")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
@@ -77,7 +77,7 @@ namespace AIWolf
                         Usage();
                     }
                 }
-                else if (args[i].Equals("-c"))
+                else if (args[i] == "-c")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
@@ -98,7 +98,7 @@ namespace AIWolf
                         Usage();
                     }
                 }
-                else if (args[i].Equals("-r"))
+                else if (args[i] == "-r")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
@@ -114,7 +114,7 @@ namespace AIWolf
                         Usage();
                     }
                 }
-                else if (args[i].Equals("-n"))
+                else if (args[i] == "-n")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
@@ -126,7 +126,7 @@ namespace AIWolf
                         Usage();
                     }
                 }
-                else if (args[i].Equals("-t"))
+                else if (args[i] == "-t")
                 {
                     i++;
                     if (i < args.Length || !args[i].StartsWith("-"))
