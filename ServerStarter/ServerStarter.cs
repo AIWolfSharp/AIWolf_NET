@@ -68,6 +68,7 @@ namespace AIWolf.Server
                 game.Rand = new Random();
                 game.Start();
             }
+            server.Close();
         }
     }
 }
