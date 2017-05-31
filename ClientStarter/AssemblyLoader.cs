@@ -7,17 +7,14 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
-#if NETCOREAPP1_1
 using Microsoft.Extensions.DependencyModel;
 using System.Runtime.Loader;
-#endif
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
 namespace AIWolf
 {
-#if NETCOREAPP1_1
     public class AssemblyLoader : AssemblyLoadContext
     {
         string folderPath;
@@ -43,5 +40,4 @@ namespace AIWolf
             return Assembly.Load(assemblyName);
         }
     }
-#endif
 }
