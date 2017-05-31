@@ -10,8 +10,6 @@
 using AIWolf.Lib;
 using AIWolf.Player.Sample;
 using System;
-using System.IO;
-using System.Reflection;
 
 namespace AIWolf
 {
@@ -143,7 +141,7 @@ namespace AIWolf
                     }
                 }
             }
-            if (port < 0 || (!useDefaultPlayer && clsName == null))
+            if (port < 0 || (!useDefaultPlayer && String.IsNullOrEmpty(clsName)))
             {
                 Usage();
             }
@@ -158,31 +156,7 @@ namespace AIWolf
             }
             else
             {
-                Assembly assembly;
-                try
-                {
-#if !NETCOREAPP1_1
-                    assembly = Assembly.LoadFrom(dllName);
-#else
-                    var fullPath = Path.GetFullPath(dllName);
-                    assembly = new AssemblyLoader(Path.GetDirectoryName(fullPath)).LoadFromAssemblyPath(fullPath);
-#endif
-                }
-                catch
-                {
-                    Console.Error.WriteLine($"ClientStarter: Error in loading {dllName}.");
-                    throw;
-                }
-
-                try
-                {
-                    player = (IPlayer)Activator.CreateInstance(assembly.GetType(clsName));
-                }
-                catch
-                {
-                    Console.Error.WriteLine($"ClientStarter: Error in creating instance of {clsName}.");
-                    throw;
-                }
+                player = PlayerLoader.Load(className: clsName, dllName: dllName);
             }
 
             TcpipClient client = new TcpipClient(host, port, playerName, roleRequest, timeout);
