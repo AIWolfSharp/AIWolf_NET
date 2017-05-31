@@ -9,13 +9,8 @@
 
 using AIWolf.Lib;
 using AIWolf.Player.Sample;
-#if NETCOREAPP1_1
-using Microsoft.Extensions.DependencyModel;
-using System.Runtime.Loader;
-#endif
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace AIWolf
@@ -34,16 +29,21 @@ namespace AIWolf
         /// </remarks>
         public static void Main(string[] args)
         {
-            string host = "localhost";
-            int port = 10000;
-            string clsName = null;
-            string dllName = null;
-            Role roleRequest = Role.UNC; // No request by default.
-            string playerName = null; // Obtained from the player by default.
-            int timeout = -1; // No limit by default.
-            bool useDefaultPlayer = false;
+            new ClientStarter(args).Start();
+        }
 
-            for (int i = 0; i < args.Length; i++)
+        string host = "localhost";
+        int port = 10000;
+        string clsName;
+        string dllName;
+        Role roleRequest = Role.UNC; // No request by default.
+        string playerName; // Obtained from the player by default.
+        int timeout = -1; // No limit by default.
+        bool useDefaultPlayer = false;
+
+        ClientStarter(string[] args)
+        {
+            for (var i = 0; i < args.Length; i++)
             {
                 if (args[i] == "-d")
                 {
@@ -56,8 +56,8 @@ namespace AIWolf
                     {
                         if (!int.TryParse(args[i], out port))
                         {
-                            Console.Error.WriteLine("ClientStarter: Invalid port {0}.", args[i]);
-                            return;
+                            Console.Error.WriteLine($"ClientStarter: Invalid port {args[i]}.");
+                            Usage();
                         }
                     }
                     else
@@ -105,8 +105,8 @@ namespace AIWolf
                     {
                         if (!Enum.TryParse(args[i], out roleRequest))
                         {
-                            Console.Error.WriteLine("ClientStarter: Invalid role {0}.", args[i]);
-                            return;
+                            Console.Error.WriteLine($"ClientStarter: Invalid role {args[i]}.");
+                            Usage();
                         }
                     }
                     else
@@ -133,8 +133,8 @@ namespace AIWolf
                     {
                         if (!int.TryParse(args[i], out timeout))
                         {
-                            Console.Error.WriteLine("ClientStarter: Invalid timeout {0}.", args[i]);
-                            return;
+                            Console.Error.WriteLine($"ClientStarter: Invalid timeout {args[i]}.");
+                            Usage();
                         }
                     }
                     else
@@ -147,7 +147,10 @@ namespace AIWolf
             {
                 Usage();
             }
+        }
 
+        void Start()
+        {
             IPlayer player;
             if (useDefaultPlayer)
             {
@@ -161,25 +164,24 @@ namespace AIWolf
 #if !NETCOREAPP1_1
                     assembly = Assembly.LoadFrom(dllName);
 #else
-                    assembly = new AssemblyLoader(Path.GetDirectoryName(Path.GetFullPath(dllName))).LoadFromAssemblyPath(Path.GetFullPath(dllName));
+                    var fullPath = Path.GetFullPath(dllName);
+                    assembly = new AssemblyLoader(Path.GetDirectoryName(fullPath)).LoadFromAssemblyPath(fullPath);
 #endif
                 }
-                catch (Exception e)
+                catch
                 {
-                    Console.Error.WriteLine("ClientStarter: Error in loading {0}.", dllName);
-                    Console.Error.WriteLine(e);
-                    return;
+                    Console.Error.WriteLine($"ClientStarter: Error in loading {dllName}.");
+                    throw;
                 }
 
                 try
                 {
                     player = (IPlayer)Activator.CreateInstance(assembly.GetType(clsName));
                 }
-                catch (Exception e)
+                catch
                 {
-                    Console.Error.WriteLine("ClientStarter: Error in creating instance of {0}.", clsName);
-                    Console.Error.WriteLine(e);
-                    return;
+                    Console.Error.WriteLine($"ClientStarter: Error in creating instance of {clsName}.");
+                    throw;
                 }
             }
 
@@ -188,56 +190,17 @@ namespace AIWolf
             {
                 client.Connect(player);
             }
-            catch (Exception ex)
+            catch
             {
                 Console.Error.WriteLine("ClientStarter: Error in running player.");
-                Console.Error.WriteLine(ex);
-                if (ex is AggregateException)
-                {
-                    foreach (var e in (ex as AggregateException).InnerExceptions)
-                    {
-                        Console.Error.WriteLine(e);
-                    }
-                }
-                return;
+                throw;
             }
         }
 
-        static void Usage()
+        void Usage()
         {
             Console.Error.WriteLine("Usage: ClientStarter [-h host] [-p port] -c clientClass dllName [roleRequest] [-n name] [-t timeout] [-d]");
             Environment.Exit(0);
         }
     }
-
-#if NETCOREAPP1_1
-    class AssemblyLoader : AssemblyLoadContext
-    {
-        string folderPath;
-
-        public AssemblyLoader(string folderPath)
-        {
-            this.folderPath = folderPath;
-        }
-
-        protected override Assembly Load(AssemblyName assemblyName)
-        {
-            var cl = DependencyContext.Default.CompileLibraries.Where(d => d.Name.Contains(assemblyName.Name));
-            if (cl.Count() > 0)
-            {
-                return Assembly.Load(new AssemblyName(cl.First().Name));
-            }
-            else
-            {
-                var fileInfo = new FileInfo($"{folderPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
-                if (File.Exists(fileInfo.FullName))
-                {
-                    var asl = new AssemblyLoader(fileInfo.DirectoryName);
-                    return asl.LoadFromAssemblyPath(fileInfo.FullName);
-                }
-            }
-            return Assembly.Load(assemblyName);
-        }
-    }
-#endif
 }
