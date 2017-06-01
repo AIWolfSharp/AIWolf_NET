@@ -40,7 +40,7 @@ namespace AIWolf
         int gameNum = 1;
         int port = 10000;
         string logDir = "./log/";
-        bool isConsoleLog = true;
+        bool hasConsoleLog = true;
         int delay = 100;
         List<string[]> commands = new List<string[]>();
 
@@ -55,7 +55,7 @@ namespace AIWolf
             {
                 var logName = Path.Combine(logSubDir, i.ToString("D3") + ".log");
                 var game = new AIWolfGame(gameSetting, server);
-                game.ShowConsoleLog = isConsoleLog;
+                game.ShowConsoleLog = hasConsoleLog;
                 game.GameLogger = new FileGameLogger(logName);
                 game.Rand = new Random();
                 game.Start();
@@ -143,11 +143,11 @@ namespace AIWolf
                         var stringComparison = StringComparison.CurrentCultureIgnoreCase;
                         if (rhs.StartsWith("y", stringComparison) || rhs.StartsWith("t", stringComparison))
                         {
-                            isConsoleLog = true;
+                            hasConsoleLog = true;
                         }
                         else
                         {
-                            isConsoleLog = false;
+                            hasConsoleLog = false;
                         }
                     }
                 }
