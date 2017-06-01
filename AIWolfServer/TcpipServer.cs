@@ -33,7 +33,6 @@ namespace AIWolf.Server
         int port;
         IPAddress address = IPAddress.Parse("127.0.0.1");
         int connectionLimit;
-        int timeLimit;
 
         /// <summary>
         /// Current game data.
@@ -70,7 +69,6 @@ namespace AIWolf.Server
             GameSetting = gameSetting;
             this.port = port;
             connectionLimit = limit;
-            timeLimit = GameSetting.TimeLimit != -1 ? GameSetting.TimeLimit : 1000;
             //ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Critical, true));
