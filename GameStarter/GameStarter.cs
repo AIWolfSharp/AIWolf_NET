@@ -65,6 +65,7 @@ namespace AIWolf
 
         void Start()
         {
+            var processes = new List<Process>();
             var tasks = new List<Task>();
             tasks.Add(Task.Run(() => StartServer()));
             foreach (var command in commands)
@@ -82,11 +83,22 @@ namespace AIWolf
                 {
                     process.StartInfo.WorkingDirectory = command[2];
                 }
-                process.Start();
-                tasks.Add(Task.Run(() => process.WaitForExit()));
-                Thread.Sleep(delay);
+                if (process.Start())
+                {
+                    processes.Add(process);
+                    tasks.Add(Task.Run(() => process.WaitForExit()));
+                    Thread.Sleep(delay);
+                }
             }
-            Task.WaitAll(tasks.ToArray());
+            Task.WaitAny(tasks.ToArray());
+            Thread.Sleep(1000);
+            foreach(var process in processes)
+            {
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                }
+            }
         }
 
         GameStarter(string initFileName)
