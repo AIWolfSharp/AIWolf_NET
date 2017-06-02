@@ -9,16 +9,19 @@
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>alpha2</VersionSuffix>
+    <VersionSuffix>pre</VersionSuffix>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf</RootNamespace>
-    <RuntimeIdentifiers>centos.7-x64;fedora.24-x64;win10-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AIWolfPlayer" Version="1.1.0-alpha2" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
+    <ProjectReference Include="..\AIWolfPlayer\AIWolfPlayer.csproj" />
   </ItemGroup>
 
 </Project>

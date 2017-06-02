@@ -3,6 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <Company>AIWolfSharp</Company>
+    <Authors>Takashi OTSUKI</Authors>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionSuffix>pre</VersionSuffix>
+    <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf</RootNamespace>
   </PropertyGroup>
 

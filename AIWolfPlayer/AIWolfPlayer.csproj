@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>alpha2</VersionSuffix>
+    <VersionSuffix>pre</VersionSuffix>
     <Authors>Takashi OTSUKI</Authors>
     <Company>AIWolfSharp</Company>
     <Description>The AIWolf sample player.</Description>
     <Copyright>Copyright ©  2017 Takashi OTSUKI</Copyright>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <RootNamespace>AIWolf.Player</RootNamespace>
   </PropertyGroup>
 
@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AIWolfLib" Version="1.1.0-alpha2" />
+    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
   </ItemGroup>
 
 </Project>

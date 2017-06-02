@@ -3,7 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <RuntimeIdentifiers>centos.7-x64;fedora.24-x64;win10-x64</RuntimeIdentifiers>
+    <Company>AIWolfSharp</Company>
+    <Authors>Takashi OTSUKI</Authors>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionSuffix>pre</VersionSuffix>
+    <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AIWolfServer" Version="1.1.0-alpha2" />
+    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
+    <ProjectReference Include="..\AIWolfServer\AIWolfServer.csproj" />
   </ItemGroup>
 
 </Project>
