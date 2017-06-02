@@ -13,12 +13,12 @@ AIWolf.NETは.NET版人狼知能プラットフォームです．
 1. ダウンロード
 
     * クライアントスタータ：
-[ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
+[ClientStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0.zip)
     * サーバスタータ：
-[ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
+[ServerStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ServerStarter-2.0.0.zip)
     * ゲームスタータ：
-[GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
-    * リファレンスマニュアル：[AIWolf_NET_1.1.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_J.zip)
+[GameStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
+    * リファレンスマニュアル：[AIWolf_NET_2.0.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_J.zip)
 
 1. 履歴と変更点
 
@@ -38,7 +38,7 @@ AIWolf.NETは.NET版人狼知能プラットフォームです．
       ライブラリには変更ありませんが，SHFB(Sandcastle Help File Builder)が
       ようやく.NET Core/Standardに対応したので，
       リファレンスマニュアルが普通に生成できるようになりました．
-    * 1.1.0: ゲームサーバが加わり.NET版だけで完結するようになったのに伴い，
+    * 2.0.0: ゲームサーバが加わり.NET版だけで完結するようになったのに伴い，
       名称を「ライブラリ」から「プラットフォーム」に変えました．
       * ゲームサーバが加わりました．
         ただし，発話文字列チェックと時間制限は実装していません．

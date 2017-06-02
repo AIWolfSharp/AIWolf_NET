@@ -15,12 +15,12 @@ which is compatible with the official AIWolf platform.
 1. DOWNLOADS
 
     * ClientStarter: 
-[ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
+[ClientStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0.zip)
     * ServerStarter: 
-[ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
+[ServerStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ServerStarter-2.0.0.zip)
     * GameStarter: 
-[GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
-    * Reference manual: [AIWolf_NET_1.1.0_ReferenceManual_E.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_E.zip)
+[GameStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
+    * Reference manual: [AIWolf_NET_2.0.0_ReferenceManual_E.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_E.zip)
 
 1. HISTORY and CHANGES
 
@@ -34,7 +34,7 @@ which is compatible with the official AIWolf platform.
     * 1.0.6: Modifications for the coming AIWolfServer library.
       * Introduce enumeration type Team.
     * 1.0.7: Enable ClientStarter load assembly from multiple DLLs.
-    * 1.1.0: The first release of platform version including game server.
+    * 2.0.0: The first release of platform version including game server.
       * Now we have a game server library and the server starter.
         There remain the following features unimplemented.
         * Validation of the uttered text.

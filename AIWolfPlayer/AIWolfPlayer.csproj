@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>pre</VersionSuffix>
+    <VersionPrefix>2.0.0</VersionPrefix>
+    <VersionSuffix>beta</VersionSuffix>
     <Authors>Takashi OTSUKI</Authors>
     <Company>AIWolfSharp</Company>
     <Description>The AIWolf sample player.</Description>
     <Copyright>Copyright ©  2017 Takashi OTSUKI</Copyright>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <RootNamespace>AIWolf.Player</RootNamespace>
   </PropertyGroup>
 
@@ -18,7 +17,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.4\AIWolfPlayer.xml</DocumentationFile>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_4;JHELP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
