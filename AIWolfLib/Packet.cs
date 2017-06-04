@@ -8,21 +8,19 @@
 //
 
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// エージェントに送るパケット
+    /// サーバから送られてきたパケット
     /// </summary>
 #else
     /// <summary>
     /// Packet for sending data to client.
     /// </summary>
 #endif
-    [DataContract]
-    public class Packet
+    class Packet
     {
 #if JHELP
         /// <summary>
@@ -33,7 +31,6 @@ namespace AIWolf.Lib
         /// The request from the server.
         /// </summary>
 #endif
-        [DataMember(Name = "request")]
         public Request Request { get; }
 
 #if JHELP
@@ -45,7 +42,6 @@ namespace AIWolf.Lib
         /// The game information.
         /// </summary>
 #endif
-        [DataMember(Name = "gameInfo")]
         public GameInfo GameInfo { get; }
 
 #if JHELP
@@ -57,7 +53,6 @@ namespace AIWolf.Lib
         /// The setting of game.
         /// </summary>
 #endif
-        [DataMember(Name = "gameSetting")]
         public GameSetting GameSetting { get; }
 
 #if JHELP
@@ -69,7 +64,6 @@ namespace AIWolf.Lib
         /// The history of talks.
         /// </summary>
 #endif
-        [DataMember(Name = "talkHistory")]
         public List<Talk> TalkHistory { get; }
 
 #if JHELP
@@ -81,7 +75,6 @@ namespace AIWolf.Lib
         /// The history of whispers.
         /// </summary>
 #endif
-        [DataMember(Name = "whisperHistory")]
         public List<Whisper> WhisperHistory { get; }
 
 #if JHELP
@@ -95,10 +88,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="request">Request given.</param>
 #endif
-        public Packet(Request request)
-        {
-            Request = request;
-        }
+        public Packet(Request request) => Request = request;
 
 #if JHELP
         /// <summary>
@@ -113,10 +103,7 @@ namespace AIWolf.Lib
         /// <param name="request">Request given.</param>
         /// <param name="gameInfo">Game information given.</param>
 #endif
-        public Packet(Request request, GameInfo gameInfo) : this(request)
-        {
-            GameInfo = gameInfo;
-        }
+        public Packet(Request request, GameInfo gameInfo) : this(request) => GameInfo = gameInfo;
 
 #if JHELP
         /// <summary>
@@ -133,10 +120,7 @@ namespace AIWolf.Lib
         /// <param name="gameInfo">Game information given.</param>
         /// <param name="gameSetting">GameSetting representation of setting of game given.</param>
 #endif
-        public Packet(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo)
-        {
-            GameSetting = gameSetting;
-        }
+        public Packet(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo) => GameSetting = gameSetting;
 
 #if JHELP
         /// <summary>
