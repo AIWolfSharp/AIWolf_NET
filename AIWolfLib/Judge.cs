@@ -22,7 +22,6 @@ namespace AIWolf.Lib
     /// The judge whether the player is human or werewolf.
     /// </summary>
 #endif
-    [DataContract]
     public class Judge
     {
 #if JHELP
@@ -34,7 +33,6 @@ namespace AIWolf.Lib
         /// The day of this judge.
         /// </summary>
 #endif
-        [DataMember(Name = "day")]
         public int Day { get; }
 
 #if JHELP
@@ -48,12 +46,6 @@ namespace AIWolf.Lib
 #endif
         public Agent Agent { get; }
 
-        /// <summary>
-        /// The index number of the agent who judged.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int _Agent { get; }
-
 #if JHELP
         /// <summary>
         /// 判定されたエージェント
@@ -65,13 +57,6 @@ namespace AIWolf.Lib
 #endif
         public Agent Target { get; }
 
-        /// <summary>
-        /// The index nunmber of the judged agent.
-        /// </summary>
-        [DataMember(Name = "target")]
-        int _Target { get; }
-
-
 #if JHELP
         /// <summary>
         /// 判定結果
@@ -82,12 +67,6 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         public Species Result { get; }
-
-        /// <summary>
-        /// The result of this judge in string.
-        /// </summary>
-        [DataMember(Name = "result")]
-        string _Result { get; }
 
 #if JHELP
         /// <summary>
@@ -106,42 +85,12 @@ namespace AIWolf.Lib
         /// <param name="target">The judged agent.</param>
         /// <param name="result">The result of this judge.</param>
 #endif
-        public Judge(int day, Agent agent, Agent target, Species result)
+        public Judge(int day = 0, Agent agent = null, Agent target = null, Species result = Species.UNC)
         {
             Day = day;
-            if (Day < 0)
-            {
-                Error.RuntimeError("Invalid day " + Day + ".");
-                Day = 0;
-                Error.Warning("Force it to be " + Day + ".");
-            }
-
             Agent = agent;
-            if (Agent == null)
-            {
-                Error.RuntimeError("Agent must not be null.");
-                Agent = Agent.GetAgent(0);
-                Error.Warning("Force it to be " + Agent + ".");
-            }
-            _Agent = Agent.AgentIdx;
-
             Target = target;
-            if (Target == null)
-            {
-                Error.RuntimeError("Target must not be null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning("Force it to be " + Target + ".");
-            }
-            _Target = Target.AgentIdx;
-
             Result = result;
-            if (Result == Species.UNC)
-            {
-                Error.RuntimeError("Invalid result " + Result + ".");
-                Result = Species.HUMAN;
-                Error.Warning("Force it to be " + Result + ".");
-            }
-            _Result = Result.ToString();
         }
 
         /// <summary>
@@ -152,18 +101,8 @@ namespace AIWolf.Lib
         /// <param name="target">The index of judged agent.</param>
         /// <param name="result">The result of this judge.</param>
         [JsonConstructor]
-        Judge(int day, int agent, int target, string result) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), Species.HUMAN)
-        {
-            Species r;
-            if (!Enum.TryParse(result, out r) || r == Species.UNC)
-            {
-                Error.RuntimeError("Invalid result string " + result + ".");
-                r = Species.HUMAN;
-                Error.Warning("Force it to be " + r + ".");
-            }
-            Result = r;
-            _Result = r.ToString();
-        }
+        Judge(int day, int agent, int target, string result)
+            : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), (Species)Enum.Parse(typeof(Species), result)) { }
 
 #if JHELP
         /// <summary>
@@ -176,9 +115,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return Agent + "->" + Target + "@" + Day + ":" + Result;
-        }
+        public override string ToString() => $"{Agent}->{Target}@{Day}:{Result}";
     }
 }
