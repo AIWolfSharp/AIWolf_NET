@@ -32,15 +32,10 @@ namespace AIWolf.Lib
         int timeout;
         Role requestRole;
         string playerName;
-
-        bool running = false;
         TcpClient tcpClient;
         IPlayer player;
         GameInfo gameInfo;
         GameInfo lastGameInfo;
-        int day = -1;
-        Dictionary<int, List<Talk>> dayTalkMap = new Dictionary<int, List<Talk>>();
-        Dictionary<int, List<Whisper>> dayWhisperMap = new Dictionary<int, List<Whisper>>();
 
 #if JHELP
         /// <summary>
@@ -68,7 +63,6 @@ namespace AIWolf.Lib
             this.playerName = playerName;
             this.requestRole = requestRole;
             this.timeout = timeout;
-            running = false;
         }
 
 #if JHELP
@@ -89,16 +83,14 @@ namespace AIWolf.Lib
             tcpClient = new TcpClient();
             tcpClient.ConnectAsync(host, port).Wait();
 
-            try
+            using (var sr = new StreamReader(tcpClient.GetStream()))
+            using (var sw = new StreamWriter(tcpClient.GetStream()))
             {
-                StreamReader sr = new StreamReader(tcpClient.GetStream());
-                StreamWriter sw = new StreamWriter(tcpClient.GetStream());
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                while (!sr.EndOfStream)
                 {
-                    Packet packet = ToPacket(line);
-
-                    object obj = Recieve(packet);
+                    var line = sr.ReadLine();
+                    var packet = ToPacket(line);
+                    var obj = Recieve(packet);
                     if (packet.Request.HasReturn())
                     {
                         if (obj == null)
@@ -109,24 +101,13 @@ namespace AIWolf.Lib
                         {
                             sw.WriteLine(obj);
                         }
-                        else
+                        else // Maybe obj is Agent.
                         {
                             sw.WriteLine(DataConverter.Serialize(obj));
                         }
                         sw.Flush();
                     }
                 }
-            }
-            catch (IOException)
-            {
-                if (running)
-                {
-                    throw;
-                }
-            }
-            finally
-            {
-                running = false;
             }
         }
 
@@ -137,21 +118,11 @@ namespace AIWolf.Lib
         /// <returns>The object returned from the player.</returns>
         object Recieve(Packet packet)
         {
-            GameSetting gameSetting = packet.GameSetting;
+            var gameSetting = packet.GameSetting;
 
             if (packet.GameInfo != null)
             {
                 gameInfo = packet.GameInfo;
-                if (gameInfo.Day == day + 1) // New day.
-                {
-                    if (gameInfo.Day > 0)
-                    {
-                        // Save yesterday's talks/whispers.
-                        dayTalkMap[day] = lastGameInfo.TalkList;
-                        dayWhisperMap[day] = lastGameInfo.WhisperList;
-                    }
-                    day = gameInfo.Day;
-                }
                 lastGameInfo = gameInfo;
             }
             else
@@ -181,7 +152,7 @@ namespace AIWolf.Lib
                 }
             }
 
-            Task<object> task = Task.Run(() =>
+            var task = Task.Run(() =>
             {
                 object returnObject = null;
                 switch (packet.Request)
@@ -189,7 +160,6 @@ namespace AIWolf.Lib
                     case Request.NO_REQUEST:
                         break;
                     case Request.INITIALIZE:
-                        running = true;
                         player.Initialize(gameInfo, gameSetting);
                         break;
                     case Request.DAILY_INITIALIZE:
@@ -202,7 +172,7 @@ namespace AIWolf.Lib
                     case Request.NAME:
                         if (playerName == null || playerName.Length == 0)
                         {
-                            string name = player.Name;
+                            var name = player.Name;
                             if (name == null || name.Length == 0)
                             {
                                 returnObject = player.GetType().Name;
@@ -230,7 +200,7 @@ namespace AIWolf.Lib
                         break;
                     case Request.TALK:
                         player.Update(gameInfo);
-                        string talkText = player.Talk();
+                        var talkText = player.Talk();
                         if (talkText == null)
                         {
                             returnObject = Utterance.SKIP;
@@ -242,7 +212,7 @@ namespace AIWolf.Lib
                         break;
                     case Request.WHISPER:
                         player.Update(gameInfo);
-                        string whisperText = player.Whisper();
+                        var whisperText = player.Whisper();
                         if (whisperText == null)
                         {
                             returnObject = Utterance.SKIP;
@@ -267,10 +237,6 @@ namespace AIWolf.Lib
                     case Request.FINISH:
                         player.Update(gameInfo);
                         player.Finish();
-                        running = false;
-                        day = -1;
-                        dayTalkMap.Clear();
-                        dayWhisperMap.Clear();
                         break;
                     default:
                         break;
@@ -283,7 +249,7 @@ namespace AIWolf.Lib
             }
             else
             {
-                Error.TimeoutError(string.Format("{0}@{1} exceeds the time limit({2}ms).", packet.Request, player.Name, timeout));
+                Error.TimeoutError($"{packet.Request}@{player.Name} exceeds the time limit({timeout}ms).");
                 task.Wait(-1);
                 return task.Result;
             }
@@ -345,29 +311,14 @@ namespace AIWolf.Lib
         /// <returns>The instance of Packet class converted from the JSON string.</returns>
         Packet ToPacket(string line)
         {
-            Dictionary<string, object> map = DataConverter.Deserialize<Dictionary<string, object>>(line);
-
-            if (map["request"] == null)
-            {
-                Error.RuntimeError("There is no request in " + line + ".");
-                Error.Warning("Force it to be Request.DUMMY.");
-                return new Packet(Request.NO_REQUEST);
-            }
-
-            Request request;
-            if (!Enum.TryParse((string)map["request"], out request))
-            {
-                Error.RuntimeError("Invalid request in " + line + ".");
-                Error.Warning("Force it to be Request.DUMMY.");
-                return new Packet(Request.NO_REQUEST);
-            }
-
+            var map = DataConverter.Deserialize<Dictionary<string, object>>(line);
+            var request = (Request)Enum.Parse(typeof(Request), (string)map["request"]);
             if (map["gameInfo"] != null)
             {
-                GameInfo gameInfo = DataConverter.Deserialize<GameInfo>(DataConverter.Serialize(map["gameInfo"]));
+                var gameInfo = DataConverter.Deserialize<GameInfo>(DataConverter.Serialize(map["gameInfo"]));
                 if (map["gameSetting"] != null)
                 {
-                    GameSetting gameSetting = DataConverter.Deserialize<GameSetting>(DataConverter.Serialize(map["gameSetting"]));
+                    var gameSetting = DataConverter.Deserialize<GameSetting>(DataConverter.Serialize(map["gameSetting"]));
                     return new Packet(request, gameInfo, gameSetting);
                 }
                 else
