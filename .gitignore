@@ -215,3 +215,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 AIWolf.VC.opendb
+/ClientStarter/Properties/launchSettings.json
