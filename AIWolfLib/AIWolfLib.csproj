@@ -2,20 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <Description>The AIWolf library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
     <RootNamespace>AIWolf.Lib</RootNamespace>
-    <FileVersion>1.0.7.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\AIWolfLib.xml</DocumentationFile>
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
   </PropertyGroup>
 
