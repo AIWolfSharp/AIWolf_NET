@@ -8,7 +8,6 @@
 //
 
 using Newtonsoft.Json;
-using System.Runtime.Serialization;
 
 namespace AIWolf.Lib
 {
@@ -21,21 +20,8 @@ namespace AIWolf.Lib
     /// Information of vote for execution.
     /// </summary>
 #endif
-    [DataContract]
     public class Vote
     {
-        /// <summary>
-        /// The index number of the agent who voted.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int _agent;
-
-        /// <summary>
-        /// The index number of the voted agent.
-        /// </summary>
-        [DataMember(Name = "target")]
-        int _target;
-
 #if JHELP
         /// <summary>
         /// この投票の日
@@ -45,7 +31,6 @@ namespace AIWolf.Lib
         /// The day of this vote.
         /// </summary>
 #endif
-        [DataMember(Name = "day")]
         public int Day { get; }
 
 #if JHELP
@@ -57,7 +42,7 @@ namespace AIWolf.Lib
         /// The agent who voted.
         /// </summary>
 #endif
-        public Agent Agent => Agent.GetAgent(_agent);
+        public Agent Agent { get; }
 
 #if JHELP
         /// <summary>
@@ -68,7 +53,7 @@ namespace AIWolf.Lib
         /// The voted agent.
         /// </summary>
 #endif
-        public Agent Target => Agent.GetAgent(_target);
+        public Agent Target { get; }
 
 #if JHELP
         /// <summary>
@@ -85,37 +70,11 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who voted.</param>
         /// <param name="target">The voted agent.</param>
 #endif
-        public Vote(int day, Agent agent, Agent target)
+        public Vote(int day = 0, Agent agent = null, Agent target = null)
         {
             Day = day;
-            if (Day < 0)
-            {
-                Error.RuntimeError("Invalid day " + Day + ".");
-                Error.Warning("Force it to be 0.");
-                Day = 0;
-            }
-
-            if (agent == null)
-            {
-                Error.RuntimeError("Agent must not be null.");
-                Error.Warning("Force it to be Agent[00].");
-                _agent = 0;
-            }
-            else
-            {
-                _agent = agent.AgentIdx;
-            }
-
-            if (target == null)
-            {
-                Error.RuntimeError("Target must not be null.");
-                Error.Warning("Force it to be Agent[00].");
-                _target = 0;
-            }
-            else
-            {
-                _target = target.AgentIdx;
-            }
+            Agent = agent;
+            Target = target;
         }
 
         /// <summary>
@@ -125,9 +84,8 @@ namespace AIWolf.Lib
         /// <param name="agent">The index of agent who voted.</param>
         /// <param name="target">The index of voted agent.</param>
         [JsonConstructor]
-        Vote(int day, int agent, int target) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target))
-        {
-        }
+        Vote(int day, int agent, int target)
+            : this(day, Agent.GetAgent(agent), Agent.GetAgent(target)) { }
 
 #if JHELP
         /// <summary>
@@ -140,9 +98,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString()
-        {
-            return Agent + "voted" + Target + "@" + Day;
-        }
+        public override string ToString() => $"{Agent}voted{Target}@{Day}";
     }
 }
