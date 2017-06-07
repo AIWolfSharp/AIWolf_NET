@@ -6,7 +6,7 @@
     <Description>The starter for AIWolf client.</Description>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf</RootNamespace>
   </PropertyGroup>

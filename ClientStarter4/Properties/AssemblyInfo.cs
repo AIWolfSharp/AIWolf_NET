@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ClientStarter")]
 [assembly: AssemblyDescription("The starter for AIWolf client.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("AIWolfSharp")]
 [assembly: AssemblyProduct("ClientStarter")]
 [assembly: AssemblyCopyright("Copyright ©  2017 Takashi OTSUKI")]
 [assembly: AssemblyTrademark("")]
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.8.0")]
+[assembly: AssemblyFileVersion("1.0.9.0")]
