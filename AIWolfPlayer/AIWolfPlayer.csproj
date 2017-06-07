@@ -8,14 +8,17 @@
     <Description>The AIWolf sample player.</Description>
     <Copyright>Copyright ©  2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf.Player</RootNamespace>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
+    <DocumentationFile>bin\Debug\netstandard1.4\AIWolfPlayer.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard1.4\AIWolfPlayer.xml</DocumentationFile>
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_4;JHELP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
