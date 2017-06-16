@@ -23,7 +23,7 @@ namespace AIWolf.Lib
     /// Content class.
     /// </summary>
 #endif
-    public class Content
+    public class Content : IEquatable<Content>
     {
 #if JHELP
         /// <summary>
@@ -293,6 +293,49 @@ namespace AIWolf.Lib
             }
             return null;
         }
+
+#if JHELP
+        /// <summary>
+        /// 発話文字列が等しい場合trueを返す
+        /// </summary>
+        /// <param name="other">比較対象</param>
+        /// <returns>発話文字列が等しい場合true</returns>
+#else
+        /// <summary>
+        /// Returns true if text representation of this content equals that of other.
+        /// </summary>
+        /// <param name="other">Content to compare with this content.</param>
+        /// <returns>true if other equals this in text; otherwise, false.</returns>
+#endif
+        public bool Equals(Content other) => other == null ? false : this.Text == other.Text;
+
+#if JHELP
+        /// <summary>
+        /// 発話文字列が等しい場合trueを返す
+        /// </summary>
+        /// <param name="obj">比較対象</param>
+        /// <returns>発話文字列が等しい場合true</returns>
+#else
+        /// <summary>
+        /// Returns true if text representation of this content equals that of other.
+        /// </summary>
+        /// <param name="obj">Object to compare with this content.</param>
+        /// <returns>true if other equals this in text; otherwise, false.</returns>
+#endif
+        public override bool Equals(object obj) => obj == null || this.GetType() != obj.GetType() ? false : this.Equals((Content)obj);
+
+#if JHELP
+        /// <summary>
+        /// ハッシュ関数
+        /// </summary>
+        /// <returns>ハッシュ値</returns>
+#else
+        /// <summary>
+        /// Hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+#endif
+        public override int GetHashCode() => Text.GetHashCode();
     }
 
 #if JHELP
