@@ -144,7 +144,7 @@ namespace AIWolf.Lib
         /// The list of the operands in the Content.
         /// </summary>
 #endif
-        public IList<Content> ContentList { get; }
+        public List<Content> ContentList { get; }
 
 #if JHELP
         /// <summary>
@@ -213,7 +213,7 @@ namespace AIWolf.Lib
             {
                 Topic = Topic.OPERATOR;
                 Operator = Operator.REQUEST;
-                ContentList = new List<Content> { new Content(sentence) }.AsReadOnly();
+                ContentList = new List<Content> { new Content(sentence) };
             }
             else // Simple sentence.
             {

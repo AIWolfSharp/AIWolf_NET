@@ -152,7 +152,7 @@ namespace AIWolf.Lib
         /// The list of the operands in the Content.
         /// </summary>
 #endif
-        internal IList<Content> ContentList { get; set; }
+        internal List<Content> ContentList { get; set; }
     }
 
 #if JHELP
@@ -554,7 +554,7 @@ namespace AIWolf.Lib
                     Subject = agent,
                     Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), content.Text }).Trim()
                 }
-            }.AsReadOnly();
+            };
             Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Operator + "(" + ContentList[0].Text + ")" }).Trim();
         }
     }
