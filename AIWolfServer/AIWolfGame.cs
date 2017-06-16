@@ -108,9 +108,9 @@ namespace AIWolf.Server
 
             var agentList = gameServer.ConnectedAgentList.Shuffle();
 
-            if (agentList.Count != gameSetting.PlayerNum)
+            if (agentList.Count() != gameSetting.PlayerNum)
             {
-                throw new Exception($"Player num is {gameSetting.PlayerNum} but connected agent is {agentList.Count}.");
+                throw new Exception($"Player num is {gameSetting.PlayerNum} but connected agent is {agentList.Count()}.");
             }
 
             // 希望役職を優先して配役する
@@ -405,7 +405,7 @@ namespace AIWolf.Server
                 Guard();
 
                 Agent attacked = null;
-                if (!(AliveWolfList.Count == 1 && RoleOf(gameData.Executed) == Role.WEREWOLF))
+                if (AliveWolfList.Count > 0)
                 {
                     IList<Agent> candidates = null;
                     for (var i = 0; i <= gameSetting.MaxAttackRevote; i++)
