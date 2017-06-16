@@ -105,7 +105,7 @@ namespace AIWolf.Lib
         /// <param name="target">The judged agent.</param>
         /// <param name="result">The result of this judge.</param>
 #endif
-        public Judge(int day, Agent agent, Agent target, Species result = Species.UNC)
+        public Judge(int day = 0, Agent agent = null, Agent target = null, Species result = Species.UNC)
         {
             Day = day;
             Agent = agent;
@@ -124,9 +124,8 @@ namespace AIWolf.Lib
         /// <param name="target">The index of judged agent.</param>
         /// <param name="result">The result of this judge.</param>
         [JsonConstructor]
-        Judge(int day, int agent, int target, string result) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), (Species)Enum.Parse(typeof(Species), result))
-        {
-        }
+        Judge(int day, int agent, int target, string result)
+            : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), (Species)Enum.Parse(typeof(Species), result)) { }
 
 #if JHELP
         /// <summary>
@@ -139,6 +138,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString() => Agent + "->" + Target + "@" + Day + ":" + Result;
+        public override string ToString() => $"{Agent}->{Target}@{Day}:{Result}";
     }
 }
