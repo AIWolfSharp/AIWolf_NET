@@ -157,7 +157,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="content">Original content.</param>
 #endif
-        internal Content(Content content)
+        public Content(Content content)
         {
             Text = content.Text;
             Topic = content.Topic;
@@ -236,7 +236,7 @@ namespace AIWolf.Lib
                         break;
                     case Topic.AGREE:
                     case Topic.DISAGREE:
-                        if(split[1 + offset] == "TALK")
+                        if (split[1 + offset] == "TALK")
                         {
                             Utterance = new Talk(GetInt(split[3 + offset]), GetInt(split[2 + offset]));
                         }
