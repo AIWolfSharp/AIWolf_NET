@@ -379,7 +379,7 @@ namespace AIWolf.Lib
 
             // その他のプロパティ
             Role = RoleMap[Agent];
-            AgentList = StatusMap.Keys.ToList().AsReadOnly();
+            AgentList = StatusMap.Keys.Shuffle().ToList().AsReadOnly();
             AliveAgentList = AgentList.Where(a => StatusMap[a] == Status.ALIVE).ToList().AsReadOnly();
         }
 
