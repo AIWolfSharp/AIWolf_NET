@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace AIWolf.Lib
 {
@@ -23,6 +24,7 @@ namespace AIWolf.Lib
     /// The settings of the game.
     /// </summary>
 #endif
+    [DataContract]
     public class GameSetting
     {
         /// <summary>
@@ -88,6 +90,7 @@ namespace AIWolf.Lib
                 PlayerNum = agentNum,
             };
         }
+
 #if JHELP
         /// <summary>
         /// 各役職の人数
@@ -97,7 +100,8 @@ namespace AIWolf.Lib
         /// The number of each role.
         /// </summary>
 #endif
-        public Dictionary<Role, int> RoleNumMap { get; private set; }
+        [DataMember(Name = "roleNumMap")]
+        public Dictionary<Role, int> RoleNumMap { get; set; }
 
 #if JHELP
         /// <summary>
@@ -108,7 +112,8 @@ namespace AIWolf.Lib
         /// The maximum number of talks.
         /// </summary>
 #endif
-        public int MaxTalk { get; private set; }
+        [DataMember(Name = "maxTalk")]
+        public int MaxTalk { get; set; }
 
 #if JHELP
         /// <summary>
@@ -119,7 +124,8 @@ namespace AIWolf.Lib
         /// The maximum number of turns of talk.
         /// </summary>
 #endif
-        public int MaxTalkTurn { get; private set; }
+        [DataMember(Name = "maxTalkTurn")]
+        public int MaxTalkTurn { get; set; }
 
 #if JHELP
         /// <summary>
@@ -130,7 +136,8 @@ namespace AIWolf.Lib
         /// The maximum number of whispers a day.
         /// </summary>
 #endif
-        public int MaxWhisper { get; private set; }
+        [DataMember(Name = "maxWhisper")]
+        public int MaxWhisper { get; set; }
 
 #if JHELP
         /// <summary>
@@ -141,7 +148,8 @@ namespace AIWolf.Lib
         /// The maximum number of turns of whisper.
         /// </summary>
 #endif
-        public int MaxWhisperTurn { get; private set; }
+        [DataMember(Name = "maxWhisperTurn")]
+        public int MaxWhisperTurn { get; set; }
 
 #if JHELP
         /// <summary>
@@ -152,7 +160,8 @@ namespace AIWolf.Lib
         /// The maximum permissible length of the succession of SKIPs.
         /// </summary>
 #endif
-        public int MaxSkip { get; private set; }
+        [DataMember(Name = "maxSkip")]
+        public int MaxSkip { get; set; }
 
 #if JHELP
         /// <summary>
@@ -163,7 +172,8 @@ namespace AIWolf.Lib
         /// The maximum number of revotes.
         /// </summary>
 #endif
-        public int MaxRevote { get; private set; }
+        [DataMember(Name = "maxRevote")]
+        public int MaxRevote { get; set; }
 
 #if JHELP
         /// <summary>
@@ -174,7 +184,8 @@ namespace AIWolf.Lib
         /// The maximum number of revotes for attack.
         /// </summary>
 #endif
-        public int MaxAttackRevote { get; private set; }
+        [DataMember(Name = "maxAttackRevote")]
+        public int MaxAttackRevote { get; set; }
 
 #if JHELP
         /// <summary>
@@ -185,7 +196,8 @@ namespace AIWolf.Lib
         /// Whether or not the game permit to attack no one.
         /// </summary>
 #endif
-        public bool EnableNoAttack { get; private set; }
+        [DataMember(Name = "enableNoAttack")]
+        public bool EnableNoAttack { get; set; }
 
 #if JHELP
         /// <summary>
@@ -196,7 +208,8 @@ namespace AIWolf.Lib
         /// Whether or not agent can see who vote to who.
         /// </summary>
 #endif
-        public bool VoteVisible { get; private set; }
+        [DataMember(Name = "voteVisible")]
+        public bool VoteVisible { get; set; }
 
 #if JHELP
         /// <summary>
@@ -207,7 +220,8 @@ namespace AIWolf.Lib
         /// Whether or not there is vote on the first day.
         /// </summary>
 #endif
-        public bool VotableOnFirstDay { get; private set; }
+        [DataMember(Name = "votableInFirstDay")]
+        public bool VotableOnFirstDay { get; set; }
 
 #if JHELP
         /// <summary>
@@ -218,7 +232,8 @@ namespace AIWolf.Lib
         /// Whether or not executing nobody is allowed.
         /// </summary>
 #endif
-        public bool EnableNoExecution { get; private set; }
+        [DataMember(Name = "enableNoExecution")]
+        public bool EnableNoExecution { get; set; }
 
 #if JHELP
         /// <summary>
@@ -229,7 +244,8 @@ namespace AIWolf.Lib
         /// Whether or not there are talks on the first day.
         /// </summary>
 #endif
-        public bool TalkOnFirstDay { get; private set; }
+        [DataMember(Name = "talkOnFirstDay")]
+        public bool TalkOnFirstDay { get; set; }
 
 #if JHELP
         /// <summary>
@@ -240,7 +256,8 @@ namespace AIWolf.Lib
         /// Whether or not the uttered text is validated.
         /// </summary>
 #endif
-        public bool ValidateUtterance { get; private set; }
+        [DataMember(Name = "validateUtterance")]
+        public bool ValidateUtterance { get; set; }
 
 #if JHELP
         /// <summary>
@@ -251,7 +268,8 @@ namespace AIWolf.Lib
         /// Whether or not werewolf can whisper before the revote for attack.
         /// </summary>
 #endif
-        public bool WhisperBeforeRevote { get; private set; }
+        [DataMember(Name = "whisperBeforeRevote")]
+        public bool WhisperBeforeRevote { get; set; }
 
 #if JHELP
         /// <summary>
@@ -262,7 +280,8 @@ namespace AIWolf.Lib
         /// The random seed.
         /// </summary>
 #endif
-        public long RandomSeed { get; }
+        [DataMember(Name = "randomSeed")]
+        public long RandomSeed { get; set; }
 
 #if JHELP
         /// <summary>
@@ -273,7 +292,8 @@ namespace AIWolf.Lib
         /// The upper limit for the response time to the request.
         /// </summary>
 #endif
-        public int TimeLimit { get; private set; }
+        [DataMember(Name = "timeLimit")]
+        public int TimeLimit { get; set; }
 
 #if JHELP
         /// <summary>
@@ -284,7 +304,13 @@ namespace AIWolf.Lib
         /// The number of players.
         /// </summary>
 #endif
-        public int PlayerNum { get; private set; }
+        [DataMember(Name = "playerNum")]
+        public int PlayerNum { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance.
+        /// </summary>
+        GameSetting() { }
 
         /// <summary>
         /// Initializes a new instance.
@@ -295,7 +321,7 @@ namespace AIWolf.Lib
             bool voteVisible, bool votableInFirstDay, bool enableNoExecution, bool talkOnFirstDay,
             bool validateUtterance, bool whisperBeforeRevote, long randomSeed, int timeLimit)
         {
-            RoleNumMap = roleNumMap == null ? new Dictionary<Role, int>() : roleNumMap;
+            RoleNumMap = roleNumMap;
             MaxTalk = maxTalk;
             MaxTalkTurn = maxTalkTurn;
             MaxWhisper = maxWhisper;
@@ -314,7 +340,5 @@ namespace AIWolf.Lib
             TimeLimit = timeLimit;
             PlayerNum = RoleNumMap.Values.Sum();
         }
-
-        GameSetting() { }
     }
 }
