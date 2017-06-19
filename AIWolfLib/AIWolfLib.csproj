@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>pre</VersionSuffix>
+    <VersionSuffix>beta</VersionSuffix>
     <Description>The AIWolf library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
@@ -26,7 +26,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
 </Project>
