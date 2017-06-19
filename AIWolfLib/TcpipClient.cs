@@ -56,7 +56,7 @@ namespace AIWolf.Lib
         /// <param name="requestRole">Role this client requests.</param>
         /// <param name="timeout">The number of milliseconds to wait for the request call.</param>
 #endif
-        public TcpipClient(string host, int port, string playerName, Role requestRole, int timeout)
+        public TcpipClient(string host, int port, string playerName, Role requestRole, int timeout = -1)
         {
             this.host = host;
             this.port = port;
