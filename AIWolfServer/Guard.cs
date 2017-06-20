@@ -31,7 +31,7 @@ namespace AIWolf.Server
 
         public override string ToString()
         {
-            return Agent + " guarded " + Target + "@" + Day;
+            return $"{Agent} guarded {Target}@{Day}";
         }
     }
 }

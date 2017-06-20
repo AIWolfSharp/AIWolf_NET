@@ -181,7 +181,7 @@ namespace AIWolf.Lib
             get => _statusMap;
             set
             {
-                _statusMap = value == null ? new Dictionary<Agent, Status>() : value;
+                _statusMap = value ?? new Dictionary<Agent, Status>();
                 statusMap = _statusMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value.ToString());
                 AgentList = _statusMap.Keys.ToList();
             }
@@ -213,7 +213,7 @@ namespace AIWolf.Lib
             get => _roleMap;
             set
             {
-                _roleMap = value == null ? new Dictionary<Agent, Role>() : value;
+                _roleMap = value ?? new Dictionary<Agent, Role>();
                 roleMap = _roleMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value.ToString());
                 Role = RoleMap.ContainsKey(Agent) ? RoleMap[Agent] : Role.UNC;
             }
@@ -237,7 +237,7 @@ namespace AIWolf.Lib
             get => _remainTalkMap;
             set
             {
-                _remainTalkMap = value == null ? new Dictionary<Agent, int>() : value;
+                _remainTalkMap = value ?? new Dictionary<Agent, int>();
                 remainTalkMap = _remainTalkMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value);
             }
         }
@@ -260,7 +260,7 @@ namespace AIWolf.Lib
             get => _remainWhisperMap;
             set
             {
-                _remainWhisperMap = value == null ? new Dictionary<Agent, int>() : value;
+                _remainWhisperMap = value ?? new Dictionary<Agent, int>();
                 remainWhisperMap = _remainWhisperMap.ToDictionary(p => p.Key.AgentIdx, p => p.Value);
             }
         }
@@ -285,7 +285,7 @@ namespace AIWolf.Lib
             get => _lastDeadAgentList;
             set
             {
-                _lastDeadAgentList = value == null ? new List<Agent>() : value;
+                _lastDeadAgentList = value ?? new List<Agent>();
                 lastDeadAgentList = _lastDeadAgentList.Select(a => a.AgentIdx).ToList();
             }
         }
@@ -371,7 +371,7 @@ namespace AIWolf.Lib
         public List<Vote> VoteList
         {
             get => voteList;
-            set => voteList = value == null ? new List<Vote>() : value;
+            set => voteList = value ?? new List<Vote>();
         }
 
         List<Vote> voteList = new List<Vote>();
@@ -391,7 +391,7 @@ namespace AIWolf.Lib
         public List<Vote> LatestVoteList
         {
             get => latestVoteList;
-            set => latestVoteList = value == null ? new List<Vote>() : value;
+            set => latestVoteList = value ?? new List<Vote>();
         }
 
         List<Vote> latestVoteList = new List<Vote>();
@@ -411,7 +411,7 @@ namespace AIWolf.Lib
         public List<Vote> AttackVoteList
         {
             get => attackVoteList;
-            set => attackVoteList = value == null ? new List<Vote>() : value;
+            set => attackVoteList = value ?? new List<Vote>();
         }
 
         List<Vote> attackVoteList = new List<Vote>();
@@ -431,7 +431,7 @@ namespace AIWolf.Lib
         public List<Vote> LatestAttackVoteList
         {
             get => latestAttackVoteList;
-            set => latestAttackVoteList = value == null ? new List<Vote>() : value;
+            set => latestAttackVoteList = value ?? new List<Vote>();
         }
 
         List<Vote> latestAttackVoteList = new List<Vote>();
@@ -449,7 +449,7 @@ namespace AIWolf.Lib
         public List<Talk> TalkList
         {
             get => talkList;
-            set => talkList = value == null ? new List<Talk>() : value;
+            set => talkList = value ?? new List<Talk>();
         }
 
         List<Talk> talkList = new List<Talk>();
@@ -469,7 +469,7 @@ namespace AIWolf.Lib
         public List<Whisper> WhisperList
         {
             get => whisperList;
-            set => whisperList = value == null ? new List<Whisper>() : value;
+            set => whisperList = value ?? new List<Whisper>();
         }
 
         List<Whisper> whisperList = new List<Whisper>();
@@ -500,7 +500,7 @@ namespace AIWolf.Lib
         public List<Role> ExistingRoleList
         {
             get => existingRoleList;
-            set => existingRoleList = value == null ? new List<Role>() : value;
+            set => existingRoleList = value ?? new List<Role>();
         }
 
         List<Role> existingRoleList = new List<Role>();

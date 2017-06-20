@@ -80,7 +80,7 @@ namespace AIWolf.Server
         /// </summary>
         public void WaitForConnection()
         {
-            foreach (TcpClient client in connectionAgentMap.Keys)
+            foreach (var client in connectionAgentMap.Keys)
             {
                 if (client != null && client.Connected)
                 {
@@ -98,13 +98,13 @@ namespace AIWolf.Server
 
             while (connectionAgentMap.Count < connectionLimit)
             {
-                Task<TcpClient> task = serverSocket.AcceptTcpClientAsync();
+                var task = serverSocket.AcceptTcpClientAsync();
                 task.Wait();
-                TcpClient client = task.Result;
+                var client = task.Result;
                 lock (connectionAgentMap)
                 {
                     Agent agent = null;
-                    for (int i = 1; i <= connectionLimit; i++)
+                    for (var i = 1; i <= connectionLimit; i++)
                     {
                         if (!connectionAgentMap.ContainsValue(Agent.GetAgent(i)))
                         {
@@ -157,8 +157,8 @@ namespace AIWolf.Server
                     }
                     else
                     {
-                        List<Talk> talkList = new List<Talk>(GameData.GetGameInfo(agent).TalkList);
-                        List<Whisper> whisperList = new List<Whisper>(GameData.GetGameInfo(agent).WhisperList);
+                        var talkList = new List<Talk>(GameData.GetGameInfo(agent).TalkList);
+                        var whisperList = new List<Whisper>(GameData.GetGameInfo(agent).WhisperList);
                         talkList = Minimize(agent, talkList, lastTalkIdxMap);
                         whisperList = Minimize(agent, whisperList, lastWhisperIdxMap);
                         message = DataConverter.Serialize(new Packet(request, talkList, whisperList));
@@ -170,8 +170,8 @@ namespace AIWolf.Server
                 }
                 serverLogger.LogInformation("=>" + agent + ":" + message);
 
-                TcpClient client = agentConnectionMap[agent];
-                StreamWriter sw = new StreamWriter(client.GetStream());
+                var client = agentConnectionMap[agent];
+                var sw = new StreamWriter(client.GetStream());
                 sw.WriteLine(message);
                 sw.Flush();
             }
@@ -183,7 +183,7 @@ namespace AIWolf.Server
 
         List<T> Minimize<T>(Agent agent, List<T> list, Dictionary<Agent, int> lastIdxMap)
         {
-            int lastIdx = list.Count;
+            var lastIdx = list.Count;
             if (lastIdxMap.ContainsKey(agent) && list.Count >= lastIdxMap[agent])
             {
                 list = list.GetRange(lastIdxMap[agent], lastIdx - lastIdxMap[agent]);
@@ -196,11 +196,11 @@ namespace AIWolf.Server
         {
             try
             {
-                TcpClient client = agentConnectionMap[agent];
-                StreamReader sr = new StreamReader(client.GetStream());
+                var client = agentConnectionMap[agent];
+                var sr = new StreamReader(client.GetStream());
                 Send(agent, request);
 
-                string line = sr.ReadLine();
+                var line = sr.ReadLine();
                 serverLogger.LogInformation("<=" + agent + ":" + line);
 
                 if (line != null && line.Length == 0)
@@ -225,7 +225,7 @@ namespace AIWolf.Server
                 else if (request == Lib.Request.ATTACK || request == Lib.Request.DIVINE || request == Lib.Request.GUARD || request == Lib.Request.VOTE)
                 {
                     if (line == null) return null;
-                    Match m = regexToAgent.Match(line);
+                    var m = regexToAgent.Match(line);
                     if (m.Success)
                     {
                         return Agent.GetAgent(int.Parse(m.Groups[1].Value));
@@ -271,8 +271,7 @@ namespace AIWolf.Server
 
         public Role RequestRequestRole(Agent agent)
         {
-            Role role;
-            if (Enum.TryParse<Role>((string)Request(agent, Lib.Request.ROLE), out role))
+            if (Enum.TryParse<Role>((string)Request(agent, Lib.Request.ROLE), out var role))
             {
                 return role;
             }
