@@ -7,6 +7,7 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
+using AIWolf.Lib;
 using AIWolf.Server;
 using System;
 using System.Collections.Generic;
@@ -46,8 +47,8 @@ namespace AIWolf
 
         void StartServer()
         {
-            Console.WriteLine("Start AIWolf.NET Server port:{0} playerNum:{1} gameNum:{2}", port, agentNum, gameNum);
-            var gameSetting = GameSettingToSend.GetDefaultGameSetting(agentNum);
+            Console.WriteLine($"Start AIWolf.NET Server port:{port} playerNum:{agentNum} gameNum:{gameNum}");
+            var gameSetting = GameSetting.GetDefaultGameSetting(agentNum);
             var server = new TcpipServer(port, agentNum, gameSetting);
             server.WaitForConnection();
             var logSubDir = Path.Combine(Path.GetFullPath(logDir), DateTime.Now.ToString("yyyyMMddHHmmss"));
@@ -92,7 +93,7 @@ namespace AIWolf
             }
             Task.WaitAny(tasks.ToArray());
             Thread.Sleep(1000);
-            foreach(var process in processes)
+            foreach (var process in processes)
             {
                 if (!process.HasExited)
                 {
@@ -161,6 +162,5 @@ namespace AIWolf
                 }
             }
         }
-
     }
 }
