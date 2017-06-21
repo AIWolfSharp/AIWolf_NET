@@ -1,51 +1,47 @@
 [View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README-E.md)
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
-AIWolf.NETは.NET版人狼知能プラットフォームです．
-ゲームの構成と発話プロトコルは公式の人狼知能プラットフォーム互換となっています．
 
-1. チュートリアル（バージョン1.0.x用です）
-    1. Visual Studio 2017 の場合
-        * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/c-59927842)
-    1. Visual Studio Code の場合
-        * [.NET CoreとVisual Studio Codeで作る人狼知能（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/net-corevs-code-71808207)
+1. チュートリアル
+
+    * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/c-59927842)
+    * [.NET CoreとVisual Studio Codeで作る人狼知能（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/net-corevs-code-71808207)
 
 1. ダウンロード
 
-    * クライアントスタータ：
-[ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
+    * クライアントスタータ: 
+      [ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
     * サーバスタータ：
-[ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
+      [ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
     * ゲームスタータ：
-[GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
-    * リファレンスマニュアル：[AIWolf_NET_1.1.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_J.zip)
+      [GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
+    * リファレンスマニュアル: 
+      [AIWolf_NET_1.1.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_J.zip)
 
 1. 履歴と変更点
 
-    * 1.0.0: 最初のリリース
-    * 1.0.1: RequestContentBuilderのバグフィックス版です．
-      修正されたバグは以下の通りです．
+    * 1.0.0: 最初のリリース．
+    * 1.0.1: RequestContentBuilderの以下のバグを修正しました．
       * 入れ子になったリクエスト発話が生成可能
       * 引数として渡したContentが変更される
-    * 1.0.2: AbstractRoleAssignPlayerで各役職エージェントのインスタンスが
-      毎回生成されていたのを修正しました．
-      それに伴ってAbstractRoleAssignPlayerの使用法が大きく変わりました．
+    * 1.0.2: AbstractRoleAssignPlayerで
+    各役職エージェントのインスタンスが毎回生成されていたのを修正したのに伴い，
+    AbstractRoleAssignPlayerの使用法も変わりました．
     * 1.0.4: .NET Standard 1.4ベースになりました．
-    * 1.0.6: 将来リリース予定のAIWolfServer（サーバ用ライブラリ）のための変更です．
-      * 内部は大きく変わっているのですが，APIレベルでは変わっていません．
-      * 列挙型Teamが新たに導入されました．
-    * 1.0.7: ClientStarterが複数DLLに対応できるように修正しました．
-      ライブラリには変更ありませんが，SHFB(Sandcastle Help File Builder)が
-      ようやく.NET Core/Standardに対応したので，
-      リファレンスマニュアルが普通に生成できるようになりました．
+    * 1.0.6: サーバ側との共用を視野に入れた変更を加えました．
+      それに伴い列挙型Teamが新たに導入されました．
+    * 1.0.7: ClientStarter が複数の
+      DLL からなるエージェントを起動できるようになりました．
+    * 1.0.8: 1.0.6で実装したシリアライズ機能は，
+      処理量の増加のおそれがあるためバージョン 1.0.x
+      系列では実装しないことにしました．
+    * 1.0.9: 1.0.8 で削除した GameSetting.GetDefaultGameSetting()
+      を復活させました．
     * 1.1.0: ゲームサーバが加わり.NET版だけで完結するようになったのに伴い，
       名称を「ライブラリ」から「プラットフォーム」に変えました．
-      * ゲームサーバが加わりました．
-        ただし，発話文字列チェックと時間制限は実装していません．
-      * 計算コスト削減のため，エージェント-サーバ間でのクラスの共用の方法を見直しました．
-      * 意図しない書き換えによる誤動作を防止するため，
-        エージェントに渡されるGameInfo, GameSettingを書き換え不可にしました．
-      * 各種クライアントスタータをプロセスとして起動するGameStarterが加わりました．
+      * 公式ゲームサーバと異なり，発話文字列チェックと時間制限は実装していません．
+      * ServerStarterはゲームサーバ単体を起動します．
+      * GameStarterは各種クライアントスタータをプロセスとして起動しますので，
         サーバ起動後，Java, .NET, Pythonなどのエージェントを接続して対戦することができます．
       
 
