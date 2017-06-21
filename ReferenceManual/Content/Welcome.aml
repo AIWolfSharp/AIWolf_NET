@@ -2,7 +2,8 @@
 <topic id="a8d68761-e4cd-4515-a3cc-ed224c6de1dc" revisionNumber="1">
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
-			<para>AIWolf.NETは人狼知能エージェント作成のためのライブラリです．</para>
+      <para>AIWolf.NETは人狼知能エージェント作成のためのライブラリです．</para>
+      <para>AIWolf.NET is a library for making an AIWolf agent．</para>
 		</introduction>
 
 	</developerConceptualDocument>

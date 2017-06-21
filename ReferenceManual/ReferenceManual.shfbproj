@@ -27,8 +27,8 @@
       <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\AIWolfLib\bin\Debug\netstandard1.4\AIWolfLib.xml" />
-      <DocumentationSource sourceFile="..\AIWolfLib\bin\Debug\netstandard1.4\AIWolfLib.dll" />
+      <DocumentationSource sourceFile="..\AIWolfPlayer\bin\Debug\netstandard1.4\AIWolfLib.xml" />
+      <DocumentationSource sourceFile="..\AIWolfPlayer\bin\Debug\netstandard1.4\AIWolfLib.dll" />
       <DocumentationSource sourceFile="..\AIWolfPlayer\bin\Debug\netstandard1.4\AIWolfPlayer.xml" />
       <DocumentationSource sourceFile="..\AIWolfPlayer\bin\Debug\netstandard1.4\AIWolfPlayer.dll" />
     </DocumentationSources>
@@ -51,15 +51,17 @@
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>False</Preliminary>
     <NamingMethod>Guid</NamingMethod>
-    <HelpTitle>AIWolf.NET リファレンスマニュアル</HelpTitle>
+    <HelpTitle>AIWolf.NETリファレンスマニュアル</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceTitle>
     </RootNamespaceTitle>
     <NamespaceSummaries>
       <NamespaceSummaryItem name="(global)" isDocumented="False" />
       <NamespaceSummaryItem name="AIWolf" isDocumented="False" />
-      <NamespaceSummaryItem name="AIWolf.Lib" isDocumented="True">人狼知能エージェント作成のためのライブラリ</NamespaceSummaryItem>
-      <NamespaceSummaryItem name="AIWolf.Player.Lib" isDocumented="True">人狼知能エージェント作成補助ライブラリ</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="AIWolf.Lib" isDocumented="True">&lt;pre&gt;人狼知能エージェント作成のためのライブラリ
+A library for making an AIWolf agent.&lt;/pre&gt;</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="AIWolf.Player.Lib" isDocumented="True">&lt;pre&gt;人狼知能エージェント作成補助ライブラリ
+A support library for making an AIWolf agent.&lt;/pre&gt;</NamespaceSummaryItem>
       <NamespaceSummaryItem name="AIWolf.Player.Sample" isDocumented="False" />
     </NamespaceSummaries>
   </PropertyGroup>
