@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>pre</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Description>The AIWolf Server library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
