@@ -1,4 +1,4 @@
-[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README.md)
+[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README.md)
 # AIWolf.NET
 ## .NET version of AIWolf platform
 

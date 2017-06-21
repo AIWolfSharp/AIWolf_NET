@@ -1,4 +1,4 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README-E.md)
+[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README-E.md)
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
 
