@@ -17,13 +17,13 @@ namespace AIWolf.Server
     {
         public static void Main(string[] args)
         {
-            int port = 10000;
-            int agentNum = 5;
-            int gameNum = 1;
-            string logDir = ".";
-            bool showConsoleLog = true;
+            var port = 10000;
+            var agentNum = 5;
+            var gameNum = 1;
+            var logDir = ".";
+            var showConsoleLog = true;
 
-            for (int i = 0; i < args.Length; i++)
+            for (var i = 0; i < args.Length; i++)
             {
                 if (args[i].StartsWith("-"))
                 {
@@ -54,16 +54,16 @@ namespace AIWolf.Server
                 }
             }
 
-            Console.WriteLine("Start AIWolf.NET Server port:{0} playerNum:{1} gameNum:{2}", port, agentNum, gameNum);
-            GameSetting gameSetting = GameSetting.GetDefaultGameSetting(agentNum);
+            Console.WriteLine($"Start AIWolf.NET Server port:{port} playerNum:{agentNum} gameNum:{gameNum}");
+            var gameSetting = GameSetting.GetDefaultGameSetting(agentNum);
 
-            TcpipServer server = new TcpipServer(port, agentNum, gameSetting);
+            var server = new TcpipServer(port, agentNum, gameSetting);
             server.WaitForConnection();
-            string logSubDir = Path.Combine(Path.GetFullPath(logDir), DateTime.Now.ToString("yyyyMMddHHmmss"));
-            for (int i = 0; i < gameNum; i++)
+            var logSubDir = Path.Combine(Path.GetFullPath(logDir), DateTime.Now.ToString("yyyyMMddHHmmss"));
+            for (var i = 0; i < gameNum; i++)
             {
-                string logName = Path.Combine(logSubDir, i.ToString("D3") + ".log");
-                AIWolfGame game = new AIWolfGame(gameSetting, server);
+                var logName = Path.Combine(logSubDir, i.ToString("D3") + ".log");
+                var game = new AIWolfGame(gameSetting, server);
                 game.ShowConsoleLog = showConsoleLog;
                 game.GameLogger = new FileGameLogger(logName);
                 game.Rand = new Random();

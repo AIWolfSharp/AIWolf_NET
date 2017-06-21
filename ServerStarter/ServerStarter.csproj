@@ -6,13 +6,9 @@
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>pre</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="log\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
