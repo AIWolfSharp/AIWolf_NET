@@ -1,7 +1,6 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README-E.md)
+[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README-E.md)
 # AIWolf.NET
-## .NET版人狼知能ライブラリ
-AIWolf.NETは人狼知能プラットフォームバージョン 0.4.x 互換の .NET 版人狼知能ライブラリです．
+## .NET版人狼知能プラットフォーム
 
 1. チュートリアル
 
@@ -11,9 +10,13 @@ AIWolf.NETは人狼知能プラットフォームバージョン 0.4.x 互換の
 1. ダウンロード
 
     * クライアントスタータ: 
-      [ClientStarter-1.0.9.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.9/ClientStarter-1.0.9.zip)
+      [ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
+    * サーバスタータ：
+      [ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
+    * ゲームスタータ：
+      [GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
     * リファレンスマニュアル: 
-      [AIWolf_NET_1.0.9_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.0.9/AIWolf_NET_1.0.9_ReferenceManual_J.zip)
+      [AIWolf_NET_1.1.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_J.zip)
 
 1. 履歴と変更点
 
@@ -34,6 +37,13 @@ AIWolf.NETは人狼知能プラットフォームバージョン 0.4.x 互換の
       系列では実装しないことにしました．
     * 1.0.9: 1.0.8 で削除した GameSetting.GetDefaultGameSetting()
       を復活させました．
+    * 1.1.0: ゲームサーバが加わり.NET版だけで完結するようになったのに伴い，
+      名称を「ライブラリ」から「プラットフォーム」に変えました．
+      * 公式ゲームサーバと異なり，発話文字列チェックと時間制限は実装していません．
+      * ServerStarterはゲームサーバ単体を起動します．
+      * GameStarterは各種クライアントスタータをプロセスとして起動しますので，
+        サーバ起動後，Java, .NET, Pythonなどのエージェントを接続して対戦することができます．
+      
 
 ---
 このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE)を参照のこと.
