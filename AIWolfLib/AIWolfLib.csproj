@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <VersionPrefix>1.1.0</VersionPrefix>
-    <VersionSuffix>beta</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Description>The AIWolf library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
