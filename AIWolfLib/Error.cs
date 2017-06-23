@@ -28,7 +28,7 @@ namespace AIWolf.Lib
         /// <param name="lineNumber">The line number of the caller in the file.</param>
         public static void Warning(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
-            Console.Error.WriteLine(memberName + ": " + message + " at line " + lineNumber + " in " + Path.GetFileName(filePath));
+            Console.Error.WriteLine($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
         }
 
         /// <summary>
@@ -40,13 +40,20 @@ namespace AIWolf.Lib
         /// <param name="lineNumber">The line number of the caller in the file.</param>
         public static void RuntimeError(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
-            ThrowRuntimeException(memberName + ": " + message + " at line " + lineNumber + " in " + Path.GetFileName(filePath));
+            ThrowRuntimeException($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
+            WriteRuntimeErrorMesg($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
         }
 
         [Conditional("DEBUG")]
         static void ThrowRuntimeException(string message)
         {
             throw new AIWolfLibException(message);
+        }
+
+        [Conditional("RELEASE")]
+        static void WriteRuntimeErrorMesg(string message)
+        {
+            Console.Error.WriteLine($"RuntimeError: {message}");
         }
 
         /// <summary>
@@ -58,7 +65,8 @@ namespace AIWolf.Lib
         /// <param name="lineNumber">The line number of the caller in the file.</param>
         public static void TimeoutError(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
         {
-            ThrowTimeoutException(memberName + ": " + message + " at line " + lineNumber + " in " + Path.GetFileName(filePath));
+            ThrowTimeoutException($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
+            WriteRuntimeErrorMesg($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
         }
 
         [Conditional("DEBUG")]
