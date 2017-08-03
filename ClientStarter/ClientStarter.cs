@@ -164,9 +164,9 @@ namespace AIWolf.Client
             {
                 client.Connect(player);
             }
-            catch
+            catch(Exception e)
             {
-                Console.Error.WriteLine("ClientStarter: Error in running player.");
+                Console.Error.WriteLine($"ClientStarter: Error in running player. {e.StackTrace}");
                 throw;
             }
         }
