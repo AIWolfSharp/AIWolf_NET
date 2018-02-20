@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <VersionPrefix>1.1.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <Description>The AIWolf Server library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
     <RootNamespace>AIWolf.Server</RootNamespace>
-    <FileVersion>1.1.0.0</FileVersion>
+    <FileVersion>1.1.1.0</FileVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

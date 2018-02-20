@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
     <VersionPrefix>1.1.0</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
