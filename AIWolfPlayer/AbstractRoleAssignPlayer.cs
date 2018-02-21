@@ -99,7 +99,7 @@ namespace AIWolf.Player.Lib
         /// This player's name.
         /// </summary>
 #endif
-        public string Name => GetType().ToString();
+        public string Name { get; protected set; }
 
 #if JHELP
         /// <summary>
@@ -112,6 +112,7 @@ namespace AIWolf.Player.Lib
 #endif
         public AbstractRoleAssignPlayer()
         {
+            Name = GetType().ToString();
             SetPlayers();
         }
 
