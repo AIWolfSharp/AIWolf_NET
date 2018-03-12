@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4810C81-6979-4882-8F05-F0CC88725796}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,17 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "ReferenceManual", "ReferenceManual\ReferenceManual.shfbproj", "{AA1B0B96-CCC8-4B88-8D3C-7A30304F1FEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIWolfLib", "AIWolfLib\AIWolfLib.csproj", "{DF6E6D37-3DF4-4C6E-A942-1155FBD9BCB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfLib", "AIWolfLib\AIWolfLib.csproj", "{DF6E6D37-3DF4-4C6E-A942-1155FBD9BCB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIWolfPlayer", "AIWolfPlayer\AIWolfPlayer.csproj", "{D0B69BCB-0A13-4424-8522-222CEE161ADE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfPlayer", "AIWolfPlayer\AIWolfPlayer.csproj", "{D0B69BCB-0A13-4424-8522-222CEE161ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientStarter", "ClientStarter\ClientStarter.csproj", "{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientStarter", "ClientStarter\ClientStarter.csproj", "{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIWolfServer", "AIWolfServer\AIWolfServer.csproj", "{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfServer", "AIWolfServer\AIWolfServer.csproj", "{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerStarter", "ServerStarter\ServerStarter.csproj", "{01738DE7-C835-4976-899F-6D30B9666F69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerStarter", "ServerStarter\ServerStarter.csproj", "{01738DE7-C835-4976-899F-6D30B9666F69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameStarter", "GameStarter\GameStarter.csproj", "{3B53314D-E82C-4496-9220-0AB06F69331C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStarter", "GameStarter\GameStarter.csproj", "{3B53314D-E82C-4496-9220-0AB06F69331C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,5 +121,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F1B9968E-A672-4227-8B98-286D814543E8}
 	EndGlobalSection
 EndGlobal
