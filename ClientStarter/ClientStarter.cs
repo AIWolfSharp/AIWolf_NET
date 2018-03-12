@@ -173,7 +173,7 @@ namespace AIWolf
 
         void Usage()
         {
-            Console.Error.WriteLine("Usage: ClientStarter [-h host] [-p port] -c clientClass dllName [roleRequest] [-n name] [-t timeout] [-d]");
+            Console.Error.WriteLine("Usage: ClientStarter [-h host] [-p port] -c clientClass dllName [-r roleRequest] [-n name] [-t timeout] [-d]");
             Environment.Exit(0);
         }
     }
