@@ -271,8 +271,7 @@ namespace AIWolf.Server
 
         public Role RequestRequestRole(Agent agent)
         {
-            Role role;
-            if (Enum.TryParse<Role>((string)Request(agent, Server.Request.ROLE), out role))
+            if (Enum.TryParse<Role>((string)Request(agent, Server.Request.ROLE), out Role role))
             {
                 return role;
             }
