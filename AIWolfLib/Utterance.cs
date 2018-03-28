@@ -50,7 +50,7 @@ namespace AIWolf.Lib
         /// The index number of the agent who uttered.
         /// </summary>
         [DataMember(Name = "agent")]
-        int agent = -1;
+        int agent;
 
 #if JHELP
         /// <summary>
@@ -142,6 +142,7 @@ namespace AIWolf.Lib
         /// <param name="turn">発話ターン</param>
         /// <param name="agent">発話エージェント</param>
         /// <param name="text">発話テキスト</param>
+        /// <remarks>agentがnullの場合null参照例外</remarks>
 #else
         /// <summary>
         /// Initializes a new instance of this class.
@@ -151,11 +152,13 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this utterance.</param>
         /// <param name="agent">The agent who uttered.</param>
         /// <param name="text">The text of this utterance.</param>
+        /// <remarks>NullReferenceException is thrown in case of null agent.</remarks>
 #endif
-        protected Utterance(int idx, int day, int turn, Agent agent, string text) : this(idx, day, turn)
+        protected Utterance(int idx, int day, int turn, Agent agent, string text) : this(idx: idx, day: day, turn: turn)
         {
             Agent = agent;
-            this.agent = Agent.AgentIdx;
+            // NullReferenceException is thrown in case of null agent,
+            this.agent = agent.AgentIdx;
             Text = text;
         }
 
@@ -179,8 +182,11 @@ namespace AIWolf.Lib
         /// <param name="text">The text of this utterance.</param>
 #endif
         [JsonConstructor]
-        protected Utterance(int idx, int day, int turn, int agent, string text) : this(idx, day, turn, Agent.GetAgent(agent), text)
+        protected Utterance(int idx, int day, int turn, int agent, string text) : this(idx: idx, day: day, turn: turn)
         {
+            this.agent = agent;
+            Text = text;
+            Agent = Agent.GetAgent(agent);
         }
 
 #if JHELP
@@ -213,9 +219,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="idx">The index of this talk.</param>
         /// <param name="day">The day of this talk.</param>
-        internal Talk(int idx, int day) : base(idx, day)
-        {
-        }
+        internal Talk(int idx, int day) : base(idx: idx, day: day) { }
 
 #if JHELP
         /// <summary>
@@ -236,9 +240,8 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
 #endif
-        public Talk(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
-        {
-        }
+        public Talk(int idx, int day, int turn, Agent agent, string text)
+            : base(idx, day, turn, agent, text) { }
 
         /// <summary>
         /// Initializes a new instance of this class.
@@ -249,9 +252,8 @@ namespace AIWolf.Lib
         /// <param name="agent">The index of agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
         [JsonConstructor]
-        Talk(int idx, int day, int turn, int agent, string text) : base(idx, day, turn, agent, text)
-        {
-        }
+        Talk(int idx, int day, int turn, int agent, string text)
+            : base(idx, day, turn, agent, text) { }
 
 #if JHELP
         /// <summary>
@@ -283,9 +285,7 @@ namespace AIWolf.Lib
         /// </summary>
         /// <param name="idx">The index of this whisper.</param>
         /// <param name="day">The day of this whisper.</param>
-        internal Whisper(int idx, int day) : base(idx, day)
-        {
-        }
+        internal Whisper(int idx, int day) : base(idx: idx, day: day) { }
 
 #if JHELP
         /// <summary>
@@ -306,9 +306,8 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
 #endif
-        public Whisper(int idx, int day, int turn, Agent agent, string text) : base(idx, day, turn, agent, text)
-        {
-        }
+        public Whisper(int idx, int day, int turn, Agent agent, string text)
+            : base(idx, day, turn, agent, text) { }
 
         /// <summary>
         /// Initializes a new instance of this class.
@@ -319,9 +318,8 @@ namespace AIWolf.Lib
         /// <param name="agent">The index of agent who whispered.</param>
         /// <param name="text">The text of this whisper.</param>
         [JsonConstructor]
-        Whisper(int idx, int day, int turn, int agent, string text) : base(idx, day, turn, agent, text)
-        {
-        }
+        Whisper(int idx, int day, int turn, int agent, string text)
+            : base(idx, day, turn, agent, text) { }
 
 #if JHELP
         /// <summary>
