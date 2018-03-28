@@ -8,19 +8,21 @@
 //
 
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// サーバから送られてきたパケット
+    /// クライアント・サーバ間通信のためのパケット
     /// </summary>
 #else
     /// <summary>
-    /// Packet for sending data to client.
+    /// Packet for communication between client and server.
     /// </summary>
 #endif
-    class Packet
+    [DataContract]
+    public class Packet
     {
 #if JHELP
         /// <summary>
@@ -31,6 +33,7 @@ namespace AIWolf.Lib
         /// The request from the server.
         /// </summary>
 #endif
+        [DataMember(Name = "request")]
         public Request Request { get; }
 
 #if JHELP
@@ -42,6 +45,7 @@ namespace AIWolf.Lib
         /// The game information.
         /// </summary>
 #endif
+        [DataMember(Name = "gameInfo")]
         public GameInfo GameInfo { get; }
 
 #if JHELP
@@ -53,6 +57,7 @@ namespace AIWolf.Lib
         /// The setting of game.
         /// </summary>
 #endif
+        [DataMember(Name = "gameSetting")]
         public GameSetting GameSetting { get; }
 
 #if JHELP
@@ -64,6 +69,7 @@ namespace AIWolf.Lib
         /// The history of talks.
         /// </summary>
 #endif
+        [DataMember(Name = "talkHistory")]
         public List<Talk> TalkHistory { get; }
 
 #if JHELP
@@ -75,6 +81,7 @@ namespace AIWolf.Lib
         /// The history of whispers.
         /// </summary>
 #endif
+        [DataMember(Name = "whisperHistory")]
         public List<Whisper> WhisperHistory { get; }
 
 #if JHELP
