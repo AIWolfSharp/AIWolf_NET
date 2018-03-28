@@ -18,7 +18,7 @@ namespace AIWolf.Lib
     /// Enumeration type for requests.
     /// </summary>
 #endif
-    enum Request
+    public enum Request
     {
 #if JHELP
         /// <summary>
