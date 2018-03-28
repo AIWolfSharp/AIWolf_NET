@@ -26,8 +26,136 @@ namespace AIWolf.Lib
 #endif
     public class GameInfo
     {
-        List<Talk> talkList;
-        List<Whisper> whisperList;
+#if JHELP
+        /// <summary>
+        /// このゲーム情報を受け取るエージェント
+        /// </summary>
+#else
+        /// <summary>
+        /// The agent who receives this GameInfo.
+        /// </summary>
+#endif
+        public Agent Agent { get; }
+
+#if JHELP
+        /// <summary>
+        /// 昨夜追放されたエージェント
+        /// </summary>
+#else
+        /// <summary>
+        /// The agent executed last night.
+        /// </summary>
+#endif
+        public Agent ExecutedAgent { get; }
+
+#if JHELP
+        /// <summary>
+        /// 直近に追放されたエージェント
+        /// </summary>
+#else
+        /// <summary>
+        /// The latest executed agent.
+        /// </summary>
+#endif
+        public Agent LatestExecutedAgent { get; }
+
+#if JHELP
+        /// <summary>
+        /// 呪殺された妖狐
+        /// </summary>
+#else
+        /// <summary>
+        /// The fox killed by curse.
+        /// </summary>
+#endif
+        public Agent CursedFox { get; }
+
+#if JHELP
+        /// <summary>
+        /// 人狼による投票の結果襲撃先に決まったエージェント
+        /// </summary>
+        /// <remarks>人狼限定</remarks>
+#else
+        /// <summary>
+        /// The agent decided to be attacked as a result of werewolves' vote.
+        /// </summary>
+        /// <remarks>Werewolf only.</remarks>
+#endif
+        public Agent AttackedAgent { get; }
+
+#if JHELP
+        /// <summary>
+        /// 昨夜護衛されたエージェント
+        /// </summary>
+#else
+        /// <summary>
+        /// The agent guarded last night.
+        /// </summary>
+#endif
+        public Agent GuardedAgent { get; }
+
+#if JHELP
+        /// <summary>
+        /// 全エージェントの生死状況
+        /// </summary>
+#else
+        /// <summary>
+        /// The statuses of all agents.
+        /// </summary>
+#endif
+        public IDictionary<Agent, Status> StatusMap { get; }
+
+#if JHELP
+        /// <summary>
+        /// 役職既知のエージェント
+        /// </summary>
+        /// <remarks>
+        /// 人間の場合，自分自身しかわからない
+        /// 人狼の場合，誰が他の人狼かがわかる
+        /// </remarks>
+#else
+        /// <summary>
+        /// The known roles of agents.
+        /// </summary>
+        /// <remarks>
+        /// If you are human, you know only yourself.
+        /// If you are werewolf, you know other werewolves.
+        /// </remarks>
+#endif
+        public IDictionary<Agent, Role> RoleMap { get; }
+
+#if JHELP
+        /// <summary>
+        /// トークの残り回数
+        /// </summary>
+#else
+        /// <summary>
+        /// The number of opportunities to talk remaining.
+        /// </summary>
+#endif
+        public IDictionary<Agent, int> RemainTalkMap { get; }
+
+#if JHELP
+        /// <summary>
+        /// 囁きの残り回数
+        /// </summary>
+#else
+        /// <summary>
+        /// The number of opportunities to whisper remaining.
+        /// </summary>
+#endif
+        public IDictionary<Agent, int> RemainWhisperMap { get; }
+
+#if JHELP
+        /// <summary>
+        /// 昨夜亡くなったエージェントのリスト
+        /// </summary>
+#else
+        /// <summary>
+        /// The list of agents who died last night.
+        /// </summary>
+#endif
+        public IList<Agent> LastDeadAgentList { get; }
 
 #if JHELP
         /// <summary>
@@ -50,17 +178,6 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         public Role Role { get; }
-
-#if JHELP
-        /// <summary>
-        /// このゲーム情報を受け取るエージェント
-        /// </summary>
-#else
-        /// <summary>
-        /// The agent who receives this GameInfo.
-        /// </summary>
-#endif
-        public Agent Agent { get; }
 
 #if JHELP
         /// <summary>
@@ -98,62 +215,6 @@ namespace AIWolf.Lib
         /// <remarks>Seer only.</remarks>
 #endif
         public Judge DivineResult { get; }
-
-#if JHELP
-        /// <summary>
-        /// 昨夜追放されたエージェント
-        /// </summary>
-#else
-        /// <summary>
-        /// The agent executed last night.
-        /// </summary>
-#endif
-        public Agent ExecutedAgent { get; }
-
-#if JHELP
-        /// <summary>
-        /// 直近に追放されたエージェント
-        /// </summary>
-#else
-        /// <summary>
-        /// The latest executed agent.
-        /// </summary>
-#endif
-        public Agent LatestExecutedAgent { get; }
-#if JHELP
-        /// <summary>
-        /// 呪殺された妖狐
-        /// </summary>
-#else
-        /// <summary>
-        /// The fox killed by curse.
-        /// </summary>
-#endif
-        public Agent CursedFox { get; }
-
-#if JHELP
-        /// <summary>
-        /// 人狼による投票の結果襲撃先に決まったエージェント
-        /// </summary>
-        /// <remarks>人狼限定</remarks>
-#else
-        /// <summary>
-        /// The agent decided to be attacked as a result of werewolves' vote.
-        /// </summary>
-        /// <remarks>Werewolf only.</remarks>
-#endif
-        public Agent AttackedAgent { get; }
-
-#if JHELP
-        /// <summary>
-        /// 昨夜護衛されたエージェント
-        /// </summary>
-#else
-        /// <summary>
-        /// The agent guarded last night.
-        /// </summary>
-#endif
-        public Agent GuardedAgent { get; }
 
 #if JHELP
         /// <summary>
@@ -216,7 +277,8 @@ namespace AIWolf.Lib
         /// The list of today's talks.
         /// </summary>
 #endif
-        public IList<Talk> TalkList { get; internal set; }
+        public IList<Talk> TalkList { get; }
+        List<Talk> talkList;
 
 #if JHELP
         /// <summary>
@@ -229,72 +291,19 @@ namespace AIWolf.Lib
         /// </summary>
         /// <remarks>Werewolf only.</remarks>
 #endif
-        public IList<Whisper> WhisperList { get; internal set; }
+        public IList<Whisper> WhisperList { get; }
+        List<Whisper> whisperList;
 
 #if JHELP
         /// <summary>
         /// 生存しているエージェントのリスト
         /// </summary>
-        /// <remarks>すべてのエージェントが死んだ場合，nullではなく空のリストを返す</remarks>
 #else
         /// <summary>
         /// The list of alive agents.
         /// </summary>
-        /// <remarks>If all agents are dead, this returns an empty list, not null.</remarks>
 #endif
         public IList<Agent> AliveAgentList { get; }
-
-#if JHELP
-        /// <summary>
-        /// 全エージェントの生死状況
-        /// </summary>
-#else
-        /// <summary>
-        /// The statuses of all agents.
-        /// </summary>
-#endif
-        public IDictionary<Agent, Status> StatusMap { get; }
-
-#if JHELP
-        /// <summary>
-        /// 役職既知のエージェント
-        /// </summary>
-        /// <remarks>
-        /// 人間の場合，自分自身しかわからない
-        /// 人狼の場合，誰が他の人狼かがわかる
-        /// </remarks>
-#else
-        /// <summary>
-        /// The known roles of agents.
-        /// </summary>
-        /// <remarks>
-        /// If you are human, you know only yourself.
-        /// If you are werewolf, you know other werewolves.
-        /// </remarks>
-#endif
-        public IDictionary<Agent, Role> RoleMap { get; }
-
-#if JHELP
-        /// <summary>
-        /// トークの残り回数
-        /// </summary>
-#else
-        /// <summary>
-        /// The number of opportunities to talk remaining.
-        /// </summary>
-#endif
-        public IDictionary<Agent, int> RemainTalkMap { get; }
-
-#if JHELP
-        /// <summary>
-        /// 囁きの残り回数
-        /// </summary>
-#else
-        /// <summary>
-        /// The number of opportunities to whisper remaining.
-        /// </summary>
-#endif
-        public IDictionary<Agent, int> RemainWhisperMap { get; }
 
 #if JHELP
         /// <summary>
@@ -306,17 +315,6 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         public IList<Role> ExistingRoleList { get; }
-
-#if JHELP
-        /// <summary>
-        /// 昨夜亡くなったエージェントのリスト
-        /// </summary>
-#else
-        /// <summary>
-        /// The list of agents who died last night.
-        /// </summary>
-#endif
-        public IList<Agent> LastDeadAgentList { get; }
 
         /// <summary>
         /// Initializes a new instance of this class.
@@ -352,7 +350,6 @@ namespace AIWolf.Lib
             Dictionary<int, string> statusMap, Dictionary<int, string> roleMap,
             Dictionary<int, int> remainTalkMap, Dictionary<int, int> remainWhisperMap)
         {
-            // 引数からプロパティへ
             Day = day;
             Agent = Agent.GetAgent(agent);
             MediumResult = mediumResult;
@@ -377,7 +374,6 @@ namespace AIWolf.Lib
             RemainTalkMap = new ReadOnlyDictionary<Agent, int>(remainTalkMap.ToDictionary(p => Agent.GetAgent(p.Key), p => p.Value));
             RemainWhisperMap = new ReadOnlyDictionary<Agent, int>(remainWhisperMap.ToDictionary(p => Agent.GetAgent(p.Key), p => p.Value));
 
-            // その他のプロパティ
             Role = RoleMap[Agent];
             AgentList = StatusMap.Keys.Shuffle().ToList().AsReadOnly();
             AliveAgentList = AgentList.Where(a => StatusMap[a] == Status.ALIVE).ToList().AsReadOnly();
