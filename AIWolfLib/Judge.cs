@@ -96,6 +96,7 @@ namespace AIWolf.Lib
         /// <param name="agent">判定を下したエージェント</param>
         /// <param name="target">判定されたエージェント</param>
         /// <param name="result">判定結果</param>
+        /// <remarks>agent/target/resultがnullの場合null参照例外</remarks>
 #else
         /// <summary>
         /// Initializes a new instance of Judge class.
@@ -104,16 +105,18 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who judged.</param>
         /// <param name="target">The judged agent.</param>
         /// <param name="result">The result of this judge.</param>
+        /// <remarks>NullReferenceException is thrown in case of null agent/target/result.</remarks>
 #endif
-        public Judge(int day, Agent agent, Agent target, Species result = Species.UNC)
+        public Judge(int day = 0, Agent agent = null, Agent target = null, Species result = Species.UNC)
         {
             Day = day;
             Agent = agent;
-            this.agent = Agent.AgentIdx;
             Target = target;
-            this.target = Target.AgentIdx;
             Result = result;
-            this.result = Result.ToString();
+            // NullReferenceException is thrown in case of null agent/target/result.
+            this.agent = agent.AgentIdx;
+            this.target = target.AgentIdx;
+            this.result = result.ToString();
         }
 
         /// <summary>
@@ -124,8 +127,15 @@ namespace AIWolf.Lib
         /// <param name="target">The index of judged agent.</param>
         /// <param name="result">The result of this judge.</param>
         [JsonConstructor]
-        Judge(int day, int agent, int target, string result) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target), (Species)Enum.Parse(typeof(Species), result))
+        Judge(int day, int agent, int target, string result)
         {
+            Day = day;
+            this.agent = agent;
+            this.target = target;
+            this.result = result;
+            Agent = Agent.GetAgent(agent);
+            Target = Agent.GetAgent(target);
+            Result = (Species)Enum.Parse(typeof(Species), result);
         }
 
 #if JHELP
@@ -139,6 +149,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString() => Agent + "->" + Target + "@" + Day + ":" + Result;
+        public override string ToString() => $"{Agent}->{Target}@{Day}:{Result}";
     }
 }
