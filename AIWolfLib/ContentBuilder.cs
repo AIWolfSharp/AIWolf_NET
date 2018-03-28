@@ -192,7 +192,8 @@ namespace AIWolf.Lib
             {
                 Utterance = new Whisper(talkID, talkDay);
             }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), utteranceType.ToString(), "day" + Utterance.Day, "ID:" + Utterance.Idx }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), utteranceType.ToString(), $"day{Utterance.Day}", $"ID:{Utterance.Idx}" }).Trim();
         }
     }
 
@@ -233,7 +234,8 @@ namespace AIWolf.Lib
             {
                 Utterance = new Whisper(talkID, talkDay);
             }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), utteranceType.ToString(), "day" + Utterance.Day, "ID:" + Utterance.Idx }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), utteranceType.ToString(), $"day{Utterance.Day}", $"ID:{Utterance.Idx}" }).Trim();
         }
     }
 
@@ -262,8 +264,18 @@ namespace AIWolf.Lib
         public AttackContentBuilder(Agent target)
         {
             Topic = Topic.ATTACK;
-            Target = target;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -292,8 +304,18 @@ namespace AIWolf.Lib
         public DivinationContentBuilder(Agent target)
         {
             Topic = Topic.DIVINATION;
-            Target = target;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -322,8 +344,18 @@ namespace AIWolf.Lib
         public GuardContentBuilder(Agent target)
         {
             Topic = Topic.GUARD;
-            Target = target;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -352,8 +384,18 @@ namespace AIWolf.Lib
         public GuardedAgentContentBuilder(Agent target)
         {
             Topic = Topic.GUARDED;
-            Target = target;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -382,8 +424,18 @@ namespace AIWolf.Lib
         public VoteContentBuilder(Agent target)
         {
             Topic = Topic.VOTE;
-            Target = target;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString() }).Trim();
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString() }).Trim();
         }
     }
 
@@ -414,9 +466,19 @@ namespace AIWolf.Lib
         public ComingoutContentBuilder(Agent target, Role role)
         {
             Topic = Topic.COMINGOUT;
-            Target = target;
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
             Role = role;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
         }
     }
 
@@ -447,9 +509,19 @@ namespace AIWolf.Lib
         public EstimateContentBuilder(Agent target, Role role)
         {
             Topic = Topic.ESTIMATE;
-            Target = target;
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
             Role = role;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
         }
     }
 
@@ -480,9 +552,19 @@ namespace AIWolf.Lib
         public DivinedResultContentBuilder(Agent target, Species result)
         {
             Topic = Topic.DIVINED;
-            Target = target;
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
             Result = result;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
         }
     }
 
@@ -513,9 +595,19 @@ namespace AIWolf.Lib
         public IdentContentBuilder(Agent target, Species result)
         {
             Topic = Topic.IDENTIFIED;
-            Target = target;
+            if (target == null)
+            {
+                Error.RuntimeError("target is null.");
+                Target = Agent.GetAgent(0);
+                Error.Warning($"using {Target}.");
+            }
+            else
+            {
+                Target = target;
+            }
             Result = result;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
         }
     }
 
@@ -547,15 +639,26 @@ namespace AIWolf.Lib
         {
             Topic = Topic.OPERATOR;
             Operator = Operator.REQUEST;
-            ContentList = new List<Content>
+            if (content == null)
             {
-                new Content(content)
+                Error.RuntimeError("content is null.");
+                Error.Warning("Using Content.SKIP.");
+                ContentList = new List<Content> { Content.SKIP }.AsReadOnly();
+            }
+            else
+            {
+                ContentList = new List<Content>
                 {
-                    Subject = agent,
-                    Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), content.Text }).Trim()
-                }
-            }.AsReadOnly();
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Operator + "(" + ContentList[0].Text + ")" }).Trim();
+                    new Content(content)
+                    {
+                        Subject = agent,
+                        Text = string.Join(" ", new string[] { agent == null ? "" : agent.ToString(),
+                            content.Text }).Trim()
+                    }
+                }.AsReadOnly();
+            }
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
+                $"{Operator}({ContentList[0].Text})" }).Trim();
         }
     }
 
