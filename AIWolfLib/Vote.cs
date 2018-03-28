@@ -77,6 +77,7 @@ namespace AIWolf.Lib
         /// <param name="day">投票日</param>
         /// <param name="agent">投票したエージェント</param>
         /// <param name="target">投票されたエージェント</param>
+        /// <remarks>agent/targetがnullの場合null参照例外</remarks>
 #else
         /// <summary>
         /// Initializes a new instance of this class.
@@ -84,14 +85,16 @@ namespace AIWolf.Lib
         /// <param name="day">The day of this vote.</param>
         /// <param name="agent">The agent who voted.</param>
         /// <param name="target">The voted agent.</param>
+        /// <remarks>NullReferenceException is thrown in case of null agent/target.</remarks>
 #endif
         public Vote(int day, Agent agent, Agent target)
         {
             Day = day;
             Agent = agent;
-            this.agent = Agent.AgentIdx;
             Target = target;
-            this.target = Target.AgentIdx;
+            // NullReferenceException is thrown in case of null agent/target.
+            this.agent = agent.AgentIdx;
+            this.target = target.AgentIdx;
         }
 
         /// <summary>
@@ -101,8 +104,13 @@ namespace AIWolf.Lib
         /// <param name="agent">The index of agent who voted.</param>
         /// <param name="target">The index of voted agent.</param>
         [JsonConstructor]
-        Vote(int day, int agent, int target) : this(day, Agent.GetAgent(agent), Agent.GetAgent(target))
+        Vote(int day, int agent, int target)
         {
+            Day = day;
+            this.agent = agent;
+            this.target = target;
+            Agent = Agent.GetAgent(agent);
+            Target = Agent.GetAgent(target);
         }
 
 #if JHELP
@@ -116,6 +124,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString() => Agent + "voted" + Target + "@" + Day;
+        public override string ToString() => $"{Agent}voted{Target}@{Day}";
     }
 }
