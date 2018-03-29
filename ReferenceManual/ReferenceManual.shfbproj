@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>aa1b0b96-ccc8-4b88-8d3c-7a30304f1fec</ProjectGuid>
-    <SHFBSchemaVersion>2015.6.5.0</SHFBSchemaVersion>
+    <SHFBSchemaVersion>2017.9.26.0</SHFBSchemaVersion>
     <!-- AssemblyName, Name, and RootNamespace are not used by SHFB but Visual Studio adds them anyway -->
     <AssemblyName>ReferenceManual</AssemblyName>
     <RootNamespace>ReferenceManual</RootNamespace>
@@ -27,10 +27,8 @@
       <Argument Key="maxVersionParts" Value="" xmlns="" />
     </TransformComponentArguments>
     <DocumentationSources>
-      <DocumentationSource sourceFile="..\AIWolfLib\bin\Debug\netstandard1.4\AIWolfLib.xml" />
-      <DocumentationSource sourceFile="..\AIWolfLib\bin\Debug\netstandard1.4\AIWolfLib.dll" />
-      <DocumentationSource sourceFile="..\AIWolfPlayer\bin\Debug\netstandard1.4\AIWolfPlayer.xml" />
-      <DocumentationSource sourceFile="..\AIWolfPlayer\bin\Debug\netstandard1.4\AIWolfPlayer.dll" />
+      <DocumentationSource sourceFile="..\AIWolfLib\bin\Debug\netstandard2.0\AIWolfLib.dll" />
+      <DocumentationSource sourceFile="..\AIWolfLib\bin\Debug\netstandard2.0\AIWolfLib.xml" />
     </DocumentationSources>
     <SaveComponentCacheCapacity>100</SaveComponentCacheCapacity>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
@@ -39,7 +37,7 @@
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
-    <VisibleItems>InheritedMembers, Protected, ProtectedInternalAsProtected</VisibleItems>
+    <VisibleItems>InheritedMembers, Protected, ProtectedInternalAsProtected, EditorBrowsableNever, NonBrowsable</VisibleItems>
     <ProjectSummary>
     </ProjectSummary>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
@@ -96,15 +94,8 @@
     <Content Include="icons\Help.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj">
-      <Name>AIWolfLib</Name>
-      <Project>{df6e6d37-3df4-4c6e-a942-1155fbd9bcb6}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\..\..\..\.nuget\packages\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
