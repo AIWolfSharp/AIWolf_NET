@@ -22,7 +22,7 @@ namespace AIWolf.Server
         /// <summary>
         /// The setting of the game.
         /// </summary>
-        GameSettingToSend GameSetting { set; }
+        GameSetting GameSetting { set; }
 
         /// <summary>
         /// The game data.

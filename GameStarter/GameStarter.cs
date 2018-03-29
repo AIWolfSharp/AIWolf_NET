@@ -47,7 +47,7 @@ namespace AIWolf
         void StartServer()
         {
             Console.WriteLine("Start AIWolf.NET Server port:{0} playerNum:{1} gameNum:{2}", port, agentNum, gameNum);
-            var gameSetting = GameSettingToSend.GetDefaultGameSetting(agentNum);
+            var gameSetting = GameSetting.GetDefaultGameSetting(agentNum);
             var server = new TcpipServer(port, agentNum, gameSetting);
             server.WaitForConnection();
             var logSubDir = Path.Combine(Path.GetFullPath(logDir), DateTime.Now.ToString("yyyyMMddHHmmss"));

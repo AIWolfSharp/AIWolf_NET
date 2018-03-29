@@ -42,7 +42,7 @@ namespace AIWolf.Server
         /// <summary>
         /// Game Setting.
         /// </summary>
-        public GameSettingToSend GameSetting { private get; set; }
+        public GameSetting GameSetting { private get; set; }
 
         /// <summary>
         /// The list of agents connecting to this server.
@@ -64,7 +64,7 @@ namespace AIWolf.Server
         /// <param name="port">The port number.</param>
         /// <param name="limit">The upper limit of the number of connections.</param>
         /// <param name="gameSetting">The setting of the game.</param>
-        public TcpipServer(int port, int limit, GameSettingToSend gameSetting)
+        public TcpipServer(int port, int limit, GameSetting gameSetting)
         {
             GameSetting = gameSetting;
             this.port = port;

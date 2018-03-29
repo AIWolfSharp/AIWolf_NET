@@ -26,7 +26,7 @@ namespace AIWolf.Server
 #endif
     public class AIWolfGame
     {
-        GameSettingToSend gameSetting;
+        GameSetting gameSetting;
         IGameServer gameServer;
         GameData gameData;
         Dictionary<Agent, string> agentNameMap = new Dictionary<Agent, string>();
@@ -85,7 +85,7 @@ namespace AIWolf.Server
         /// <param name="gameSetting">The setting of this game.</param>
         /// <param name="gameServer">The game server.</param>
 #endif
-        public AIWolfGame(GameSettingToSend gameSetting, IGameServer gameServer)
+        public AIWolfGame(GameSetting gameSetting, IGameServer gameServer)
         {
             this.gameSetting = gameSetting;
             this.gameServer = gameServer;

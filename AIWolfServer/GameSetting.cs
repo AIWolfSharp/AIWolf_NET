@@ -1,14 +1,13 @@
 ﻿//
-// GameSettingToSend.cs
+// GameSetting.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 //
 
 using AIWolf.Lib;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace AIWolf.Server
     /// </summary>
 #endif
     [DataContract]
-    public class GameSettingToSend
+    public class GameSetting : IGameSetting
     {
         /// <summary>
         /// The number of agents acting as each role.
@@ -40,15 +39,15 @@ namespace AIWolf.Server
             [7] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 0, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
             [8] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 1, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
             [9] = new Dictionary<Role, int> { [Role.BODYGUARD] = 0, [Role.MEDIUM] = 1, [Role.POSSESSED] = 0, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [10] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [11] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [12] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [13] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 6, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [14] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 7, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [15] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 8, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [16] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 9, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [17] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] =10, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
-           [18] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] =11, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [10] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 4, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [11] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 2, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [12] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 5, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [13] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 6, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [14] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 7, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [15] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 8, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [16] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 9, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [17] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 10, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
+            [18] = new Dictionary<Role, int> { [Role.BODYGUARD] = 1, [Role.MEDIUM] = 1, [Role.POSSESSED] = 1, [Role.SEER] = 1, [Role.VILLAGER] = 11, [Role.WEREWOLF] = 3, [Role.FREEMASON] = 0, [Role.FOX] = 0, },
         };
 
 #if JHELP
@@ -64,13 +63,13 @@ namespace AIWolf.Server
         /// <param name="agentNum">The number of agents.</param>
         /// <returns>The default GameSetting for the given number of agents.</returns>
 #endif
-        public static GameSettingToSend GetDefaultGameSetting(int agentNum)
+        public static GameSetting GetDefaultGameSetting(int agentNum)
         {
             if (!defaultRoleNumMap.ContainsKey(agentNum))
             {
                 throw new ArgumentException("Invalid agentNum in GetDefaultGameSetting(agentNum).");
             }
-            return new GameSettingToSend()
+            return new GameSetting()
             {
                 RoleNumMap = defaultRoleNumMap[agentNum],
                 MaxTalk = 10,
@@ -311,39 +310,6 @@ namespace AIWolf.Server
             {
                 return RoleNumMap == null ? 0 : RoleNumMap.Values.Sum();
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance.
-        /// </summary>
-        GameSettingToSend() { }
-
-        /// <summary>
-        /// Initializes a new instance.
-        /// </summary>
-        [JsonConstructor]
-        GameSettingToSend(Dictionary<Role, int> roleNumMap, int maxTalk, int maxTalkTurn, int maxWhisper,
-            int maxWhisperTurn, int maxSkip, int maxRevote, int maxAttackRevote, bool enableNoAttack,
-            bool voteVisible, bool votableInFirstDay, bool enableNoExecution, bool talkOnFirstDay,
-            bool validateUtterance, bool whisperBeforeRevote, long randomSeed, int timeLimit)
-        {
-            RoleNumMap = roleNumMap;
-            MaxTalk = maxTalk;
-            MaxTalkTurn = maxTalkTurn;
-            MaxWhisper = maxWhisper;
-            MaxWhisperTurn = maxWhisperTurn;
-            MaxSkip = maxSkip;
-            MaxRevote = maxRevote;
-            MaxAttackRevote = maxAttackRevote;
-            EnableNoAttack = enableNoAttack;
-            VoteVisible = voteVisible;
-            VotableOnFirstDay = votableInFirstDay;
-            EnableNoExecution = enableNoExecution;
-            TalkOnFirstDay = talkOnFirstDay;
-            ValidateUtterance = validateUtterance;
-            WhisperBeforeRevote = whisperBeforeRevote;
-            RandomSeed = randomSeed;
-            TimeLimit = timeLimit;
         }
     }
 }

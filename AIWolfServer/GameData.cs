@@ -20,7 +20,7 @@ namespace AIWolf.Server
         Agent attackedDead;
         Agent cursedFox;
         Agent executed;
-        GameSettingToSend gameSetting;
+        GameSetting gameSetting;
 
         /// <summary>
         /// The day.
@@ -167,7 +167,7 @@ namespace AIWolf.Server
         /// Initializes a new instance of this class.
         /// </summary>
         /// <param name="gameSetting">The setting of the game.</param>
-        public GameData(GameSettingToSend gameSetting)
+        public GameData(GameSetting gameSetting)
         {
             this.gameSetting = gameSetting;
         }
@@ -178,10 +178,10 @@ namespace AIWolf.Server
         /// <param name="agent">The owner of the GameInfo.</param>
         /// <returns>The instance of GameInfo.</returns>
         /// <remarks>If agent is null, stuff the GameInfo with the all information available.</remarks>
-        public GameInfoToSend GetGameInfo(Agent agent)
+        public GameInfo GetGameInfo(Agent agent)
         {
             Role role = agent != null ? RoleMap[agent] : Role.UNC;
-            GameInfoToSend gameInfo = new GameInfoToSend()
+            GameInfo gameInfo = new GameInfo()
             {
                 Agent = agent,
                 LatestVoteList = gameSetting.VoteVisible ? LatestVoteList : null,
@@ -234,9 +234,9 @@ namespace AIWolf.Server
         /// <param name="agent">The owner of the GameInfo.</param>
         /// <returns>The instance of GameInfo.</returns>
         /// <remarks>If agent is null, stuff the GameInfo with the all information available.</remarks>
-        public GameInfoToSend GetFinalGameInfo(Agent agent)
+        public GameInfo GetFinalGameInfo(Agent agent)
         {
-            GameInfoToSend gameInfo = GetGameInfo(agent);
+            GameInfo gameInfo = GetGameInfo(agent);
             gameInfo.RoleMap = RoleMap;
             return gameInfo;
         }

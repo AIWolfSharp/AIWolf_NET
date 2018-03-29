@@ -47,7 +47,7 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         [DataMember(Name = "gameInfo")]
-        public GameInfoToSend GameInfo { get; }
+        public GameInfo GameInfo { get; }
 
 #if JHELP
         /// <summary>
@@ -59,7 +59,7 @@ namespace AIWolf.Server
         /// </summary>
 #endif
         [DataMember(Name = "gameSetting")]
-        public GameSettingToSend GameSetting { get; }
+        public GameSetting GameSetting { get; }
 
 #if JHELP
         /// <summary>
@@ -114,7 +114,7 @@ namespace AIWolf.Server
         /// <param name="request">Request given.</param>
         /// <param name="gameInfo">Game information given.</param>
 #endif
-        public PacketToSend(Request request, GameInfoToSend gameInfo) : this(request)
+        public PacketToSend(Request request, GameInfo gameInfo) : this(request)
         {
             GameInfo = gameInfo;
         }
@@ -134,7 +134,7 @@ namespace AIWolf.Server
         /// <param name="gameInfo">Game information given.</param>
         /// <param name="gameSetting">GameSetting representation of setting of game given.</param>
 #endif
-        public PacketToSend(Request request, GameInfoToSend gameInfo, GameSettingToSend gameSetting) : this(request, gameInfo)
+        public PacketToSend(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo)
         {
             GameSetting = gameSetting;
         }
