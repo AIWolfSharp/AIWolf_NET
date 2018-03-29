@@ -150,7 +150,7 @@ namespace AIWolf.Player.Sample
         /// <param name="gameInfo">The current information of this game.</param>
         /// <param name="gameSetting">The setting of this game.</param>
 #endif
-        public override void Initialize(GameInfo gameInfo, GameSetting gameSetting)
+        public override void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
         {
             base.Initialize(gameInfo, gameSetting);
             numWolves = gameSetting.RoleNumMap[Role.WEREWOLF];
@@ -182,7 +182,7 @@ namespace AIWolf.Player.Sample
         /// </summary>
         /// <param name="gameInfo">The current information of this game.</param>
 #endif
-        public override void Update(GameInfo gameInfo)
+        public override void Update(IGameInfo gameInfo)
         {
             base.Update(gameInfo);
             // 占い/霊媒結果が嘘の場合，裏切り者候補

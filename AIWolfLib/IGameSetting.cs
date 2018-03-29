@@ -1,29 +1,26 @@
 ﻿//
-// GameSetting.cs
+// IGameSetting.cs
 //
-// Copyright (c) 2016 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
 //
 
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// ゲームの設定
+    /// ゲームの設定が備えるべきプロパティとメソッド
     /// </summary>
 #else
     /// <summary>
-    /// The settings of the game.
+    /// Generalized properties/methods that a settings of the game has.
     /// </summary>
 #endif
-    public class GameSetting : IGameSetting
+    public interface IGameSetting
     {
 #if JHELP
         /// <summary>
@@ -34,7 +31,7 @@ namespace AIWolf.Lib
         /// The number of each role.
         /// </summary>
 #endif
-        public IDictionary<Role, int> RoleNumMap { get; }
+        IDictionary<Role, int> RoleNumMap { get; }
 
 #if JHELP
         /// <summary>
@@ -45,7 +42,7 @@ namespace AIWolf.Lib
         /// The maximum number of talks.
         /// </summary>
 #endif
-        public int MaxTalk { get; }
+        int MaxTalk { get; }
 
 #if JHELP
         /// <summary>
@@ -56,7 +53,7 @@ namespace AIWolf.Lib
         /// The maximum number of turns of talk.
         /// </summary>
 #endif
-        public int MaxTalkTurn { get; }
+        int MaxTalkTurn { get; }
 
 #if JHELP
         /// <summary>
@@ -67,7 +64,7 @@ namespace AIWolf.Lib
         /// The maximum number of whispers a day.
         /// </summary>
 #endif
-        public int MaxWhisper { get; }
+        int MaxWhisper { get; }
 
 #if JHELP
         /// <summary>
@@ -78,7 +75,7 @@ namespace AIWolf.Lib
         /// The maximum number of turns of whisper.
         /// </summary>
 #endif
-        public int MaxWhisperTurn { get; }
+        int MaxWhisperTurn { get; }
 
 #if JHELP
         /// <summary>
@@ -89,7 +86,7 @@ namespace AIWolf.Lib
         /// The maximum permissible length of the succession of SKIPs.
         /// </summary>
 #endif
-        public int MaxSkip { get; }
+        int MaxSkip { get; }
 
 #if JHELP
         /// <summary>
@@ -100,7 +97,7 @@ namespace AIWolf.Lib
         /// The maximum number of revotes.
         /// </summary>
 #endif
-        public int MaxRevote { get; }
+        int MaxRevote { get; }
 
 #if JHELP
         /// <summary>
@@ -111,7 +108,7 @@ namespace AIWolf.Lib
         /// The maximum number of revotes for attack.
         /// </summary>
 #endif
-        public int MaxAttackRevote { get; }
+        int MaxAttackRevote { get; }
 
 #if JHELP
         /// <summary>
@@ -122,7 +119,7 @@ namespace AIWolf.Lib
         /// Whether or not the game permit to attack no one.
         /// </summary>
 #endif
-        public bool EnableNoAttack { get; }
+        bool EnableNoAttack { get; }
 
 #if JHELP
         /// <summary>
@@ -133,7 +130,7 @@ namespace AIWolf.Lib
         /// Whether or not agent can see who vote to who.
         /// </summary>
 #endif
-        public bool VoteVisible { get; }
+        bool VoteVisible { get; }
 
 #if JHELP
         /// <summary>
@@ -144,7 +141,7 @@ namespace AIWolf.Lib
         /// Whether or not there is vote on the first day.
         /// </summary>
 #endif
-        public bool VotableOnFirstDay { get; }
+        bool VotableOnFirstDay { get; }
 
 #if JHELP
         /// <summary>
@@ -155,7 +152,7 @@ namespace AIWolf.Lib
         /// Whether or not executing nobody is allowed.
         /// </summary>
 #endif
-        public bool EnableNoExecution { get; }
+        bool EnableNoExecution { get; }
 
 #if JHELP
         /// <summary>
@@ -166,7 +163,7 @@ namespace AIWolf.Lib
         /// Whether or not there are talks on the first day.
         /// </summary>
 #endif
-        public bool TalkOnFirstDay { get; }
+        bool TalkOnFirstDay { get; }
 
 #if JHELP
         /// <summary>
@@ -177,7 +174,7 @@ namespace AIWolf.Lib
         /// Whether or not the uttered text is validated.
         /// </summary>
 #endif
-        public bool ValidateUtterance { get; }
+        bool ValidateUtterance { get; }
 
 #if JHELP
         /// <summary>
@@ -188,7 +185,7 @@ namespace AIWolf.Lib
         /// Whether or not werewolf can whisper before the revote for attack.
         /// </summary>
 #endif
-        public bool WhisperBeforeRevote { get; }
+        bool WhisperBeforeRevote { get; }
 
 #if JHELP
         /// <summary>
@@ -199,7 +196,7 @@ namespace AIWolf.Lib
         /// The random seed.
         /// </summary>
 #endif
-        public long RandomSeed { get; }
+        long RandomSeed { get; }
 
 #if JHELP
         /// <summary>
@@ -210,7 +207,7 @@ namespace AIWolf.Lib
         /// The upper limit for the response time to the request.
         /// </summary>
 #endif
-        public int TimeLimit { get; }
+        int TimeLimit { get; }
 
 #if JHELP
         /// <summary>
@@ -221,35 +218,6 @@ namespace AIWolf.Lib
         /// The number of players.
         /// </summary>
 #endif
-        public int PlayerNum { get; }
-
-        /// <summary>
-        /// Initializes a new instance.
-        /// </summary>
-        [JsonConstructor]
-        GameSetting(Dictionary<Role, int> roleNumMap, int maxTalk, int maxTalkTurn, int maxWhisper,
-            int maxWhisperTurn, int maxSkip, int maxRevote, int maxAttackRevote, bool enableNoAttack,
-            bool voteVisible, bool votableInFirstDay, bool enableNoExecution, bool talkOnFirstDay,
-            bool validateUtterance, bool whisperBeforeRevote, long randomSeed, int timeLimit)
-        {
-            RoleNumMap = roleNumMap == null ? new ReadOnlyDictionary<Role, int>(new Dictionary<Role, int>()) : new ReadOnlyDictionary<Role, int>(roleNumMap);
-            MaxTalk = maxTalk;
-            MaxTalkTurn = maxTalkTurn;
-            MaxWhisper = maxWhisper;
-            MaxWhisperTurn = maxWhisperTurn;
-            MaxSkip = maxSkip;
-            MaxRevote = maxRevote;
-            MaxAttackRevote = maxAttackRevote;
-            EnableNoAttack = enableNoAttack;
-            VoteVisible = voteVisible;
-            VotableOnFirstDay = votableInFirstDay;
-            EnableNoExecution = enableNoExecution;
-            TalkOnFirstDay = talkOnFirstDay;
-            ValidateUtterance = validateUtterance;
-            WhisperBeforeRevote = whisperBeforeRevote;
-            RandomSeed = randomSeed;
-            TimeLimit = timeLimit;
-            PlayerNum = RoleNumMap.Values.Sum();
-        }
+        int PlayerNum { get; }
     }
 }

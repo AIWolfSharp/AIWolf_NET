@@ -43,7 +43,7 @@ namespace AIWolf.Player.Sample
         /// <summary>
         /// 最新のゲーム情報
         /// </summary>
-        protected GameInfo CurrentGameInfo { get; private set; }
+        protected IGameInfo CurrentGameInfo { get; private set; }
         /// <summary>
         /// 自分以外の生存エージェントのリスト
         /// </summary>
@@ -106,7 +106,7 @@ namespace AIWolf.Player.Sample
         /// </summary>
         /// <param name="gameInfo">最新のゲーム情報</param>
         /// <param name="gameSetting">ゲーム設定</param>
-        public virtual void Initialize(GameInfo gameInfo, GameSetting gameSetting)
+        public virtual void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
         {
             Day = -1;
             Me = gameInfo.Agent;
@@ -149,7 +149,7 @@ namespace AIWolf.Player.Sample
         /// ゲーム情報更新の際に呼ばれる
         /// </summary>
         /// <param name="gameInfo">最新のゲーム情報</param>
-        public virtual void Update(GameInfo gameInfo)
+        public virtual void Update(IGameInfo gameInfo)
         {
             CurrentGameInfo = gameInfo;
             // 1日の最初の呼び出しはDayStart()の前なので何もしない

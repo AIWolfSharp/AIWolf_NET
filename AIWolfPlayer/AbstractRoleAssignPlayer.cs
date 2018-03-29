@@ -155,7 +155,7 @@ namespace AIWolf.Player.Lib
         /// </summary>
         /// <param name="gameInfo">The current information of this game.</param>
 #endif
-        public void Update(GameInfo gameInfo) => player.Update(gameInfo);
+        public void Update(IGameInfo gameInfo) => player.Update(gameInfo);
 
 #if JHELP
         /// <summary>
@@ -170,7 +170,7 @@ namespace AIWolf.Player.Lib
         /// <param name="gameInfo">The current information of this game.</param>
         /// <param name="gameSetting">The setting of this game.</param>
 #endif
-        public void Initialize(GameInfo gameInfo, GameSetting gameSetting)
+        public void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
         {
             switch (gameInfo.Role)
             {

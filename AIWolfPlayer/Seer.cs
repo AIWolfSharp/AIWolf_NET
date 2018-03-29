@@ -128,7 +128,7 @@ namespace AIWolf.Player.Sample
         /// <param name="gameInfo">The current information of this game.</param>
         /// <param name="gameSetting">The setting of this game.</param>
 #endif
-        public override void Initialize(GameInfo gameInfo, GameSetting gameSetting)
+        public override void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
         {
             base.Initialize(gameInfo, gameSetting);
             comingoutDay = new int[] { 1, 2, 3 }.Shuffle().First();
