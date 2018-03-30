@@ -130,7 +130,7 @@ namespace AIWolf.Lib
         /// The utterance the Content refers to.
         /// </summary>
 #endif
-        internal Utterance Utterance { get; set; }
+        internal IUtterance Utterance { get; set; }
 
 #if JHELP
         /// <summary>
@@ -685,7 +685,7 @@ namespace AIWolf.Lib
         public SkipContentBuilder()
         {
             Topic = Topic.Skip;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Utterance.SKIP }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Talk.SKIP }).Trim();
         }
     }
 
@@ -712,7 +712,7 @@ namespace AIWolf.Lib
         public OverContentBuilder()
         {
             Topic = Topic.Over;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Utterance.OVER }).Trim();
+            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Talk.OVER }).Trim();
         }
     }
 }

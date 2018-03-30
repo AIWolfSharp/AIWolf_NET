@@ -546,20 +546,20 @@ namespace AIWolf.Server
                 var talkList = new List<Talk>();
                 foreach (var agent in AliveAgentList.Shuffle())
                 {
-                    var text = Utterance.OVER;
+                    var text = Lib.Talk.OVER;
                     if (gameData.RemainTalkMap[agent] > 0)
                     {
                         text = gameServer.RequestTalk(agent);
                     }
                     if (text == null || text.Length == 0)
                     {
-                        text = Utterance.SKIP;
+                        text = Lib.Talk.SKIP;
                     }
                     else
                     {
                         text = StripText(text);
                     }
-                    if (text == Utterance.SKIP)
+                    if (text == Lib.Talk.SKIP)
                     {
                         if (skipCounter.ContainsKey(agent))
                         {
@@ -571,11 +571,11 @@ namespace AIWolf.Server
                         }
                         if (skipCounter[agent] > gameSetting.MaxSkip)
                         {
-                            text = Utterance.OVER;
+                            text = Lib.Talk.OVER;
                         }
                     }
                     talkList.Add(new Talk(gameData.NextTalkIdx, Day, turn, agent, text));
-                    if (text != Utterance.OVER && text != Utterance.SKIP)
+                    if (text != Lib.Talk.OVER && text != Lib.Talk.SKIP)
                     {
                         skipCounter[agent] = 0;
                     }
@@ -588,7 +588,7 @@ namespace AIWolf.Server
                     {
                         GameLogger.Log($"{Day},talk,{talk.Idx},{talk.Turn},{talk.Agent.AgentIdx},{talk.Text}");
                     }
-                    if (talk.Text != Utterance.OVER)
+                    if (talk.Text != Lib.Talk.OVER)
                     {
                         continueTalk = true;
                     }
@@ -618,20 +618,20 @@ namespace AIWolf.Server
                 var whisperList = new List<Whisper>();
                 foreach (var agent in AliveWolfList.Shuffle())
                 {
-                    var text = Utterance.OVER;
+                    var text = Lib.Talk.OVER;
                     if (gameData.RemainWhisperMap[agent] > 0)
                     {
                         text = gameServer.RequestWhisper(agent);
                     }
                     if (text == null || text.Length == 0)
                     {
-                        text = Utterance.SKIP;
+                        text = Lib.Talk.SKIP;
                     }
                     else
                     {
                         text = StripText(text);
                     }
-                    if (text == Utterance.SKIP)
+                    if (text == Lib.Talk.SKIP)
                     {
                         if (skipCounter.ContainsKey(agent))
                         {
@@ -643,11 +643,11 @@ namespace AIWolf.Server
                         }
                         if (skipCounter[agent] > gameSetting.MaxSkip)
                         {
-                            text = Utterance.OVER;
+                            text = Lib.Talk.OVER;
                         }
                     }
                     whisperList.Add(new Whisper(gameData.NextWhisperIdx, Day, turn, agent, text));
-                    if (text != Utterance.OVER && text != Utterance.SKIP)
+                    if (text != Lib.Talk.OVER && text != Lib.Talk.SKIP)
                     {
                         skipCounter[agent] = 0;
                     }
@@ -660,7 +660,7 @@ namespace AIWolf.Server
                     {
                         GameLogger.Log($"{Day},whisper,{whisper.Idx},{whisper.Turn},{ whisper.Agent.AgentIdx},{whisper.Text}");
                     }
-                    if (whisper.Text != Utterance.OVER)
+                    if (whisper.Text != Lib.Talk.OVER)
                     {
                         continueWhisper = true;
                     }

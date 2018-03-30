@@ -205,7 +205,7 @@ namespace AIWolf.Client
                         var talkText = player.Talk();
                         if (talkText == null)
                         {
-                            returnObject = Utterance.SKIP;
+                            returnObject = Lib.Talk.SKIP;
                         }
                         else
                         {
@@ -217,7 +217,7 @@ namespace AIWolf.Client
                         var whisperText = player.Whisper();
                         if (whisperText == null)
                         {
-                            returnObject = Utterance.SKIP;
+                            returnObject = Lib.Talk.SKIP;
                         }
                         else
                         {
@@ -262,7 +262,7 @@ namespace AIWolf.Client
         /// </summary>
         /// <param name="utterance">The utterance to be checked.</param>
         /// <returns>True if it is new.</returns>
-        bool IsNew(Utterance utterance)
+        bool IsNew(IUtterance utterance)
         {
             if (utterance is Whisper)
             {

@@ -1,7 +1,7 @@
 ﻿//
-// Utterance.cs
+// Talk.cs
 //
-// Copyright (c) 2016 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -14,15 +14,15 @@ namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// 発話抽象クラス
+    /// 会話クラス
     /// </summary>
 #else
     /// <summary>
-    /// Abstract utterance class.
+    /// Talk class.
     /// </summary>
 #endif
     [DataContract]
-    public abstract class Utterance
+    public class Talk : IUtterance
     {
 #if JHELP
         /// <summary>
@@ -45,12 +45,6 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         public static readonly string SKIP = "Skip";
-
-        /// <summary>
-        /// The index number of the agent who uttered.
-        /// </summary>
-        [DataMember(Name = "agent")]
-        int agent;
 
 #if JHELP
         /// <summary>
@@ -99,6 +93,12 @@ namespace AIWolf.Lib
 #endif
         public Agent Agent { get; }
 
+        /// <summary>
+        /// The index number of the agent who uttered.
+        /// </summary>
+        [DataMember(Name = "agent")]
+        int agent;
+
 #if JHELP
         /// <summary>
         /// 発話テキスト
@@ -111,115 +111,12 @@ namespace AIWolf.Lib
         [DataMember(Name = "text")]
         public string Text { get; }
 
-#if JHELP
-        /// <summary>
-        /// 発話の新しいインスタンスを初期化する
-        /// </summary>
-        /// <param name="idx">発話のインデックス</param>
-        /// <param name="day">発話日</param>
-        /// <param name="turn">発話ターン</param>
-#else
-        /// <summary>
-        /// Initializes a new instance of this class.
-        /// </summary>
-        /// <param name="idx">The index of this utterance.</param>
-        /// <param name="day">The day of this utterance.</param>
-        /// <param name="turn">The turn of this utterance.</param>
-#endif
-        protected Utterance(int idx = 0, int day = 0, int turn = -1)
+        Talk(int idx = 0, int day = 0, int turn = -1)
         {
             Idx = idx;
             Day = day;
             Turn = turn;
         }
-
-#if JHELP
-        /// <summary>
-        /// 発話の新しいインスタンスを初期化する
-        /// </summary>
-        /// <param name="idx">発話のインデックス</param>
-        /// <param name="day">発話日</param>
-        /// <param name="turn">発話ターン</param>
-        /// <param name="agent">発話エージェント</param>
-        /// <param name="text">発話テキスト</param>
-        /// <remarks>agentがnullの場合null参照例外</remarks>
-#else
-        /// <summary>
-        /// Initializes a new instance of this class.
-        /// </summary>
-        /// <param name="idx">The index of this utterance.</param>
-        /// <param name="day">The day of this utterance.</param>
-        /// <param name="turn">The turn of this utterance.</param>
-        /// <param name="agent">The agent who uttered.</param>
-        /// <param name="text">The text of this utterance.</param>
-        /// <remarks>NullReferenceException is thrown in case of null agent.</remarks>
-#endif
-        protected Utterance(int idx, int day, int turn, Agent agent, string text) : this(idx: idx, day: day, turn: turn)
-        {
-            Agent = agent;
-            // NullReferenceException is thrown in case of null agent,
-            this.agent = agent.AgentIdx;
-            Text = text;
-        }
-
-#if JHELP
-        /// <summary>
-        /// 発話の新しいインスタンスを初期化する
-        /// </summary>
-        /// <param name="idx">発話のインデックス</param>
-        /// <param name="day">発話日</param>
-        /// <param name="turn">発話ターン</param>
-        /// <param name="agent">発話エージェント番号</param>
-        /// <param name="text">発話テキスト</param>
-#else
-        /// <summary>
-        /// Initializes a new instance of this class.
-        /// </summary>
-        /// <param name="idx">The index of this utterance.</param>
-        /// <param name="day">The day of this utterance.</param>
-        /// <param name="turn">The turn of this utterance.</param>
-        /// <param name="agent">The index of agent who uttered.</param>
-        /// <param name="text">The text of this utterance.</param>
-#endif
-        [JsonConstructor]
-        protected Utterance(int idx, int day, int turn, int agent, string text) : this(idx: idx, day: day, turn: turn)
-        {
-            this.agent = agent;
-            Text = text;
-            Agent = Agent.GetAgent(agent);
-        }
-
-#if JHELP
-        /// <summary>
-        /// このオブジェクトを表す文字列を返す
-        /// </summary>
-        /// <returns>このオブジェクトを表す文字列</returns>
-#else
-        /// <summary>
-        /// Returns a string that represents the current object.
-        /// </summary>
-        /// <returns>A string that represents the current object.</returns>
-#endif
-        public abstract override string ToString();
-    }
-
-#if JHELP
-    /// <summary>
-    /// 会話クラス
-    /// </summary>
-#else
-    /// <summary>
-    /// Talk class.
-    /// </summary>
-#endif
-    public class Talk : Utterance
-    {
-        /// <summary>
-        /// Initializes a new instance of this class.
-        /// </summary>
-        /// <param name="idx">The index of this talk.</param>
-        /// <param name="day">The day of this talk.</param>
-        internal Talk(int idx, int day) : base(idx: idx, day: day) { }
 
 #if JHELP
         /// <summary>
@@ -230,6 +127,7 @@ namespace AIWolf.Lib
         /// <param name="turn">この会話の発話ターン</param>
         /// <param name="agent">この会話の発話エージェント</param>
         /// <param name="text">この会話の発話テキスト</param>
+        /// <remarks>agentがnullの場合null参照例外</remarks>
 #else
         /// <summary>
         /// Initializes a new instance of this class.
@@ -239,9 +137,18 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this talk.</param>
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
+        /// <remarks>NullReferenceException is thrown in case of null agent.</remarks>
 #endif
-        public Talk(int idx, int day, int turn, Agent agent, string text)
-            : base(idx, day, turn, agent, text) { }
+        public Talk(int idx = 0, int day = 0, int turn = -1, Agent agent = null, string text = "")
+        {
+            Idx = idx;
+            Day = day;
+            Turn = turn;
+            Agent = agent;
+            // NullReferenceException is thrown in case of null agent,
+            this.agent = agent.AgentIdx;
+            Text = text;
+        }
 
         /// <summary>
         /// Initializes a new instance of this class.
@@ -252,8 +159,12 @@ namespace AIWolf.Lib
         /// <param name="agent">The index of agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
         [JsonConstructor]
-        Talk(int idx, int day, int turn, int agent, string text)
-            : base(idx, day, turn, agent, text) { }
+        internal Talk(int idx, int day, int turn, int agent, string text) : this(idx: idx, day: day, turn: turn)
+        {
+            this.agent = agent;
+            Text = text;
+            Agent = Agent.GetAgent(agent);
+        }
 
 #if JHELP
         /// <summary>
@@ -278,15 +189,8 @@ namespace AIWolf.Lib
     /// Whisper class.
     /// </summary>
 #endif
-    public class Whisper : Utterance
+    public class Whisper : Talk
     {
-        /// <summary>
-        /// Initializes a new instance of this class.
-        /// </summary>
-        /// <param name="idx">The index of this whisper.</param>
-        /// <param name="day">The day of this whisper.</param>
-        internal Whisper(int idx, int day) : base(idx: idx, day: day) { }
-
 #if JHELP
         /// <summary>
         /// 囁きの新しいインスタンスを初期化する
@@ -306,7 +210,7 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
 #endif
-        public Whisper(int idx, int day, int turn, Agent agent, string text)
+        public Whisper(int idx = 0, int day = 0, int turn = -1, Agent agent = null, string text = "")
             : base(idx, day, turn, agent, text) { }
 
         /// <summary>

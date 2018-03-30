@@ -265,7 +265,7 @@ namespace AIWolf.Server
         /// <param name="talk">The uttered talk.</param>
         public void AddTalk(Agent agent, Talk talk)
         {
-            if (talk.Text != Utterance.OVER && talk.Text != Utterance.SKIP)
+            if (talk.Text != Talk.OVER && talk.Text != Talk.SKIP)
             {
                 if (RemainTalkMap[agent] == 0)
                 {
@@ -283,7 +283,7 @@ namespace AIWolf.Server
         /// <param name="whisper">The uttered whisper.</param>
         public void AddWhisper(Agent agent, Whisper whisper)
         {
-            if (whisper.Text != Utterance.OVER && whisper.Text != Utterance.SKIP)
+            if (whisper.Text != Talk.OVER && whisper.Text != Talk.SKIP)
             {
                 if (RemainWhisperMap[agent] == 0)
                 {

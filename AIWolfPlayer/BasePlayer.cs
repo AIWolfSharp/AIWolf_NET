@@ -201,7 +201,7 @@ namespace AIWolf.Player
                 TalkQueue.Enqueue(new Content(new VoteContentBuilder(voteCandidate)));
                 declaredVoteCandidate = voteCandidate;
             }
-            return TalkQueue.Count > 0 ? TalkQueue.Dequeue().Text : Utterance.SKIP;
+            return TalkQueue.Count > 0 ? TalkQueue.Dequeue().Text : Lib.Talk.SKIP;
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace AIWolf.Player
                 WhisperQueue.Enqueue(new Content(new AttackContentBuilder(attackVoteCandidate)));
                 declaredAttackVoteCandidate = attackVoteCandidate;
             }
-            return WhisperQueue.Count > 0 ? WhisperQueue.Dequeue().Text : Utterance.SKIP;
+            return WhisperQueue.Count > 0 ? WhisperQueue.Dequeue().Text : Lib.Talk.SKIP;
         }
 
         /// <summary>

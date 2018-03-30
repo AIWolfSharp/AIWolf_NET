@@ -122,7 +122,7 @@ namespace AIWolf.Lib
         /// The utterance the Content refers to.
         /// </summary>
 #endif
-        public Utterance Utterance { get; }
+        public IUtterance Utterance { get; }
 
 #if JHELP
         /// <summary>
