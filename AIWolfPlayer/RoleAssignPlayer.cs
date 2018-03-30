@@ -7,10 +7,7 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
-using System;
-using AIWolf.Player.Lib;
-
-namespace AIWolf.Player.Sample
+namespace AIWolf.Player
 {
 #if JHELP
     /// <summary>

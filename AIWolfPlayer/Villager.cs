@@ -11,7 +11,7 @@ using AIWolf.Lib;
 using System;
 using System.Linq;
 
-namespace AIWolf.Player.Sample
+namespace AIWolf.Player
 {
 #if JHELP
     /// <summary>
