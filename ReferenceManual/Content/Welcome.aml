@@ -3,6 +3,7 @@
 	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
 		<introduction>
 			<para>AIWolfLibは人狼知能エージェント作成のためのライブラリです．</para>
+      <para>AIWolfLib is a library for making an AIWolf agent．</para>
 		</introduction>
 
 	</developerConceptualDocument>
