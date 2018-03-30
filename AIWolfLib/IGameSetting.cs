@@ -13,11 +13,11 @@ namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// ゲームの設定が備えるべきプロパティとメソッド
+    /// ゲーム設定クラスが実装すべきプロパティ
     /// </summary>
 #else
     /// <summary>
-    /// Generalized properties/methods that a settings of the game has.
+    /// Defines the properties to be in the class for game settings.
     /// </summary>
 #endif
     public interface IGameSetting

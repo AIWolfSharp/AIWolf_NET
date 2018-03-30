@@ -15,7 +15,7 @@ namespace AIWolf.Lib
     /// </summary>
 #else
     /// <summary>
-    /// Defines a generalized properties/methods that a class implements to be a player of AIWolf.
+    /// Defines the property and the methods to be in the class for AIWolf player.
     /// </summary>
 #endif
     public interface IPlayer

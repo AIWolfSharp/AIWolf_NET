@@ -13,11 +13,11 @@ namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// ゲーム情報が実装すべきプロパティとメソッド
+    /// ゲーム情報クラスが実装すべきプロパティ
     /// </summary>
 #else
     /// <summary>
-    /// Defines generalized properties/methods that a game information class has.
+    /// Defines the properties to be in the class for game information.
     /// </summary>
 #endif
     public interface IGameInfo
