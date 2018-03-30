@@ -75,7 +75,7 @@ namespace AIWolf.Player
         /// Initializes a new instance of AdditionalGameInfo.
         /// </summary>
         /// <param name="gameInfo">Game information.</param>
-        public AdditionalGameInfo(GameInfo gameInfo)
+        public AdditionalGameInfo(IGameInfo gameInfo)
         {
             day = -1;
             AliveOthers = gameInfo.AliveAgentList.Where(a => a != gameInfo.Agent).ToList();
@@ -85,7 +85,7 @@ namespace AIWolf.Player
         /// Update AdditionalGameinfo.
         /// </summary>
         /// <param name="gameInfo">Game information.</param>
-        public void Update(GameInfo gameInfo)
+        public void Update(IGameInfo gameInfo)
         {
             // 1日の最初の呼び出しではその日の初期化などを行う
             if (gameInfo.Day != day)

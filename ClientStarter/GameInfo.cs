@@ -7,13 +7,14 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
+using AIWolf.Lib;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AIWolf.Lib
+namespace AIWolf.Client
 {
 #if JHELP
     /// <summary>
