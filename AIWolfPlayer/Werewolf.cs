@@ -150,7 +150,7 @@ namespace AIWolf.Player.Sample
         /// <param name="gameInfo">The current information of this game.</param>
         /// <param name="gameSetting">The setting of this game.</param>
 #endif
-        public override void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
+        public override void Initialize(IGameInfo gameInfo, IGameSetting gameSetting)
         {
             base.Initialize(gameInfo, gameSetting);
             numWolves = gameSetting.RoleNumMap[Role.WEREWOLF];

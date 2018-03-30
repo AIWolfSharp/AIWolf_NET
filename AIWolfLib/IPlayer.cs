@@ -57,7 +57,7 @@ namespace AIWolf.Lib
         /// <param name="gameInfo">The current information of this game.</param>
         /// <param name="gameSetting">The setting of this game.</param>
 #endif
-        void Initialize(IGameInfo gameInfo, GameSetting gameSetting);
+        void Initialize(IGameInfo gameInfo, IGameSetting gameSetting);
 
 
 #if JHELP

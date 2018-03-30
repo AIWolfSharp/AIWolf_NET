@@ -106,7 +106,7 @@ namespace AIWolf.Player.Sample
         /// </summary>
         /// <param name="gameInfo">最新のゲーム情報</param>
         /// <param name="gameSetting">ゲーム設定</param>
-        public virtual void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
+        public virtual void Initialize(IGameInfo gameInfo, IGameSetting gameSetting)
         {
             Day = -1;
             Me = gameInfo.Agent;

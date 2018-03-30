@@ -170,7 +170,7 @@ namespace AIWolf.Player.Lib
         /// <param name="gameInfo">The current information of this game.</param>
         /// <param name="gameSetting">The setting of this game.</param>
 #endif
-        public void Initialize(IGameInfo gameInfo, GameSetting gameSetting)
+        public void Initialize(IGameInfo gameInfo, IGameSetting gameSetting)
         {
             switch (gameInfo.Role)
             {
