@@ -138,7 +138,7 @@ namespace AIWolf.Client
                 {
                     if (IsNew(t))
                     {
-                        gameInfo.TalkList.Add(t);
+                        gameInfo.AddTalk(t);
                     }
                 }
             }
@@ -149,7 +149,7 @@ namespace AIWolf.Client
                 {
                     if (IsNew(w))
                     {
-                        gameInfo.WhisperList.Add(w);
+                        gameInfo.AddWhisper(w);
                     }
                 }
             }
