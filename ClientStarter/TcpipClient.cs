@@ -7,6 +7,7 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
+using AIWolf.Lib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace AIWolf.Lib
+namespace AIWolf.Client
 {
 #if JHELP
     /// <summary>

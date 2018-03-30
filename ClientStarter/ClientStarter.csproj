@@ -9,7 +9,7 @@
     <VersionPrefix>2.0.0</VersionPrefix>
     <VersionSuffix>beta</VersionSuffix>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
-    <RootNamespace>AIWolf</RootNamespace>
+    <RootNamespace>AIWolf.Client</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AIWolfLib\AIWolfLib.csproj" />
     <ProjectReference Include="..\AIWolfPlayer\AIWolfPlayer.csproj" />
+    <ProjectReference Include="..\AIWolfServer\AIWolfServer.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
-namespace AIWolf.Lib
+namespace AIWolf.Client
 {
 #if JHELP
     /// <summary>

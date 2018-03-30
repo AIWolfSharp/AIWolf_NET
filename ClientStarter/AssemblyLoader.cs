@@ -13,7 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace AIWolf
+namespace AIWolf.Client
 {
     public class AssemblyLoader : AssemblyLoadContext
     {

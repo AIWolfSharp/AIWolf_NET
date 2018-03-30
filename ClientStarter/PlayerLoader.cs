@@ -12,7 +12,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace AIWolf
+namespace AIWolf.Client
 {
     public static class PlayerLoader
     {

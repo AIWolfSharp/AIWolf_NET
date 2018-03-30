@@ -7,10 +7,11 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
+using AIWolf.Lib;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace AIWolf.Lib
+namespace AIWolf.Client
 {
 #if JHELP
     /// <summary>

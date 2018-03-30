@@ -8,10 +8,10 @@
 //
 
 using AIWolf.Lib;
-using AIWolf.Player.Sample;
+using AIWolf.Player;
 using System;
 
-namespace AIWolf
+namespace AIWolf.Client
 {
     /// <summary>
     /// Client starter class.
