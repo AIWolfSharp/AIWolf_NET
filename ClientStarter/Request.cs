@@ -18,7 +18,7 @@ namespace AIWolf.Client
     /// Enumeration type for requests.
     /// </summary>
 #endif
-    public enum Request
+    enum Request
     {
 #if JHELP
         /// <summary>
