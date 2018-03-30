@@ -47,7 +47,18 @@ AIWolf.NETは.NET版人狼知能プラットフォームです．
         エージェントに渡されるGameInfo, GameSettingを書き換え不可にしました．
       * 各種クライアントスタータをプロセスとして起動するGameStarterが加わりました．
         サーバ起動後，Java, .NET, Pythonなどのエージェントを接続して対戦することができます．
-      
+      * Contentクラスの変更点
+        * コピーコンストラクタの不可視化
+        * ConentListをreadonlyのIListに
+      * GameInfoクラスの変更点
+        * IGameInfoインターフェースの実装
+        * プロパティのsetterを廃止し，ListをreadonlyのIListに，DictionaryをreadonlyのIDictionaryに
+        * コンストラクタの不可視化
+      * GameSettingクラスの変更点
+        * IGameSettingインターフェースの実装
+        * プロパティのsetterを廃止し，RoleNumMapをreadonlyのIDictionaryに
+      * IPlayerインターフェースの変更点
+        * GameInfo, GameSettingをIGameInfo, IGameSettingに      
 
 ---
 このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE)を参照のこと.
