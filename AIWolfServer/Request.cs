@@ -18,7 +18,7 @@ namespace AIWolf.Server
     /// Enumeration type for requests.
     /// </summary>
 #endif
-    enum Request
+    public enum Request
     {
 #if JHELP
         /// <summary>
@@ -194,7 +194,7 @@ namespace AIWolf.Server
     /// <summary>
     /// Defines extension method of enum Request.
     /// </summary>
-    static class RequestExtensions
+    public static class RequestExtensions
     {
         /// <summary>
         /// Returns whethere or not the request waits for return value.
