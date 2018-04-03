@@ -49,13 +49,12 @@
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>False</Preliminary>
     <NamingMethod>Guid</NamingMethod>
-    <HelpTitle>AIWolfLib リファレンスマニュアル</HelpTitle>
+    <HelpTitle>AIWolfLib Reference Manual</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
     <RootNamespaceTitle>
     </RootNamespaceTitle>
     <NamespaceSummaries>
-      <NamespaceSummaryItem name="AIWolf.Lib" isDocumented="True">人狼知能エージェント作成のためのライブラリ
-A library for making an AIWolf agent.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="AIWolf.Lib" isDocumented="True">A library for making an AIWolf agent.</NamespaceSummaryItem>
     </NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
