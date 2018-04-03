@@ -20,6 +20,8 @@ namespace AIWolf.Player
 #endif
     public class RoleAssignPlayer : AbstractRoleAssignPlayer
     {
+        public override string Name => "SamplePlayer";
+
 #if JHELP
         /// <summary>
         /// サンプルエージェントを使うので何も設定しない

@@ -99,7 +99,7 @@ namespace AIWolf.Player
         /// This player's name.
         /// </summary>
 #endif
-        public virtual string Name => GetType().ToString();
+        public abstract string Name { get; }
 
 #if JHELP
         /// <summary>
