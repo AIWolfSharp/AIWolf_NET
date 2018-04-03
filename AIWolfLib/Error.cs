@@ -17,7 +17,7 @@ namespace AIWolf.Lib
     /// <summary>
     /// Error handling class.
     /// </summary>
-    public static class Error
+    static class Error
     {
         /// <summary>
         /// Writes a warning message.
@@ -54,25 +54,6 @@ namespace AIWolf.Lib
         static void WriteRuntimeErrorMesg(string message)
         {
             Console.Error.WriteLine($"RuntimeError: {message}");
-        }
-
-        /// <summary>
-        /// Writes an error message, then throws TimeoutException on debug.
-        /// </summary>
-        /// <param name="message">Error message.</param>
-        /// <param name="memberName">The name of the caller.</param>
-        /// <param name="filePath">The path of file containing the code of the caller.</param>
-        /// <param name="lineNumber">The line number of the caller in the file.</param>
-        public static void TimeoutError(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0)
-        {
-            ThrowTimeoutException($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
-            WriteRuntimeErrorMesg($"{memberName}: {message} at line {lineNumber} in {Path.GetFileName(filePath)}");
-        }
-
-        [Conditional("DEBUG")]
-        static void ThrowTimeoutException(string message)
-        {
-            throw new TimeoutException(message);
         }
     }
 
