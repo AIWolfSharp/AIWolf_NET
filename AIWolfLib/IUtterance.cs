@@ -11,11 +11,11 @@ namespace AIWolf.Lib
 {
 #if JHELP
     /// <summary>
-    /// 発話クラスが実装すべきプロパティとメソッド
+    /// 発話クラスが実装すべきプロパティ
     /// </summary>
 #else
     /// <summary>
-    /// Abstract utterance class.
+    /// The properties to be in the class for utterances.
     /// </summary>
 #endif
     public interface IUtterance
