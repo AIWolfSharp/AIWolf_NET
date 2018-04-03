@@ -11,15 +11,15 @@ using AIWolf.Lib;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AIWolf.Player
+namespace AIWolf.Player.Sample
 {
 #if JHELP
     /// <summary>
-    /// プレイヤー用基本クラス
+    /// サンプルプレイヤー用基本クラス
     /// </summary>
 #else
     /// <summary>
-    /// Base class for player.
+    /// Base class for sample players.
     /// </summary>
 #endif
     public class BasePlayer : IPlayer

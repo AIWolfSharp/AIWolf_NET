@@ -8,7 +8,6 @@
 //
 
 using AIWolf.Lib;
-using AIWolf.Player;
 using System;
 
 namespace AIWolf.Client
@@ -152,7 +151,7 @@ namespace AIWolf.Client
             IPlayer player;
             if (useDefaultPlayer)
             {
-                player = new RoleAssignPlayer();
+                player = new Player.Sample.RoleAssignPlayer();
             }
             else
             {
@@ -164,7 +163,7 @@ namespace AIWolf.Client
             {
                 client.Connect(player);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Error.WriteLine($"ClientStarter: Error in running player. {e.StackTrace}");
                 throw;

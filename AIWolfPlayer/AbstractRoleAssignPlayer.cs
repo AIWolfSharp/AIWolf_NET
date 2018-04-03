@@ -31,7 +31,7 @@ namespace AIWolf.Player
         /// Villager player.
         /// </summary>
 #endif
-        protected IPlayer VillagerPlayer { get; set; } = new Villager();
+        protected IPlayer VillagerPlayer { get; set; } = new Sample.Villager();
 
 #if JHELP
         /// <summary>
@@ -42,7 +42,7 @@ namespace AIWolf.Player
         /// Bodyguard player.
         /// </summary>
 #endif
-        protected IPlayer BodyguardPlayer { get; set; } = new Bodyguard();
+        protected IPlayer BodyguardPlayer { get; set; } = new Sample.Bodyguard();
 
 #if JHELP
         /// <summary>
@@ -53,7 +53,7 @@ namespace AIWolf.Player
         /// Seer player.
         /// </summary>
 #endif
-        protected IPlayer SeerPlayer { get; set; } = new Seer();
+        protected IPlayer SeerPlayer { get; set; } = new Sample.Seer();
 
 #if JHELP
         /// <summary>
@@ -64,7 +64,7 @@ namespace AIWolf.Player
         /// Medium player.
         /// </summary>
 #endif
-        protected IPlayer MediumPlayer { get; set; } = new Medium();
+        protected IPlayer MediumPlayer { get; set; } = new Sample.Medium();
 
 #if JHELP
         /// <summary>
@@ -75,7 +75,7 @@ namespace AIWolf.Player
         /// Possessed player.
         /// </summary>
 #endif
-        protected IPlayer PossessedPlayer { get; set; } = new Possessed();
+        protected IPlayer PossessedPlayer { get; set; } = new Sample.Possessed();
 
 #if JHELP
         /// <summary>
@@ -86,7 +86,7 @@ namespace AIWolf.Player
         /// Werewolf player.
         /// </summary>
 #endif
-        protected IPlayer WerewolfPlayer { get; set; } = new Werewolf();
+        protected IPlayer WerewolfPlayer { get; set; } = new Sample.Werewolf();
 
         IPlayer player;
 
