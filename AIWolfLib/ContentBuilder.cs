@@ -53,8 +53,10 @@ namespace AIWolf.Lib
     /// Abstract class of the builder for Content class.
     /// </summary>
 #endif
-    public class ContentBuilder
+    public abstract class ContentBuilder
     {
+        internal ContentBuilder() { }
+
 #if JHELP
         /// <summary>
         /// Contentのテキスト表現
@@ -75,7 +77,7 @@ namespace AIWolf.Lib
         /// The topic of the Content.
         /// </summary>
 #endif
-        internal Topic Topic { get; set; }
+        internal abstract Topic Topic { get; }
 
 #if JHELP
         /// <summary>
@@ -166,6 +168,8 @@ namespace AIWolf.Lib
 #endif
     public class AgreeContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.AGREE;
+
 #if JHELP
         /// <summary>
         /// AgreeContentBuilderクラスの新しいインスタンスを初期化します
@@ -183,7 +187,6 @@ namespace AIWolf.Lib
 #endif
         public AgreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
         {
-            Topic = Topic.AGREE;
             if (utteranceType == UtteranceType.TALK)
             {
                 Utterance = new Talk(talkID, talkDay);
@@ -208,6 +211,8 @@ namespace AIWolf.Lib
 #endif
     public class DisagreeContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.DISAGREE;
+
 #if JHELP
         /// <summary>
         /// DisagreeContentBuilderクラスの新しいインスタンスを初期化します
@@ -225,7 +230,6 @@ namespace AIWolf.Lib
 #endif
         public DisagreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
         {
-            Topic = Topic.DISAGREE;
             if (utteranceType == UtteranceType.TALK)
             {
                 Utterance = new Talk(talkID, talkDay);
@@ -250,6 +254,8 @@ namespace AIWolf.Lib
 #endif
     public class AttackContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.ATTACK;
+
 #if JHELP
         /// <summary>
         /// AttackContentBuilderクラスの新しいインスタンスを初期化します
@@ -263,7 +269,6 @@ namespace AIWolf.Lib
 #endif
         public AttackContentBuilder(Agent target)
         {
-            Topic = Topic.ATTACK;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -290,6 +295,9 @@ namespace AIWolf.Lib
 #endif
     public class DivinationContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.DIVINATION;
+
+
 #if JHELP
         /// <summary>
         /// DivinationContentBuilderクラスの新しいインスタンスを初期化します
@@ -303,7 +311,6 @@ namespace AIWolf.Lib
 #endif
         public DivinationContentBuilder(Agent target)
         {
-            Topic = Topic.DIVINATION;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -330,6 +337,8 @@ namespace AIWolf.Lib
 #endif
     public class GuardContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.GUARD;
+
 #if JHELP
         /// <summary>
         /// GuardContentBuilderクラスの新しいインスタンスを初期化します
@@ -343,7 +352,6 @@ namespace AIWolf.Lib
 #endif
         public GuardContentBuilder(Agent target)
         {
-            Topic = Topic.GUARD;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -370,6 +378,8 @@ namespace AIWolf.Lib
 #endif
     public class GuardedAgentContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.GUARDED;
+
 #if JHELP
         /// <summary>
         /// GuardedAgentContentBuilderクラスの新しいインスタンスを初期化します
@@ -383,7 +393,6 @@ namespace AIWolf.Lib
 #endif
         public GuardedAgentContentBuilder(Agent target)
         {
-            Topic = Topic.GUARDED;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -410,6 +419,8 @@ namespace AIWolf.Lib
 #endif
     public class VoteContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.VOTE;
+
 #if JHELP
         /// <summary>
         /// VoteContentBuilderクラスの新しいインスタンスを初期化します
@@ -423,7 +434,6 @@ namespace AIWolf.Lib
 #endif
         public VoteContentBuilder(Agent target)
         {
-            Topic = Topic.VOTE;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -450,6 +460,8 @@ namespace AIWolf.Lib
 #endif
     public class ComingoutContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.COMINGOUT;
+
 #if JHELP
         /// <summary>
         /// ComingoutContentBuilderクラスの新しいインスタンスを初期化します
@@ -465,7 +477,6 @@ namespace AIWolf.Lib
 #endif
         public ComingoutContentBuilder(Agent target, Role role)
         {
-            Topic = Topic.COMINGOUT;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -493,6 +504,8 @@ namespace AIWolf.Lib
 #endif
     public class EstimateContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.ESTIMATE;
+
 #if JHELP
         /// <summary>
         /// EstimateContentBuilderクラスの新しいインスタンスを初期化します
@@ -508,7 +521,6 @@ namespace AIWolf.Lib
 #endif
         public EstimateContentBuilder(Agent target, Role role)
         {
-            Topic = Topic.ESTIMATE;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -536,6 +548,8 @@ namespace AIWolf.Lib
 #endif
     public class DivinedResultContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.DIVINED;
+
 #if JHELP
         /// <summary>
         /// DivinedResultContentBuilderクラスの新しいインスタンスを初期化します
@@ -551,7 +565,6 @@ namespace AIWolf.Lib
 #endif
         public DivinedResultContentBuilder(Agent target, Species result)
         {
-            Topic = Topic.DIVINED;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -579,6 +592,8 @@ namespace AIWolf.Lib
 #endif
     public class IdentContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.IDENTIFIED;
+
 #if JHELP
         /// <summary>
         /// IdentContentBuilderクラスの新しいインスタンスを初期化します
@@ -594,7 +609,6 @@ namespace AIWolf.Lib
 #endif
         public IdentContentBuilder(Agent target, Species result)
         {
-            Topic = Topic.IDENTIFIED;
             if (target == null)
             {
                 Error.RuntimeError("target is null.");
@@ -622,6 +636,8 @@ namespace AIWolf.Lib
 #endif
     public class RequestContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.OPERATOR;
+
 #if JHELP
         /// <summary>
         /// RequestContentBuilderクラスの新しいインスタンスを初期化します
@@ -637,7 +653,6 @@ namespace AIWolf.Lib
 #endif
         public RequestContentBuilder(Agent agent, Content content)
         {
-            Topic = Topic.OPERATOR;
             Operator = Operator.REQUEST;
             if (content == null)
             {
@@ -673,6 +688,8 @@ namespace AIWolf.Lib
 #endif
     public class SkipContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.Skip;
+
 #if JHELP
         /// <summary>
         /// SkipContentBuilderクラスの新しいインスタンスを初期化します
@@ -684,7 +701,6 @@ namespace AIWolf.Lib
 #endif
         public SkipContentBuilder()
         {
-            Topic = Topic.Skip;
             Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Talk.SKIP }).Trim();
         }
     }
@@ -700,6 +716,8 @@ namespace AIWolf.Lib
 #endif
     public class OverContentBuilder : ContentBuilder
     {
+        internal override Topic Topic => Topic.Over;
+
 #if JHELP
         /// <summary>
         /// OverContentBuilderクラスの新しいインスタンスを初期化します
@@ -711,7 +729,6 @@ namespace AIWolf.Lib
 #endif
         public OverContentBuilder()
         {
-            Topic = Topic.Over;
             Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Talk.OVER }).Trim();
         }
     }
