@@ -134,26 +134,26 @@ namespace AIWolf.Server
                 {
                     lastTalkIdxMap.Clear();
                     lastWhisperIdxMap.Clear();
-                    message = DataConverter.Serialize(new PacketToSend(request, GameData.GetGameInfo(agent), GameSetting));
+                    message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent), GameSetting));
                 }
                 else if (request == Server.Request.NAME || request == Server.Request.ROLE)
                 {
-                    message = DataConverter.Serialize(new PacketToSend(request));
+                    message = DataConverter.Serialize(new Packet(request));
                 }
                 else if (request != Server.Request.FINISH)
                 {
                     if (request == Server.Request.VOTE && GameData.LatestVoteList.Count != 0)
                     {
-                        message = DataConverter.Serialize(new PacketToSend(request, GameData.GetGameInfo(agent)));
+                        message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent)));
                     }
                     else if (request == Server.Request.ATTACK && GameData.LatestAttackVoteList.Count != 0)
                     {
-                        message = DataConverter.Serialize(new PacketToSend(request, GameData.GetGameInfo(agent)));
+                        message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent)));
                     }
                     else if (GameData.Executed != null && (request == Server.Request.DIVINE || request == Server.Request.GUARD
                         || request == Server.Request.WHISPER || request == Server.Request.ATTACK))
                     {
-                        message = DataConverter.Serialize(new PacketToSend(request, GameData.GetGameInfo(agent)));
+                        message = DataConverter.Serialize(new Packet(request, GameData.GetGameInfo(agent)));
                     }
                     else
                     {
@@ -161,12 +161,12 @@ namespace AIWolf.Server
                         List<Whisper> whisperList = new List<Whisper>(GameData.GetGameInfo(agent).WhisperList);
                         talkList = Minimize(agent, talkList, lastTalkIdxMap);
                         whisperList = Minimize(agent, whisperList, lastWhisperIdxMap);
-                        message = DataConverter.Serialize(new PacketToSend(request, talkList, whisperList));
+                        message = DataConverter.Serialize(new Packet(request, talkList, whisperList));
                     }
                 }
                 else
                 {
-                    message = DataConverter.Serialize(new PacketToSend(request, GameData.GetFinalGameInfo(agent)));
+                    message = DataConverter.Serialize(new Packet(request, GameData.GetFinalGameInfo(agent)));
                 }
                 serverLogger.LogInformation("=>" + agent + ":" + message);
 

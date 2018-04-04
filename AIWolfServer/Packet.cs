@@ -23,7 +23,7 @@ namespace AIWolf.Server
     /// </summary>
 #endif
     [DataContract]
-    class PacketToSend : IPacket
+    class Packet : IPacket
     {
 #if JHELP
         /// <summary>
@@ -100,7 +100,7 @@ namespace AIWolf.Server
         /// </summary>
         /// <param name="request">Request given.</param>
 #endif
-        public PacketToSend(Request request)
+        public Packet(Request request)
         {
             Request = request;
         }
@@ -118,7 +118,7 @@ namespace AIWolf.Server
         /// <param name="request">Request given.</param>
         /// <param name="gameInfo">Game information given.</param>
 #endif
-        public PacketToSend(Request request, GameInfo gameInfo) : this(request)
+        public Packet(Request request, GameInfo gameInfo) : this(request)
         {
             this.gameInfo = gameInfo;
         }
@@ -138,7 +138,7 @@ namespace AIWolf.Server
         /// <param name="gameInfo">Game information given.</param>
         /// <param name="gameSetting">GameSetting representation of setting of game given.</param>
 #endif
-        public PacketToSend(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo)
+        public Packet(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo)
         {
             this.gameSetting = gameSetting;
         }
@@ -158,7 +158,7 @@ namespace AIWolf.Server
         /// <param name="talkHistoryList">History of talk given.</param>
         /// <param name="whisperHistoryList">History of whisper given.</param>
 #endif
-        public PacketToSend(Request request, IList<Talk> talkHistoryList, IList<Whisper> whisperHistoryList) : this(request)
+        public Packet(Request request, IList<Talk> talkHistoryList, IList<Whisper> whisperHistoryList) : this(request)
         {
             TalkHistory = talkHistoryList;
             WhisperHistory = whisperHistoryList;
