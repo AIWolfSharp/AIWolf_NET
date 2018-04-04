@@ -9,7 +9,7 @@
 
 using AIWolf.Lib;
 
-namespace AIWolf.Player
+namespace AIWolf.Sample
 {
 #if JHELP
     /// <summary>

@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AIWolf.Player.Sample
+namespace AIWolf.Sample
 {
 #if JHELP
     /// <summary>
