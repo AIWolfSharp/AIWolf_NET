@@ -3,12 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>beta</VersionSuffix>
+    <VersionSuffix>alpha</VersionSuffix>
     <Description>The AIWolf Server library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
     <RootNamespace>AIWolf.Server</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
