@@ -1,7 +1,7 @@
 ﻿//
-// Seer.cs
+// SampleSeer.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -23,7 +23,7 @@ namespace AIWolf.Sample
     /// Sample seer player.
     /// </summary>
 #endif
-    public sealed class Seer : BasePlayer
+    public sealed class SampleSeer : SampleBasePlayer
     {
         // カミングアウトする日
         int comingoutDay;

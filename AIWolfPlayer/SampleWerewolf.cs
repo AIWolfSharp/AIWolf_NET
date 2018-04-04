@@ -1,7 +1,7 @@
 ﻿//
-// Werewolf.cs
+// SampleWerewolf.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -23,7 +23,7 @@ namespace AIWolf.Sample
     /// Sample werewolf player.
     /// </summary>
 #endif
-    public sealed class Werewolf : BasePlayer
+    public sealed class SampleWerewolf : SampleBasePlayer
     {
         // 規定人狼数
         int numWolves;

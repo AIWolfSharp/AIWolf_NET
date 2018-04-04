@@ -1,7 +1,7 @@
 ﻿//
-// Medium.cs
+// SamplePossessed.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -16,23 +16,25 @@ namespace AIWolf.Sample
 {
 #if JHELP
     /// <summary>
-    /// 霊媒師プレイヤーの見本
+    /// 裏切り者プレイヤーの見本
     /// </summary>
 #else
     /// <summary>
-    /// Sample medium player.
+    /// Sample possessed player.
     /// </summary>
 #endif
-    public sealed class Medium : BasePlayer
+    public sealed class SamplePossessed : SampleBasePlayer
     {
-        // カミングアウトする日
-        int comingoutDay;
+        // 規定人狼数
+        int numWolves;
         // カミングアウト済みか否か
         bool isCameout;
-        // 霊媒結果を入れる待ち行列
-        Queue<Judge> identQueue = new Queue<Judge>();
-        // 霊媒結果マップ
-        Dictionary<Agent, Species> myIdentMap = new Dictionary<Agent, Species>();
+        // 偽占い結果リスト
+        List<Judge> fakeDivinationList = new List<Judge>();
+        // 偽占い結果を入れる待ち行列
+        Queue<Judge> fakeDivinationQueue = new Queue<Judge>();
+        // 偽占い済みエージェントのリスト
+        List<Agent> divinedAgents = new List<Agent>();
 
         /// <summary>
         /// 投票先候補を選ぶ
@@ -40,32 +42,33 @@ namespace AIWolf.Sample
         /// <returns>投票先候補のエージェント</returns>
         protected override void ChooseVoteCandidate()
         {
-            // 霊媒師をカミングアウトしている他のエージェントは人狼候補
-            var fakeMediums = AliveOthers.Where(a => GetCoRole(a) == Role.MEDIUM);
-            // 自分や殺されたエージェントを人狼と判定，あるいは自分と異なる判定の占い師は人狼候補
-            var fakeSeers = DivinationList
-                .Where(j => (j.Result == Species.WEREWOLF && (j.Target == Me || Killed(j.Target)))
-               || (myIdentMap.ContainsKey(j.Target) && j.Result != myIdentMap[j.Target])).Select(j => j.Agent);
-            var candidates = fakeMediums.Concat(fakeSeers).Where(a => Alive(a)).Distinct();
-            if (candidates.Count() > 0)
+            // 自分や殺されたエージェントを人狼と判定していて，生存している占い師は人狼候補
+            var werewolves = DivinationList
+                .Where(j => j.Result == Species.WEREWOLF && (j.Target == Me || Killed(j.Target))).Select(j => j.Agent);
+            // 対抗カミングアウトのエージェントは投票先候補
+            var rivals = AliveOthers.Where(a => !werewolves.Contains(a) && GetCoRole(a) == Role.SEER);
+            // 人狼と判定したエージェントは投票先候補
+            var fakeHumans = fakeDivinationQueue.Where(j => j.Result == Species.HUMAN).Select(j => j.Target).Distinct();
+            var fakeWerewolves = fakeDivinationQueue.Where(j => j.Result == Species.WEREWOLF).Select(j => j.Target).Distinct();
+            var candidates = rivals.Concat(fakeWerewolves).Distinct();
+            // 候補がいなければ人間と判定していない村人陣営から
+            if (candidates.Count() == 0)
             {
-                if (!candidates.Contains(voteCandidate))
+                candidates = AliveOthers.Where(a => !werewolves.Contains(a) && !fakeHumans.Contains(a));
+                // それでも候補がいなければ村人陣営から
+                if (candidates.Count() == 0)
                 {
-                    voteCandidate = candidates.Shuffle().First();
-                    // 以前の投票先から変わる場合，新たに推測発言と占い要請をする
-                    if (CanTalk)
-                    {
-                        TalkQueue.Enqueue(new Content(new EstimateContentBuilder(voteCandidate, Role.WEREWOLF)));
-                        TalkQueue.Enqueue(new Content(new RequestContentBuilder(null, new Content(new DivinationContentBuilder(voteCandidate)))));
-                    }
+                    candidates = AliveOthers.Where(a => !werewolves.Contains(a));
                 }
             }
-            // 人狼候補がいない場合はランダム
-            else
+            if (!candidates.Contains(voteCandidate))
             {
-                if (!AliveOthers.Contains(voteCandidate))
+                voteCandidate = candidates.Shuffle().First();
+                // 以前の投票先から変わる場合，新たに推測発言と占い要請をする
+                if (CanTalk)
                 {
-                    voteCandidate = AliveOthers.Shuffle().First();
+                    TalkQueue.Enqueue(new Content(new EstimateContentBuilder(voteCandidate, Role.WEREWOLF)));
+                    TalkQueue.Enqueue(new Content(new RequestContentBuilder(null, new Content(new DivinationContentBuilder(voteCandidate)))));
                 }
             }
         }
@@ -86,10 +89,11 @@ namespace AIWolf.Sample
         public override void Initialize(IGameInfo gameInfo, IGameSetting gameSetting)
         {
             base.Initialize(gameInfo, gameSetting);
-            comingoutDay = new int[] { 1, 2, 3 }.Shuffle().First();
+            numWolves = gameSetting.RoleNumMap[Role.WEREWOLF];
             isCameout = false;
-            identQueue.Clear();
-            myIdentMap.Clear();
+            fakeDivinationList.Clear();
+            fakeDivinationQueue.Clear();
+            divinedAgents.Clear();
         }
 
 #if JHELP
@@ -104,11 +108,16 @@ namespace AIWolf.Sample
         public override void DayStart()
         {
             base.DayStart();
-            // 霊媒結果を待ち行列に入れる
-            if (CurrentGameInfo.MediumResult != null)
+            // 偽の判定
+            if (Day > 0)
             {
-                identQueue.Enqueue(CurrentGameInfo.MediumResult);
-                myIdentMap[CurrentGameInfo.MediumResult.Target] = CurrentGameInfo.MediumResult.Result;
+                Judge judge = GetFakeDivination();
+                if (judge != null)
+                {
+                    fakeDivinationList.Add(judge);
+                    fakeDivinationQueue.Enqueue(judge);
+                    divinedAgents.Add(judge.Target);
+                }
             }
         }
 
@@ -131,25 +140,47 @@ namespace AIWolf.Sample
 #endif
         public override string Talk()
         {
-            // カミングアウトする日になったら，あるいは霊媒結果が人狼だったら
-            // あるいは霊媒師カミングアウトが出たらカミングアウト
-            if (!isCameout && (Day >= comingoutDay
-                    || (identQueue.Count > 0 && identQueue.Peek().Result == Species.WEREWOLF)
-                    || IsCo(Role.MEDIUM)))
+            // 即占い師カミングアウト
+            if (!isCameout)
             {
-                TalkQueue.Enqueue(new Content(new ComingoutContentBuilder(Me, Role.MEDIUM)));
+                TalkQueue.Enqueue(new Content(new ComingoutContentBuilder(Me, Role.SEER)));
                 isCameout = true;
             }
-            // カミングアウトしたらこれまでの霊媒結果をすべて公開
+            // カミングアウトしたらこれまでの偽判定結果をすべて公開
             if (isCameout)
             {
-                while (identQueue.Count > 0)
+                while (fakeDivinationQueue.Count > 0)
                 {
-                    Judge ident = identQueue.Dequeue();
-                    TalkQueue.Enqueue(new Content(new IdentContentBuilder(ident.Target, ident.Result)));
+                    Judge judge = fakeDivinationQueue.Dequeue();
+                    TalkQueue.Enqueue(new Content(new DivinedResultContentBuilder(judge.Target, judge.Result)));
                 }
             }
             return base.Talk();
+        }
+
+        /// <summary>
+        /// 偽占い結果を返す
+        /// </summary>
+        /// <returns>偽占い結果</returns>
+        Judge GetFakeDivination()
+        {
+            Agent target = null;
+            var candidates = AliveOthers.Where(a => !divinedAgents.Contains(a) && GetCoRole(a) != Role.SEER);
+            if (candidates.Count() > 0)
+            {
+                target = candidates.Shuffle().First();
+            }
+            else
+            {
+                target = AliveOthers.Shuffle().First();
+            }
+            // 偽人狼に余裕があれば，人狼と人間の割合を勘案して，30%の確率で人狼と判定
+            Species result = Species.HUMAN;
+            if (fakeDivinationList.Where(j => j.Result == Species.WEREWOLF).Count() < numWolves && new Random().NextDouble() < 0.3)
+            {
+                result = Species.WEREWOLF;
+            }
+            return new Judge(Day, Me, target, result);
         }
 
 #if JHELP

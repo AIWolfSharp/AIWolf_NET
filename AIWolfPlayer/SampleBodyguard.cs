@@ -1,7 +1,7 @@
 ﻿//
-// Bodyguard.cs
+// SampleBodyguard.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -23,7 +23,7 @@ namespace AIWolf.Sample
     /// Sample bodyguard player.
     /// </summary>
 #endif
-    public sealed class Bodyguard : BasePlayer
+    public sealed class SampleBodyguard : SampleBasePlayer
     {
         // 人狼候補リスト
         List<Agent> werewolves = new List<Agent>();

@@ -1,7 +1,7 @@
 ﻿//
-// RoleAssignPlayer.cs
+// SampleRoleAssignPlayer.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -20,15 +20,15 @@ namespace AIWolf.Sample
     /// Player class which switches player actually used according to its role.
     /// </summary>
 #endif
-    public sealed class RoleAssignPlayer : IPlayer
+    public sealed class SampleRoleAssignPlayer : IPlayer
     {
         IPlayer player;
-        IPlayer villagerPlayer = new Villager();
-        IPlayer bodyguardPlayer = new Bodyguard();
-        IPlayer seerPlayer = new Seer();
-        IPlayer mediumPlayer = new Medium();
-        IPlayer possessedPlayer = new Possessed();
-        IPlayer werewolfPlayer = new Werewolf();
+        IPlayer villagerPlayer = new SampleVillager();
+        IPlayer bodyguardPlayer = new SampleBodyguard();
+        IPlayer seerPlayer = new SampleSeer();
+        IPlayer mediumPlayer = new SampleMedium();
+        IPlayer possessedPlayer = new SamplePossessed();
+        IPlayer werewolfPlayer = new SampleWerewolf();
 
 #if JHELP
         /// <summary>

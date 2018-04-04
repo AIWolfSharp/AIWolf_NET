@@ -151,7 +151,7 @@ namespace AIWolf.Client
             IPlayer player;
             if (useDefaultPlayer)
             {
-                player = new Sample.RoleAssignPlayer();
+                player = new Sample.SampleRoleAssignPlayer();
             }
             else
             {

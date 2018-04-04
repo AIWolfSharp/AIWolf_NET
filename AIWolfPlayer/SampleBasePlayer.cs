@@ -1,7 +1,7 @@
 ﻿//
-// BasePlayer.cs
+// SampleBasePlayer.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -22,7 +22,7 @@ namespace AIWolf.Sample
     /// Base class for sample players.
     /// </summary>
 #endif
-    public class BasePlayer : IPlayer
+    public class SampleBasePlayer : IPlayer
     {
         /// <summary>
         /// このエージェント
@@ -93,13 +93,7 @@ namespace AIWolf.Sample
         /// <summary>
         /// プレイヤー名
         /// </summary>
-        public virtual string Name
-        {
-            get
-            {
-                return GetType().ToString();
-            }
-        }
+        public string Name => "";
 
         /// <summary>
         /// ゲーム開始時に呼ばれる

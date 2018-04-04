@@ -1,7 +1,7 @@
 ﻿//
-// Villager.cs
+// SampleVillager.cs
 //
-// Copyright (c) 2017 Takashi OTSUKI
+// Copyright (c) 2018 Takashi OTSUKI
 //
 // This software is released under the MIT License.
 // http://opensource.org/licenses/mit-license.php
@@ -22,7 +22,7 @@ namespace AIWolf.Sample
     /// Sample villager player.
     /// </summary>
 #endif
-    public sealed class Villager : BasePlayer
+    public sealed class SampleVillager : SampleBasePlayer
     {
         /// <summary>
         /// 投票先候補を選ぶ
