@@ -122,9 +122,9 @@ namespace AIWolf.Client
         {
             var gameSetting = packet.GameSetting;
 
-            if (packet.GameInfo != null)
+            if (packet.GameInfo is GameInfo gi)
             {
-                gameInfo = packet.GameInfo;
+                gameInfo = gi;
                 lastGameInfo = gameInfo;
             }
             else

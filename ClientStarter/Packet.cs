@@ -10,21 +10,19 @@
 using AIWolf.Lib;
 using AIWolf.Server;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace AIWolf.Client
 {
 #if JHELP
     /// <summary>
-    /// クライアント・サーバ間通信のためのパケット
+    /// サーバから送られてきたパケット
     /// </summary>
 #else
     /// <summary>
-    /// Packet for communication between client and server.
+    /// Packet sent from server.
     /// </summary>
 #endif
-    [DataContract]
-    public class Packet
+    class Packet : IPacket
     {
 #if JHELP
         /// <summary>
@@ -35,7 +33,6 @@ namespace AIWolf.Client
         /// The request from the server.
         /// </summary>
 #endif
-        [DataMember(Name = "request")]
         public Request Request { get; }
 
 #if JHELP
@@ -47,8 +44,7 @@ namespace AIWolf.Client
         /// The game information.
         /// </summary>
 #endif
-        [DataMember(Name = "gameInfo")]
-        public GameInfo GameInfo { get; }
+        public IGameInfo GameInfo { get; }
 
 #if JHELP
         /// <summary>
@@ -59,8 +55,7 @@ namespace AIWolf.Client
         /// The setting of game.
         /// </summary>
 #endif
-        [DataMember(Name = "gameSetting")]
-        public GameSetting GameSetting { get; }
+        public IGameSetting GameSetting { get; }
 
 #if JHELP
         /// <summary>
@@ -71,8 +66,7 @@ namespace AIWolf.Client
         /// The history of talks.
         /// </summary>
 #endif
-        [DataMember(Name = "talkHistory")]
-        public List<Talk> TalkHistory { get; }
+        public IList<Talk> TalkHistory { get; }
 
 #if JHELP
         /// <summary>
@@ -83,8 +77,7 @@ namespace AIWolf.Client
         /// The history of whispers.
         /// </summary>
 #endif
-        [DataMember(Name = "whisperHistory")]
-        public List<Whisper> WhisperHistory { get; }
+        public IList<Whisper> WhisperHistory { get; }
 
 #if JHELP
         /// <summary>
@@ -112,7 +105,7 @@ namespace AIWolf.Client
         /// <param name="request">Request given.</param>
         /// <param name="gameInfo">Game information given.</param>
 #endif
-        public Packet(Request request, GameInfo gameInfo) : this(request) => GameInfo = gameInfo;
+        public Packet(Request request, IGameInfo gameInfo) : this(request) => GameInfo = gameInfo;
 
 #if JHELP
         /// <summary>
@@ -129,7 +122,7 @@ namespace AIWolf.Client
         /// <param name="gameInfo">Game information given.</param>
         /// <param name="gameSetting">GameSetting representation of setting of game given.</param>
 #endif
-        public Packet(Request request, GameInfo gameInfo, GameSetting gameSetting) : this(request, gameInfo) => GameSetting = gameSetting;
+        public Packet(Request request, IGameInfo gameInfo, IGameSetting gameSetting) : this(request, gameInfo) => GameSetting = gameSetting;
 
 #if JHELP
         /// <summary>
@@ -146,7 +139,7 @@ namespace AIWolf.Client
         /// <param name="talkHistoryList">History of talk given.</param>
         /// <param name="whisperHistoryList">History of whisper given.</param>
 #endif
-        public Packet(Request request, List<Talk> talkHistoryList, List<Whisper> whisperHistoryList) : this(request)
+        public Packet(Request request, IList<Talk> talkHistoryList, IList<Whisper> whisperHistoryList) : this(request)
         {
             TalkHistory = talkHistoryList;
             WhisperHistory = whisperHistoryList;
