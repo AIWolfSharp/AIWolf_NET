@@ -7,9 +7,10 @@
     <Authors>Takashi OTSUKI</Authors>
     <Company>AIWolfSharp</Company>
     <Description>The AIWolf sample player.</Description>
-    <Copyright>Copyright ©  2017 Takashi OTSUKI</Copyright>
-    <RootNamespace>AIWolf.Player</RootNamespace>
+    <Copyright>Copyright ©  2018 Takashi OTSUKI</Copyright>
+    <RootNamespace>AIWolf.Sample</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>1.0.0-alpha</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

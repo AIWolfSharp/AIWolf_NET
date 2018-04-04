@@ -14,8 +14,6 @@ Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "ReferenceManual", "Referenc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfLib", "AIWolfLib\AIWolfLib.csproj", "{DF6E6D37-3DF4-4C6E-A942-1155FBD9BCB6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfPlayer", "AIWolfPlayer\AIWolfPlayer.csproj", "{D0B69BCB-0A13-4424-8522-222CEE161ADE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientStarter", "ClientStarter\ClientStarter.csproj", "{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfServer", "AIWolfServer\AIWolfServer.csproj", "{E9AD7111-437A-4F7B-9E81-46C5A65E8F70}"
@@ -23,6 +21,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerStarter", "ServerStarter\ServerStarter.csproj", "{01738DE7-C835-4976-899F-6D30B9666F69}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameStarter", "GameStarter\GameStarter.csproj", "{3B53314D-E82C-4496-9220-0AB06F69331C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIWolfSample", "AIWolfPlayer\AIWolfSample.csproj", "{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,18 +58,6 @@ Global
 		{DF6E6D37-3DF4-4C6E-A942-1155FBD9BCB6}.Release|x64.Build.0 = Release|Any CPU
 		{DF6E6D37-3DF4-4C6E-A942-1155FBD9BCB6}.Release|x86.ActiveCfg = Release|Any CPU
 		{DF6E6D37-3DF4-4C6E-A942-1155FBD9BCB6}.Release|x86.Build.0 = Release|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Debug|x64.Build.0 = Debug|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Debug|x86.Build.0 = Debug|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Release|x64.ActiveCfg = Release|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Release|x64.Build.0 = Release|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Release|x86.ActiveCfg = Release|Any CPU
-		{D0B69BCB-0A13-4424-8522-222CEE161ADE}.Release|x86.Build.0 = Release|Any CPU
 		{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89B34F81-E7C1-42CF-AB30-DAFFADD8E572}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -118,6 +106,18 @@ Global
 		{3B53314D-E82C-4496-9220-0AB06F69331C}.Release|x64.Build.0 = Release|Any CPU
 		{3B53314D-E82C-4496-9220-0AB06F69331C}.Release|x86.ActiveCfg = Release|Any CPU
 		{3B53314D-E82C-4496-9220-0AB06F69331C}.Release|x86.Build.0 = Release|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Debug|x86.Build.0 = Debug|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Release|x64.Build.0 = Release|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A160754E-D1C4-4AC7-ABEB-7EABFBB4F1D7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
