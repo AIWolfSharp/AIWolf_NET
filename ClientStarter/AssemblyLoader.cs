@@ -7,37 +7,23 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
-using Microsoft.Extensions.DependencyModel;
-using System.Runtime.Loader;
 using System.IO;
-using System.Linq;
 using System.Reflection;
+using System;
 
 namespace AIWolf.Client
 {
-    public class AssemblyLoader : AssemblyLoadContext
+    class AssemblyLoader
     {
         string folderPath;
 
         public AssemblyLoader(string folderPath) => this.folderPath = folderPath;
 
-        protected override Assembly Load(AssemblyName assemblyName)
+        public Assembly LoadFromFolder(object sender, ResolveEventArgs args)
         {
-            var cl = DependencyContext.Default.CompileLibraries.Where(d => d.Name.Contains(assemblyName.Name));
-            if (cl.Count() > 0)
-            {
-                return Assembly.Load(new AssemblyName(cl.First().Name));
-            }
-            else
-            {
-                var fileInfo = new FileInfo($"{folderPath}{Path.DirectorySeparatorChar}{assemblyName.Name}.dll");
-                if (File.Exists(fileInfo.FullName))
-                {
-                    var asl = new AssemblyLoader(fileInfo.DirectoryName);
-                    return asl.LoadFromAssemblyPath(fileInfo.FullName);
-                }
-            }
-            return Assembly.Load(assemblyName);
+            string assemblyPath = Path.Combine(folderPath, new AssemblyName(args.Name).Name + ".dll");
+            if (!File.Exists(assemblyPath)) return null;
+            return Assembly.LoadFrom(assemblyPath);
         }
     }
 }

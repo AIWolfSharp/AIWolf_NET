@@ -27,7 +27,8 @@ namespace AIWolf.Client
             try
             {
                 var fullPath = Path.GetFullPath(dllName);
-                assembly = new AssemblyLoader(Path.GetDirectoryName(fullPath)).LoadFromAssemblyPath(fullPath);
+                AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(new AssemblyLoader(Path.GetDirectoryName(fullPath)).LoadFromFolder);
+                assembly = Assembly.LoadFile(fullPath);
             }
             catch
             {
