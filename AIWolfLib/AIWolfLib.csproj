@@ -17,12 +17,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard1.4\AIWolfLib.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.4\AIWolfLib.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
     <DefineConstants>TRACE;RELEASE;NETSTANDARD1_4;JHELP</DefineConstants>
   </PropertyGroup>
 
