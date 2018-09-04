@@ -12,9 +12,9 @@
     * クライアントスタータ: 
       [ClientStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/ClientStarter-1.1.2.zip)
     * サーバスタータ：
-      [ServerStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.2.zip)
+      [ServerStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/ServerStarter-1.1.2.zip)
     * ゲームスタータ：
-      [GameStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.2.zip)
+      [GameStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/GameStarter-1.1.2.zip)
     * リファレンスマニュアル: 
       [AIWolf_NET_1.1.2_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/AIWolf_NET_1.1.2_ReferenceManual_J.zip)
 
