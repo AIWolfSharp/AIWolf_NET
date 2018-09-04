@@ -1,4 +1,4 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README-E.md)
+[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/README-E.md)
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
 
@@ -10,13 +10,13 @@
 1. ダウンロード
 
     * クライアントスタータ: 
-      [ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
+      [ClientStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/ClientStarter-1.1.2.zip)
     * サーバスタータ：
-      [ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
+      [ServerStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.2.zip)
     * ゲームスタータ：
-      [GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
+      [GameStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.2.zip)
     * リファレンスマニュアル: 
-      [AIWolf_NET_1.1.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_J.zip)
+      [AIWolf_NET_1.1.2_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/AIWolf_NET_1.1.2_ReferenceManual_J.zip)
 
 1. 履歴と変更点
 
@@ -43,7 +43,9 @@
       * ServerStarterはゲームサーバ単体を起動します．
       * GameStarterは各種クライアントスタータをプロセスとして起動しますので，
         サーバ起動後，Java, .NET, Pythonなどのエージェントを接続して対戦することができます．
+    * 1.1.1: 各種ContentBuilderでtargeがnullの場合の処理を変更しました．
+    * 1.1.2: AbstractRoleAssignPlayer.Nameプロパティをvirtualにしました．
       
 
 ---
-このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE)を参照のこと.
+このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/LICENSE)を参照のこと.

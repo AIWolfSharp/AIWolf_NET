@@ -1,4 +1,4 @@
-[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README.md)
+[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/README.md)
 # AIWolf.NET
 ## .NET version of AIWolf platform
 
@@ -9,13 +9,13 @@
 1. DOWNLOADS
 
     * ClientStarter: 
-      [ClientStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ClientStarter-1.1.0.zip)
+      [ClientStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/ClientStarter-1.1.2.zip)
     * ServerStarter: 
-      [ServerStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/ServerStarter-1.1.0.zip)
+      [ServerStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/ServerStarter-1.1.2.zip)
     * GameStarter: 
-      [GameStarter-1.1.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/GameStarter-1.1.0.zip)
+      [GameStarter-1.1.2.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/GameStarter-1.1.2.zip)
     * Reference manual:
-      [AIWolf_NET_1.1.0_ReferenceManual_E.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.0/AIWolf_NET_1.1.0_ReferenceManual_E.zip)
+      [AIWolf_NET_1.1.2_ReferenceManual_E.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v1.1.2/AIWolf_NET_1.1.2_ReferenceManual_E.zip)
 
 1. HISTORY and CHANGES
 
@@ -40,6 +40,8 @@
         * Limitation of the agent's response time for request.
       * We have GameStarter for launching the server and the agents at the same time
         regardless of their kind such as Java, .NET, Python, etc.
+    * 1.1.1: Modify error processing in case of null target of ContentBuilders.
+    * 1.1.2: Make AbstractRoleAssignPlayer.Name property virtual.
 
 ---
-This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE).
+This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/LICENSE).
