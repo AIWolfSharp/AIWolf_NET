@@ -43,7 +43,7 @@
       * ServerStarterはゲームサーバ単体を起動します．
       * GameStarterは各種クライアントスタータをプロセスとして起動しますので，
         サーバ起動後，Java, .NET, Pythonなどのエージェントを接続して対戦することができます．
-    * 1.1.1: 各種ContentBuilderでtargeがnullの場合の処理を変更しました．
+    * 1.1.1: 各種ContentBuilderでtargetがnullの場合の処理を変更しました．
     * 1.1.2: AbstractRoleAssignPlayer.Nameプロパティをvirtualにしました．
       
 
