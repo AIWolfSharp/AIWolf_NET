@@ -1,4 +1,4 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/README-E.md)
+[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README-E.md)
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
 
@@ -48,4 +48,4 @@
       
 
 ---
-このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/LICENSE)を参照のこと.
+このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/LICENSE)を参照のこと.

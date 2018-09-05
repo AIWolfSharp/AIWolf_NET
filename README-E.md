@@ -1,4 +1,4 @@
-[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/README.md)
+[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/README.md)
 # AIWolf.NET
 ## .NET version of AIWolf platform
 
@@ -44,4 +44,4 @@
     * 1.1.2: Make AbstractRoleAssignPlayer.Name property virtual.
 
 ---
-This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1.2/LICENSE).
+This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v1.1/LICENSE).
