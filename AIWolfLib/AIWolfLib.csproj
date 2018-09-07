@@ -2,23 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
     <Description>The AIWolf library.</Description>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <Company>AIWolfSharp</Company>
     <Authors>Takashi OTSUKI</Authors>
     <RootNamespace>AIWolf.Lib</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>2.0.0-beta</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\AIWolfLib.xml</DocumentationFile>
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
+    <DocumentationFile></DocumentationFile>
+    <DefineConstants>TRACE;DEBUG;JHELP</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_4;JHELP</DefineConstants>
+    <DefineConstants>TRACE;JHELP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
