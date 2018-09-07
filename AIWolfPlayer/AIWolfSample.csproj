@@ -2,24 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
     <Authors>Takashi OTSUKI</Authors>
     <Company>AIWolfSharp</Company>
     <Description>The AIWolf sample player.</Description>
     <Copyright>Copyright ©  2018 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf.Sample</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>2.0.0-alpha</Version>
+    <Version>2.0.0-beta</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD1_4;JHELP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;JHELP</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD1_4;JHELP</DefineConstants>
+    <DefineConstants>TRACE;JHELP</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
