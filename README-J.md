@@ -1,4 +1,4 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README-E.md)
+[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0-beta/README.md)
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
 
@@ -10,12 +10,12 @@
 1. ダウンロード
 
     * クライアントスタータ：
-[ClientStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0.zip)
+[ClientStarter-2.0.0-beta.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/ClientStarter-2.0.0-beta.zip)
     * サーバスタータ：
-[ServerStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ServerStarter-2.0.0.zip)
+[ServerStarter-2.0.0-beta.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/ServerStarter-2.0.0-beta.zip)
     * ゲームスタータ：
-[GameStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
-    * リファレンスマニュアル：[AIWolf_NET_2.0.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_J.zip)
+[GameStarter-2.0.0-beta.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/GameStarter-2.0.0-beta.zip)
+    * リファレンスマニュアル：[AIWolf_NET_2.0.0-beta_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/AIWolf_NET_2.0.0-beta_ReferenceManual_J.zip)
 
 1. 履歴と変更点
 
@@ -24,4 +24,4 @@
     * 2.0.0: APIを変更しました．
 
 ---
-このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE)を参照のこと.
+このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0-beta/LICENSE)を参照のこと.
