@@ -1,27 +1,27 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README-E.md)
+[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/README.md)
 # AIWolf.NET
-## .NET版人狼知能プラットフォーム
+## .NET version of AIWolf platform
 
-1. チュートリアル
+1. TUTORIALS (sorry, in Japanese.)
 
-    * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/c-59927842)
-    * [.NET CoreとVisual Studio Codeで作る人狼知能（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/net-corevs-code-71808207)
+    * [C#�Ől�T�m�\�G�[�W�F���g�̍����`Visual Studio�ҁ`�iAIWolf.NET 1.0.x�Łj](https://www.slideshare.net/takots/c-59927842)
+    * [.NET Core��VS Code�ō��l�T�m�\�iAIWolf.NET 1.0.x�Łj](http://www.slideshare.net/takots/net-corevs-code-71808207)
 
-1. ダウンロード
+1. DOWNLOADS
 
-    * クライアントスタータ：
+    * ClientStarter: 
 [ClientStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0.zip)
-    * サーバスタータ：
+    * ServerStarter: 
 [ServerStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ServerStarter-2.0.0.zip)
-    * ゲームスタータ：
+    * GameStarter: 
 [GameStarter-2.0.0.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
-    * リファレンスマニュアル：[AIWolf_NET_2.0.0_ReferenceManual_J.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_J.zip)
+    * Reference manual: [AIWolf_NET_2.0.0_ReferenceManual_E.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_E.zip)
 
-1. 履歴と変更点
+1. HISTORY and CHANGES
 
-    * 1.0.0: 最初のリリース．
-    * 1.1.0: ゲームサーバが加わったのに伴い，名称を「プラットフォーム」に変えました．
-    * 2.0.0: APIを変更しました．
+    * 1.0.0: The first release of library version.
+    * 1.1.0: The first release of platform version including game server.
+    * 2.0.0: APIs are chenged.
 
 ---
-このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE)を参照のこと.
+This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/master/LICENSE).
