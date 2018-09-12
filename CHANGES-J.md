@@ -19,8 +19,7 @@
     * プロパティの型変更
       * `public IUtterance Utterance { get; }`
       * `public IList<Content> ContentList { get; }`
-    * コンストラクタの不可視化
-      * `internal Content(Content content)`
+    * コピーコンストラクタの不可視化
   * AIWolf.Lib.ContentBuilderクラスの抽象化
   * AIWolf.Lib.IPlayerインターフェース
     * メソッド引数の型変更

@@ -20,8 +20,7 @@ regardless of their kind such as Java, .NET, Python, etc.
     * Modify the types of the following properties.
       * `public IUtterance Utterance { get; }`
       * `public IList<Content> ContentList { get; }`
-    * Make the following constructor invisible.
-      * `internal Content(Content content)`
+    * Make the copy constructor invisible.
   * Make AIWolf.Lib.ContentBuilder class abstract.
   * On AIWolf.Lib.IPlayer interface,
     * Modify the types of the arguments in the following methods.
