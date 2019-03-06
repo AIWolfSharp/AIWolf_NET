@@ -1,30 +1,30 @@
-* 1.0.0: �ŏ��̃����[�X
-* 1.1.0: �Q�[���T�[�o�������.NET�ł����Ŋ�������悤�ɂȂ����̂ɔ����C
-���̂��u���C�u�����v����u�v���b�g�t�H�[���v�ɕς��܂����D
-  * �Q�[���T�[�o�������܂����D
-�������C���b������`�F�b�N�Ǝ��Ԑ����͎������Ă��܂���D
-  * �v�Z�R�X�g�팸�̂��߁C�G�[�W�F���g-�T�[�o�Ԃł̃N���X�̋��p�̕��@���������܂����D
-  * �Ӑ}���Ȃ����������ɂ��듮���h�~���邽�߁C
-�G�[�W�F���g�ɓn�����GameInfo, GameSetting�����������s�ɂ��܂����D
-  * �e��N���C�A���g�X�^�[�^���v���Z�X�Ƃ��ċN������GameStarter�������܂����D
-�T�[�o�N����CJava, .NET, Python�Ȃǂ̃G�[�W�F���g��ڑ����đΐ킷�邱�Ƃ��ł��܂��D
-* 2.0.0: API�̕ύX
-  * �V�K�N���X
+﻿* 1.0.0: 最初のリリース
+* 1.1.0: ゲームサーバが加わり.NET版だけで完結するようになったのに伴い，
+名称を「ライブラリ」から「プラットフォーム」に変えました．
+  * ゲームサーバが加わりました．
+ただし，発話文字列チェックと時間制限は実装していません．
+  * 計算コスト削減のため，エージェント-サーバ間でのクラスの共用の方法を見直しました．
+  * 意図しない書き換えによる誤動作を防止するため，
+エージェントに渡されるGameInfo, GameSettingを書き換え不可にしました．
+  * 各種クライアントスタータをプロセスとして起動するGameStarterが加わりました．
+サーバ起動後，Java, .NET, Pythonなどのエージェントを接続して対戦することができます．
+* 2.0.0: APIの変更
+  * 新規クラス
     * AIWolf.Lib.AbstractRoleAssignPlayer
-  * �V�K�C���^�[�t�F�[�X
+  * 新規インターフェース
     * AIWolf.Lib.IGameInfo
     * AIWolf.Lib.IGameSetting
     * AIWolf.Lib.IUtterance
-  * AIWolf.Lib.Content�N���X
-    * �v���p�e�B�̌^�ύX
+  * AIWolf.Lib.Contentクラス
+    * プロパティの型変更
       * `public IUtterance Utterance { get; }`
       * `public IList<Content> ContentList { get; }`
-    * �R�s�[�R���X�g���N�^�̕s����
-  * AIWolf.Lib.ContentBuilder�N���X�̒��ۉ�
-  * AIWolf.Lib.IPlayer�C���^�[�t�F�[�X
-    * ���\�b�h�����̌^�ύX
+    * コピーコンストラクタの不可視化
+  * AIWolf.Lib.ContentBuilderクラスの抽象化
+  * AIWolf.Lib.IPlayerインターフェース
+    * メソッド引数の型変更
       * `void Update(IGameInfo gameinfo)`
       * `void Initialize(IGameInfo gameInfo, IGameSetting gameSetting)`
-  * AIWolf.Lib.ShuffleExtensions.Shuffle�g�����\�b�h
-    * �߂�l�̌^�ύX
+  * AIWolf.Lib.ShuffleExtensions.Shuffle拡張メソッド
+    * 戻り値の型変更
       * `public static IList<T> Shuffle<T>(this IEnumerable<T> s)`
