@@ -119,7 +119,18 @@ namespace AIWolf.Lib
         /// Werewolf.
         /// </summary>
 #endif
-        WEREWOLF
+        WEREWOLF,
+
+#if JHELP
+        /// <summary>
+        /// ワイルドカード
+        /// </summary>
+#else
+        /// <summary>
+        /// Wildcard.
+        /// </summary>
+#endif
+        ANY = int.MaxValue
     }
 
 #if JHELP
@@ -220,7 +231,18 @@ namespace AIWolf.Lib
         /// Werewolf.
         /// </summary>
 #endif
-        WEREWOLF
+        WEREWOLF,
+
+#if JHELP
+        /// <summary>
+        /// ワイルドカード
+        /// </summary>
+#else
+        /// <summary>
+        /// Wildcard.
+        /// </summary>
+#endif
+        ANY = int.MaxValue
     }
 
 #if JHELP
