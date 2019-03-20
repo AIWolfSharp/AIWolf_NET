@@ -27,6 +27,28 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
+        /// 定数NONE
+        /// </summary>
+#else
+        /// <summary>
+        /// Constant NONE.
+        /// </summary>
+#endif
+        public static readonly Agent NONE = GetAgent(0);
+
+#if JHELP
+        /// <summary>
+        /// 定数ANY
+        /// </summary>
+#else
+        /// <summary>
+        /// Constant ANY.
+        /// </summary>
+#endif
+        public static readonly Agent ANY = GetAgent(int.MaxValue);
+
+#if JHELP
+        /// <summary>
         /// 指定したインデックスのエージェントを返す
         /// </summary>
         /// <param name="idx">インデックス</param>
@@ -82,6 +104,6 @@ namespace AIWolf.Lib
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
 #endif
-        public override string ToString() => $"Agent[{AgentIdx:00}]";
+        public override string ToString() => AgentIdx == 0 ? "NONE" : AgentIdx == int.MaxValue ? "ANY" : $"Agent[{AgentIdx:00}]";
     }
 }
