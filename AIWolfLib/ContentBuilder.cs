@@ -7,6 +7,7 @@
 // http://opensource.org/licenses/mit-license.php
 //
 
+using System;
 using System.Collections.Generic;
 
 namespace AIWolf.Lib
@@ -22,6 +23,16 @@ namespace AIWolf.Lib
 #endif
     public enum UtteranceType
     {
+#if JHELP
+        /// <summary>
+        /// 不明
+        /// </summary>
+#else
+        /// <summary>
+        /// Uncertain.
+        /// </summary>
+#endif
+        UNC,
 #if JHELP
         /// <summary>
         /// 会話
@@ -46,27 +57,19 @@ namespace AIWolf.Lib
 
 #if JHELP
     /// <summary>
-    /// 発話内容クラスビルダー
+    /// 各種発話内容を生成するビルダークラスのためのクラス
     /// </summary>
 #else
     /// <summary>
-    /// Abstract class of the builder for Content class.
+    /// A class for the builder classes to build Content of all kinds.
     /// </summary>
 #endif
-    public abstract class ContentBuilder
+    public class ContentBuilder
     {
         internal ContentBuilder() { }
 
-#if JHELP
-        /// <summary>
-        /// Contentのテキスト表現
-        /// </summary>
-#else
-        /// <summary>
-        /// The text representation of the Content.
-        /// </summary>
-#endif
-        internal string Text { get; set; }
+        private Agent _subject;
+        private Agent _target;
 
 #if JHELP
         /// <summary>
@@ -77,7 +80,7 @@ namespace AIWolf.Lib
         /// The topic of the Content.
         /// </summary>
 #endif
-        internal abstract Topic Topic { get; }
+        internal Topic Topic { get; set; }
 
 #if JHELP
         /// <summary>
@@ -88,7 +91,7 @@ namespace AIWolf.Lib
         /// The subject of the Content.
         /// </summary>
 #endif
-        internal Agent Subject { get; set; }
+        internal Agent Subject { get => _subject; set => _subject = value ?? Agent.NONE; }
 
 #if JHELP
         /// <summary>
@@ -99,7 +102,7 @@ namespace AIWolf.Lib
         /// The target agent of the Content.
         /// </summary>
 #endif
-        internal Agent Target { get; set; }
+        internal Agent Target { get => _target; set => _target = value ?? Agent.ANY; }
 
 #if JHELP
         /// <summary>
@@ -155,6 +158,17 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         internal IList<Content> ContentList { get; set; }
+
+#if JHELP
+        /// <summary>
+        /// 被演算子に付加される日付
+        /// </summary>
+#else
+        /// <summary>
+        /// The date added to the operand.
+        /// </summary>
+#endif
+        internal int Day { get; set; }
     }
 
 #if JHELP
@@ -168,7 +182,37 @@ namespace AIWolf.Lib
 #endif
     public class AgreeContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.AGREE;
+#if JHELP
+        /// <summary>
+        /// AgreeContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">同意を表明するエージェント</param>
+        /// <param name="utteranceType">同意される発話の種類</param>
+        /// <param name="talkDay">同意される発話の発話日</param>
+        /// <param name="talkID">同意される発話のID</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of AgreeContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who agrees.</param>
+        /// <param name="utteranceType">The type of the agreed utterance.</param>
+        /// <param name="talkDay">The day of the utterance agreed with.</param>
+        /// <param name="talkID">The ID of the utterance agreed with.</param>
+#endif
+        public AgreeContentBuilder(Agent subject, UtteranceType utteranceType, int talkDay, int talkID)
+        {
+            Topic = Topic.AGREE;
+            Subject = subject;
+
+            if (utteranceType == UtteranceType.TALK)
+            {
+                Utterance = new Talk(talkID, talkDay, 0, Agent.NONE, "");
+            }
+            else if (utteranceType == UtteranceType.WHISPER)
+            {
+                Utterance = new Whisper(talkID, talkDay, 0, Agent.NONE, "");
+            }
+        }
 
 #if JHELP
         /// <summary>
@@ -185,19 +229,9 @@ namespace AIWolf.Lib
         /// <param name="talkDay">The day of the utterance agreed with.</param>
         /// <param name="talkID">The ID of the utterance agreed with.</param>
 #endif
+        [Obsolete]
         public AgreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
-        {
-            if (utteranceType == UtteranceType.TALK)
-            {
-                Utterance = new Talk(talkID, talkDay);
-            }
-            else
-            {
-                Utterance = new Whisper(talkID, talkDay);
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), utteranceType.ToString(), $"day{Utterance.Day}", $"ID:{Utterance.Idx}" }).Trim();
-        }
+            : this(Agent.NONE, utteranceType, talkDay, talkID) { }
     }
 
 #if JHELP
@@ -209,162 +243,264 @@ namespace AIWolf.Lib
     /// Builder class for the utterance of a disagreement.
     /// </summary>
 #endif
-    public class DisagreeContentBuilder : ContentBuilder
+    public class DisagreeContentBuilder : AgreeContentBuilder
     {
-        internal override Topic Topic => Topic.DISAGREE;
-
 #if JHELP
         /// <summary>
         /// DisagreeContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="utteranceType">不同意される発話の種類.</param>
+        /// <param name="subject">不同意を表明するエージェント</param>
+        /// <param name="utteranceType">不同意される発話の種類</param>
         /// <param name="talkDay">不同意される発話の発話日</param>
         /// <param name="talkID">不同意される発話のID</param>
 #else
         /// <summary>
         /// Initializes a new instance of DisagreeContentBuilder.
         /// </summary>
-        /// <param name="utteranceType">The type of the utterance disagreed with.</param>
-        /// <param name="talkDay">The day of the utterance disagreed with.</param>
-        /// <param name="talkID">The ID of the utterance disagreed with.</param>
+        /// <param name="subject">The agent who disagrees.</param>
+        /// <param name="utteranceType">The type of the disagreed utterance.</param>
+        /// <param name="talkDay">The date of the disagreed utterance.</param>
+        /// <param name="talkID">The ID of the disagreed utterance.</param>
 #endif
-        public DisagreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
+        public DisagreeContentBuilder(Agent subject, UtteranceType utteranceType, int talkDay, int talkID)
+            : base(subject, utteranceType, talkDay, talkID)
         {
-            if (utteranceType == UtteranceType.TALK)
-            {
-                Utterance = new Talk(talkID, talkDay);
-            }
-            else
-            {
-                Utterance = new Whisper(talkID, talkDay);
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), utteranceType.ToString(), $"day{Utterance.Day}", $"ID:{Utterance.Idx}" }).Trim();
+            Topic = Topic.DISAGREE;
         }
+
+#if JHELP
+        /// <summary>
+        /// DisagreeContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="utteranceType">不同意される発話の種類</param>
+        /// <param name="talkDay">不同意される発話の発話日</param>
+        /// <param name="talkID">不同意される発話のID</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of DisagreeContentBuilder.
+        /// </summary>
+        /// <param name="utteranceType">The type of the disagreed utterance.</param>
+        /// <param name="talkDay">The date of the disagreed utterance.</param>
+        /// <param name="talkID">The ID of the disagreed utterance.</param>
+#endif
+        [Obsolete]
+        public DisagreeContentBuilder(UtteranceType utteranceType, int talkDay = 0, int talkID = 0)
+            : this(Agent.NONE, utteranceType, talkDay, talkID) { }
     }
 
 #if JHELP
     /// <summary>
-    /// 襲撃発話ビルダークラス
+    /// 襲撃宣言発話ビルダークラス
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the utterance of an attack.
+    /// Builder class for the declaration of an attack.
     /// </summary>
 #endif
     public class AttackContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.ATTACK;
+#if JHELP
+        /// <summary>
+        /// AttackContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">襲撃するエージェント</param>
+        /// <param name="target">襲撃されるエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of AttackContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who will attack..</param>
+        /// <param name="target">The agent to be attacked.</param>
+#endif
+        public AttackContentBuilder(Agent subject, Agent target)
+        {
+            Topic = Topic.ATTACK;
+            Subject = subject;
+            Target = target;
+        }
 
 #if JHELP
         /// <summary>
         /// AttackContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">襲撃先エージェント</param>
+        /// <param name="target">襲撃されるエージェント</param>
 #else
         /// <summary>
         /// Initializes a new instance of AttackContentBuilder.
         /// </summary>
         /// <param name="target">The agent to be attacked.</param>
 #endif
-        public AttackContentBuilder(Agent target)
+        [Obsolete]
+        public AttackContentBuilder(Agent target) : this(Agent.NONE, target) { }
+    }
+
+#if JHELP
+    /// <summary>
+    /// 襲撃報告発話ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for the report of an attack.
+    /// </summary>
+#endif
+    public class AttackedContentBuilder : AttackContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// AttackedContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">襲撃したエージェント</param>
+        /// <param name="target">襲撃されたエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of AttackedContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who attacked.</param>
+        /// <param name="target">The agent who was attacked.</param>
+#endif
+        public AttackedContentBuilder(Agent subject, Agent target) : base(subject, target)
         {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString() }).Trim();
+            Topic = Topic.ATTACKED;
         }
     }
 
 #if JHELP
     /// <summary>
-    /// 占い発話ビルダークラス
+    /// 占い宣言発話ビルダークラス
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the utterance of a divination.
+    /// Builder class for the declaration of a divination.
     /// </summary>
 #endif
-    public class DivinationContentBuilder : ContentBuilder
+    public class DivinationContentBuilder : AttackContentBuilder
     {
-        internal override Topic Topic => Topic.DIVINATION;
-
+#if JHELP
+        /// <summary>
+        /// DivinationContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">占いを行うエージェント</param>
+        /// <param name="target">占われるエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of DivinationContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who will divine.</param>
+        /// <param name="target">The agent to be divined.</param>
+#endif
+        public DivinationContentBuilder(Agent subject, Agent target) : base(subject, target)
+        {
+            Topic = Topic.DIVINATION;
+        }
 
 #if JHELP
         /// <summary>
         /// DivinationContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">占い先エージェント</param>
+        /// <param name="target">占われるエージェント</param>
 #else
         /// <summary>
         /// Initializes a new instance of DivinationContentBuilder.
         /// </summary>
         /// <param name="target">The agent to be divined.</param>
 #endif
-        public DivinationContentBuilder(Agent target)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString() }).Trim();
-        }
+        [Obsolete]
+        public DivinationContentBuilder(Agent target) : this(Agent.NONE, target) { }
     }
 
 #if JHELP
     /// <summary>
-    /// 護衛発話ビルダークラス
+    /// 占い報告発話ビルダークラス
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the utterance of a guard.
+    /// Builder class for the report of a divination.
     /// </summary>
 #endif
-    public class GuardContentBuilder : ContentBuilder
+    public class DivinedResultContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.GUARD;
+#if JHELP
+        /// <summary>
+        /// DivinedResultContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">占いを行ったエージェント</param>
+        /// <param name="target">占われたエージェント</param>
+        /// <param name="result">占われたエージェントの種族</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of DivinedResultContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who divined.</param>
+        /// <param name="target">The agent who was divined.</param>
+        /// <param name="result">The species of the divined agent.</param>
+#endif
+        public DivinedResultContentBuilder(Agent subject, Agent target, Species result)
+        {
+            Topic = Topic.DIVINED;
+            Subject = subject;
+            Target = target;
+            Result = result;
+        }
+
+#if JHELP
+        /// <summary>
+        /// DivinedResultContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="target">占われたエージェント</param>
+        /// <param name="result">占われたエージェントの種族</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of DivinedResultContentBuilder.
+        /// </summary>
+        /// <param name="target">The agent who was divined.</param>
+        /// <param name="result">The species of the divined agent.</param>
+#endif
+        [Obsolete]
+        public DivinedResultContentBuilder(Agent target, Species result) : this(Agent.NONE, target, result) { }
+    }
+
+#if JHELP
+    /// <summary>
+    /// 護衛宣言発話ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for the declaration of a guard.
+    /// </summary>
+#endif
+    public class GuardContentBuilder : AttackContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// GuardContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">護衛を行うエージェント</param>
+        /// <param name="target">護衛されるエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of GuardContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who will guard.</param>
+        /// <param name="target">The agent to be guarded.</param>
+#endif
+        public GuardContentBuilder(Agent subject, Agent target) : base(subject, target)
+        {
+            Topic = Topic.GUARD;
+        }
 
 #if JHELP
         /// <summary>
         /// GuardContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">護衛先エージェント</param>
+        /// <param name="target">護衛されるエージェント</param>
 #else
         /// <summary>
         /// Initializes a new instance of GuardContentBuilder.
         /// </summary>
         /// <param name="target">The agent to be guarded.</param>
 #endif
-        public GuardContentBuilder(Agent target)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString() }).Trim();
-        }
+        [Obsolete]
+        public GuardContentBuilder(Agent target) : this(Agent.NONE, target) { }
     }
 
 #if JHELP
@@ -376,76 +512,112 @@ namespace AIWolf.Lib
     /// Builder class for the report of a guard.
     /// </summary>
 #endif
-    public class GuardedAgentContentBuilder : ContentBuilder
+    public class GuardedAgentContentBuilder : AttackContentBuilder
     {
-        internal override Topic Topic => Topic.GUARDED;
+#if JHELP
+        /// <summary>
+        /// GuardedAgentContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">護衛を行ったエージェント</param>
+        /// <param name="target">護衛されたエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of GuardedAgentContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who guarded.</param>
+        /// <param name="target">The agent who was guarded.</param>
+#endif
+        public GuardedAgentContentBuilder(Agent subject, Agent target) : base(subject, target)
+        {
+            Topic = Topic.GUARDED;
+        }
 
 #if JHELP
         /// <summary>
         /// GuardedAgentContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">占ったエージェント</param>
+        /// <param name="target">護衛されたエージェント</param>
 #else
         /// <summary>
         /// Initializes a new instance of GuardedAgentContentBuilder.
         /// </summary>
-        /// <param name="target">The guarded agent.</param>
+        /// <param name="target">The agent who was guarded.</param>
 #endif
-        public GuardedAgentContentBuilder(Agent target)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString() }).Trim();
-        }
+        [Obsolete]
+        public GuardedAgentContentBuilder(Agent target) : this(Agent.NONE, target) { }
     }
 
 #if JHELP
     /// <summary>
-    /// 投票発話ビルダークラス
+    /// 投票宣言発話ビルダークラス
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the utterance of a vote.
+    /// Builder class for the declaration of a vote.
     /// </summary>
 #endif
-    public class VoteContentBuilder : ContentBuilder
+    public class VoteContentBuilder : AttackContentBuilder
     {
-        internal override Topic Topic => Topic.VOTE;
+#if JHELP
+        /// <summary>
+        /// VoteContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">投票を行うエージェント</param>
+        /// <param name="target">投票されるエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of VoteContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who will vote.</param>
+        /// <param name="target">The agent to be voted.</param>
+#endif
+        public VoteContentBuilder(Agent subject, Agent target) : base(subject, target)
+        {
+            Topic = Topic.VOTE;
+        }
 
 #if JHELP
         /// <summary>
         /// VoteContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">投票先エージェント</param>
+        /// <param name="target">投票されるエージェント</param>
 #else
         /// <summary>
         /// Initializes a new instance of VoteContentBuilder.
         /// </summary>
-        /// <param name="target">The agent to be voted for.</param>
+        /// <param name="target">The agent to be voted.</param>
 #endif
-        public VoteContentBuilder(Agent target)
+        [Obsolete]
+        public VoteContentBuilder(Agent target) : this(Agent.NONE, target) { }
+    }
+
+#if JHELP
+    /// <summary>
+    /// 投票報告発話ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for the report of a vote.
+    /// </summary>
+#endif
+    public class VotedContentBuilder : AttackContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// VotedContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">投票を行ったエージェント</param>
+        /// <param name="target">投票されたエージェント</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of VotedContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who voted.</param>
+        /// <param name="target">The agent who was voted.</param>
+#endif
+        public VotedContentBuilder(Agent subject, Agent target) : base(subject, target)
         {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString() }).Trim();
+            Topic = Topic.VOTED;
         }
     }
 
@@ -455,42 +627,49 @@ namespace AIWolf.Lib
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the utterance of a coming-out.
+    /// Builder class for the utterance of a comingout.
     /// </summary>
 #endif
     public class ComingoutContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.COMINGOUT;
+#if JHELP
+        /// <summary>
+        /// ComingoutContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">役職公開を行うエージェント</param>
+        /// <param name="target">役職を公開されるエージェント</param>
+        /// <param name="role">公開される役職</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of ComingoutContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who discloses.</param>
+        /// <param name="target">The disclosed agent.</param>
+        /// <param name="role">The disclosed role.</param>
+#endif
+        public ComingoutContentBuilder(Agent subject, Agent target, Role role)
+        {
+            Topic = Topic.COMINGOUT;
+            Subject = subject;
+            Target = target;
+            Role = role;
+        }
 
 #if JHELP
         /// <summary>
         /// ComingoutContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">役職を明らかにされるエージェント</param>
-        /// <param name="role">明らかにされる役職</param>
+        /// <param name="target">役職を公開されるエージェント</param>
+        /// <param name="role">公開される役職</param>
 #else
         /// <summary>
         /// Initializes a new instance of ComingoutContentBuilder.
         /// </summary>
-        /// <param name="target">The agent whose role is come out with.</param>
-        /// <param name="role">The role come out with.</param>
+        /// <param name="target">The agent whose role is disclosed.</param>
+        /// <param name="role">The disclosed role.</param>
 #endif
-        public ComingoutContentBuilder(Agent target, Role role)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Role = role;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
-        }
+        [Obsolete]
+        public ComingoutContentBuilder(Agent target, Role role) : this(Agent.NONE, target, role) { }
     }
 
 #if JHELP
@@ -499,12 +678,31 @@ namespace AIWolf.Lib
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the utterance of a estimation.
+    /// Builder class for the utterance of a estimate.
     /// </summary>
 #endif
-    public class EstimateContentBuilder : ContentBuilder
+    public class EstimateContentBuilder : ComingoutContentBuilder
     {
-        internal override Topic Topic => Topic.ESTIMATE;
+#if JHELP
+        /// <summary>
+        /// EstimateContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">推測を行うエージェント</param>
+        /// <param name="target">推測されるエージェント</param>
+        /// <param name="role">推測される役職</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of EstimateContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who estimates.</param>
+        /// <param name="target">The estimated agent.</param>
+        /// <param name="role">The estimated role.</param>
+#endif
+        public EstimateContentBuilder(Agent subject, Agent target, Role role)
+            : base(subject, target, role)
+        {
+            Topic = Topic.ESTIMATE;
+        }
 
 #if JHELP
         /// <summary>
@@ -519,66 +717,8 @@ namespace AIWolf.Lib
         /// <param name="target">The estimated agent.</param>
         /// <param name="role">The estimated role.</param>
 #endif
-        public EstimateContentBuilder(Agent target, Role role)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Role = role;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString(), Role.ToString() }).Trim();
-        }
-    }
-
-#if JHELP
-    /// <summary>
-    /// 占い結果報告ビルダークラス
-    /// </summary>
-#else
-    /// <summary>
-    /// Builder class for the report of a divination.
-    /// </summary>
-#endif
-    public class DivinedResultContentBuilder : ContentBuilder
-    {
-        internal override Topic Topic => Topic.DIVINED;
-
-#if JHELP
-        /// <summary>
-        /// DivinedResultContentBuilderクラスの新しいインスタンスを初期化します
-        /// </summary>
-        /// <param name="target">占われたエージェント</param>
-        /// <param name="result">占われたエージェントの種族</param>
-#else
-        /// <summary>
-        /// Initializes a new instance of DivinedResultContentBuilder.
-        /// </summary>
-        /// <param name="target">The divined agent.</param>
-        /// <param name="result">The species of target.</param>
-#endif
-        public DivinedResultContentBuilder(Agent target, Species result)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Result = result;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
-        }
+        [Obsolete]
+        public EstimateContentBuilder(Agent target, Role role) : this(Agent.NONE, target, role) { }
     }
 
 #if JHELP
@@ -590,39 +730,44 @@ namespace AIWolf.Lib
     /// Builder class for the report of an identification.
     /// </summary>
 #endif
-    public class IdentContentBuilder : ContentBuilder
+    public class IdentContentBuilder : DivinedResultContentBuilder
     {
-        internal override Topic Topic => Topic.IDENTIFIED;
+#if JHELP
+        /// <summary>
+        /// IdentContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">種族確認を行ったエージェント</param>
+        /// <param name="target">種族確認をされたエージェント</param>
+        /// <param name="result">確認されたエージェントの種族</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of IdentContentBuilder.
+        /// </summary>
+        /// <param name="agents">The agent who identified.</param>
+        /// <param name="agents">The agent who was identified.</param>
+        /// <param name="result">The species of the identified agent.</param>
+#endif
+        public IdentContentBuilder(Agent subject, Agent target, Species result)
+            : base(subject, target, result)
+        {
+            Topic = Topic.IDENTIFIED;
+        }
 
 #if JHELP
         /// <summary>
         /// IdentContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="target">霊媒されたエージェント</param>
-        /// <param name="result">霊媒されたエージェントの種族</param>
+        /// <param name="target">種族確認をされたエージェント</param>
+        /// <param name="result">確認されたエージェントの種族</param>
 #else
         /// <summary>
         /// Initializes a new instance of IdentContentBuilder.
         /// </summary>
         /// <param name="target">The identified agent.</param>
-        /// <param name="result">The species of target.</param>
+        /// <param name="result">The species of the identified agent.</param>
 #endif
-        public IdentContentBuilder(Agent target, Species result)
-        {
-            if (target == null)
-            {
-                Error.RuntimeError("target is null.");
-                Target = Agent.GetAgent(0);
-                Error.Warning($"using {Target}.");
-            }
-            else
-            {
-                Target = target;
-            }
-            Result = result;
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                Topic.ToString(), Target.ToString(), Result.ToString() }).Trim();
-        }
+        [Obsolete]
+        public IdentContentBuilder(Agent target, Species result) : this(Agent.NONE, target, result) { }
     }
 
 #if JHELP
@@ -631,49 +776,295 @@ namespace AIWolf.Lib
     /// </summary>
 #else
     /// <summary>
-    /// Builder class for the report of a request.
+    /// Builder class for a request.
     /// </summary>
 #endif
     public class RequestContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.OPERATOR;
+#if JHELP
+        /// <summary>
+        /// RequestContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">要求を行うエージェント</param>
+        /// <param name="target">要求されるエージェント</param>
+        /// <param name="action">要求されるアクション</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of RequestContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who requests.</param>
+        /// <param name="target">The requested agent.</param>
+        /// <param name="content">The requested action.</param>
+#endif
+        public RequestContentBuilder(Agent subject, Agent target, Content action)
+        {
+            Topic = Topic.OPERATOR;
+            Operator = Operator.REQUEST;
+            Subject = subject;
+            Target = target;
+            ContentList = action == null ? null : new List<Content> { action }.AsReadOnly();
+        }
 
 #if JHELP
         /// <summary>
         /// RequestContentBuilderクラスの新しいインスタンスを初期化します
         /// </summary>
-        /// <param name="agent">要求先エージェント</param>
-        /// <param name="content">要求されるアクションを表すContent</param>
+        /// <param name="target">要求をされるエージェント</param>
+        /// <param name="action">要求されるアクション</param>
 #else
         /// <summary>
         /// Initializes a new instance of RequestContentBuilder.
         /// </summary>
-        /// <param name="agent">The requested agent.</param>
-        /// <param name="content">Content representing the requested action.</param>
+        /// <param name="target">The requested agent.</param>
+        /// <param name="action">The requested action.</param>
 #endif
-        public RequestContentBuilder(Agent agent, Content content)
+        [Obsolete]
+        public RequestContentBuilder(Agent target, Content action) : this(Agent.NONE, target, action) { }
+    }
+
+#if JHELP
+    /// <summary>
+    /// 照会発話ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for a inquiry.
+    /// </summary>
+#endif
+    public class InquiryContentBuilder : RequestContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// InquiryContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">照会を行うエージェント</param>
+        /// <param name="target">照会されるエージェント</param>
+        /// <param name="content">照会事項</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of InquiryContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who inquires.</param>
+        /// <param name="target">The inquired agent.</param>
+        /// <param name="content">The inquired matter.</param>
+#endif
+        public InquiryContentBuilder(Agent subject, Agent target, Content content)
+            : base(subject, target, content)
         {
-            Operator = Operator.REQUEST;
-            if (content == null)
+            Operator = Operator.INQUIRE;
+        }
+    }
+
+#if JHELP
+    /// <summary>
+    /// 理由発話ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for the utterance of a reason.
+    /// </summary>
+#endif
+    public class BecauseContentBuilder : ContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// BecauseContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">行動とその理由を述べるエージェント</param>
+        /// <param name="reason">行動の理由</param>
+        /// <param name="action">理由に基づく行動</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of BecauseContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who express the action and its reason.</param>
+        /// <param name="reason">The reason.</param>
+        /// <param name="action">The action.</param>
+#endif
+        public BecauseContentBuilder(Agent subject, Content reason, Content action)
+        {
+            Topic = Topic.OPERATOR;
+            Operator = Operator.BECAUSE;
+            Subject = subject;
+
+            if (reason == null)
             {
-                Error.RuntimeError("content is null.");
-                Error.Warning("Using Content.SKIP.");
-                ContentList = new List<Content> { Content.SKIP }.AsReadOnly();
+                Error.RuntimeError("Invalid argument: reason is null");
             }
-            else
+            if (action == null)
             {
-                ContentList = new List<Content>
-                {
-                    new Content(content)
-                    {
-                        Subject = agent,
-                        Text = string.Join(" ", new string[] { agent == null ? "" : agent.ToString(),
-                            content.Text }).Trim()
-                    }
-                }.AsReadOnly();
+                Error.RuntimeError("Invalid argument: action is null");
             }
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(),
-                $"{Operator}({ContentList[0].Text})" }).Trim();
+            ContentList = (reason == null || action == null) ? null : new List<Content> { reason, action }.AsReadOnly();
+        }
+    }
+
+#if JHELP
+    /// <summary>
+    /// AND演算子ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for AND operator.
+    /// </summary>
+#endif
+    public class AndContentBuilder : ContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// AndContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">この連言を主張するエージェント</param>
+        /// <param name="contents">連言肢の並び</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of AndContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who states this conjunction.</param>
+        /// <param name="contents">The series of the conjuncts.</param>
+#endif
+        public AndContentBuilder(Agent subject, params Content[] contents)
+        {
+            Topic = Topic.OPERATOR;
+            Operator = Operator.AND;
+            Subject = subject;
+            if (contents.Length == 0)
+            {
+                Error.RuntimeError("Invalid argument: contents is empty");
+            }
+            ContentList = contents.Length == 0 ? null : new List<Content>(contents).AsReadOnly();
+        }
+    }
+
+#if JHELP
+    /// <summary>
+    /// OR演算子ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for OR operator.
+    /// </summary>
+#endif
+    public class OrContentBuilder : AndContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// OrContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">この選言を主張するエージェント</param>
+        /// <param name="contents">選言肢の並び</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of OrContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who states this disjunction.</param>
+        /// <param name="contents">The series of the disjuncts.</param>
+#endif
+        public OrContentBuilder(Agent subject, params Content[] contents) : base(subject, contents)
+        {
+            Operator = Operator.OR;
+        }
+    }
+
+#if JHELP
+    /// <summary>
+    /// XOR演算子ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for XOR operator.
+    /// </summary>
+#endif
+    public class XorContentBuilder : BecauseContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// XorContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">この排他的選言を主張するエージェント</param>
+        /// <param name="disjunct1">第1選言肢</param>
+        /// <param name="disjunct2">第2選言肢</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of XorContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who states this exclusive disjunction.</param>
+        /// <param name="disjunct1">The first disjunct.</param>
+        /// <param name="disjunct2">The second disjunct.</param>
+#endif
+        public XorContentBuilder(Agent subject, Content disjunct1, Content disjunct2)
+            : base(subject, disjunct1, disjunct2)
+        {
+            Operator = Operator.XOR;
+        }
+    }
+
+#if JHELP
+    /// <summary>
+    /// NOT演算子ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for NOT operator.
+    /// </summary>
+#endif
+    public class NotContentBuilder : ContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// NotContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">この否定を主張するエージェント</param>
+        /// <param name="content">否定される命題</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of NotContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who states this negation.</param>
+        /// <param name="content">The negated proposition.</param>
+#endif
+        public NotContentBuilder(Agent subject, Content content)
+        {
+            Topic = Topic.OPERATOR;
+            Operator = Operator.NOT;
+            Subject = subject;
+            ContentList = content == null ? null : new List<Content> { content }.AsReadOnly();
+        }
+    }
+
+#if JHELP
+    /// <summary>
+    /// DAY演算子ビルダークラス
+    /// </summary>
+#else
+    /// <summary>
+    /// Builder class for DAY operator.
+    /// </summary>
+#endif
+    public class DayContentBuilder : ContentBuilder
+    {
+#if JHELP
+        /// <summary>
+        /// DayContentBuilderクラスの新しいインスタンスを初期化します
+        /// </summary>
+        /// <param name="subject">日付を付加するエージェント</param>
+        /// <param name="day">日付</param>
+        /// <param name="content">日付を付加される発話</param>
+#else
+        /// <summary>
+        /// Initializes a new instance of DayContentBuilder.
+        /// </summary>
+        /// <param name="subject">The agent who adds the date to the Content.</param>
+        /// <param name="day">The date added to the Content.</param>
+        /// <param name="content">The Content whose date is added.</param>
+#endif
+        public DayContentBuilder(Agent subject, int day, Content content)
+        {
+            Topic = Topic.OPERATOR;
+            Operator = Operator.DAY;
+            Subject = subject;
+            Day = day;
+            ContentList = content == null ? null : new List<Content> { content }.AsReadOnly();
         }
     }
 
@@ -688,20 +1079,9 @@ namespace AIWolf.Lib
 #endif
     public class SkipContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.Skip;
-
-#if JHELP
-        /// <summary>
-        /// SkipContentBuilderクラスの新しいインスタンスを初期化します
-        /// </summary>
-#else
-        /// <summary>
-        /// Initializes a new instance of SkipContentBuilder.
-        /// </summary>
-#endif
         public SkipContentBuilder()
         {
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Talk.SKIP }).Trim();
+            Topic = Topic.Skip;
         }
     }
 
@@ -716,21 +1096,9 @@ namespace AIWolf.Lib
 #endif
     public class OverContentBuilder : ContentBuilder
     {
-        internal override Topic Topic => Topic.Over;
-
-#if JHELP
-        /// <summary>
-        /// OverContentBuilderクラスの新しいインスタンスを初期化します
-        /// </summary>
-#else
-        /// <summary>
-        /// Initializes a new instance of OverContentBuilder.
-        /// </summary>
-#endif
         public OverContentBuilder()
         {
-            Text = string.Join(" ", new string[] { Subject == null ? "" : Subject.ToString(), Talk.OVER }).Trim();
+            Topic = Topic.Over;
         }
     }
 }
-
