@@ -8,7 +8,7 @@
     <Authors>Takashi OTSUKI</Authors>
     <Copyright>Copyright © 2017 Takashi OTSUKI</Copyright>
     <RootNamespace>AIWolf.Client</RootNamespace>
-    <Version>2.0.0-beta</Version>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
