@@ -72,15 +72,15 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
-        /// 発話ターン（オプション，未指定の場合-1）
+        /// 発話ターン
         /// </summary>
 #else
         /// <summary>
-        /// The turn of this utterance(optional). -1 if not specified.
+        /// The turn of this utterance.
         /// </summary>
 #endif
         [DataMember(Name = "turn")]
-        public int Turn { get; } = -1;
+        public int Turn { get; }
 
 #if JHELP
         /// <summary>
@@ -111,13 +111,6 @@ namespace AIWolf.Lib
         [DataMember(Name = "text")]
         public string Text { get; }
 
-        Talk(int idx = 0, int day = 0, int turn = -1)
-        {
-            Idx = idx;
-            Day = day;
-            Turn = turn;
-        }
-
 #if JHELP
         /// <summary>
         /// 会話の新しいインスタンスを初期化する
@@ -127,7 +120,6 @@ namespace AIWolf.Lib
         /// <param name="turn">この会話の発話ターン</param>
         /// <param name="agent">この会話の発話エージェント</param>
         /// <param name="text">この会話の発話テキスト</param>
-        /// <remarks>agentがnullの場合null参照例外</remarks>
 #else
         /// <summary>
         /// Initializes a new instance of this class.
@@ -137,17 +129,15 @@ namespace AIWolf.Lib
         /// <param name="turn">The turn of this talk.</param>
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
-        /// <remarks>NullReferenceException is thrown in case of null agent.</remarks>
 #endif
-        public Talk(int idx = 0, int day = 0, int turn = -1, Agent agent = null, string text = "")
+        public Talk(int idx, int day, int turn, Agent agent, string text)
         {
             Idx = idx;
             Day = day;
             Turn = turn;
-            Agent = agent;
-            // NullReferenceException is thrown in case of null agent,
-            this.agent = agent.AgentIdx;
-            Text = text;
+            Agent = agent ?? Agent.NONE;
+            this.agent = Agent.AgentIdx;
+            Text = text ?? "";
         }
 
         /// <summary>
@@ -159,12 +149,8 @@ namespace AIWolf.Lib
         /// <param name="agent">The index of agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
         [JsonConstructor]
-        internal Talk(int idx, int day, int turn, int agent, string text) : this(idx: idx, day: day, turn: turn)
-        {
-            this.agent = agent;
-            Text = text;
-            Agent = Agent.GetAgent(agent);
-        }
+        internal Talk(int idx, int day, int turn, int agent, string text)
+            : this(idx, day, turn, Agent.GetAgent(agent), text) { }
 
 #if JHELP
         /// <summary>
@@ -210,7 +196,7 @@ namespace AIWolf.Lib
         /// <param name="agent">The agent who talked.</param>
         /// <param name="text">The text of this talk.</param>
 #endif
-        public Whisper(int idx = 0, int day = 0, int turn = -1, Agent agent = null, string text = "")
+        public Whisper(int idx, int day, int turn, Agent agent, string text)
             : base(idx, day, turn, agent, text) { }
 
         /// <summary>
@@ -223,7 +209,7 @@ namespace AIWolf.Lib
         /// <param name="text">The text of this whisper.</param>
         [JsonConstructor]
         Whisper(int idx, int day, int turn, int agent, string text)
-            : base(idx, day, turn, agent, text) { }
+            : this(idx, day, turn, Agent.GetAgent(agent), text) { }
 
 #if JHELP
         /// <summary>
