@@ -10,6 +10,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AIWolf.Lib
@@ -56,7 +57,7 @@ namespace AIWolf.Lib
         /// The text representation of the Content.
         /// </summary>
 #endif
-        public string Text { get; internal set; }
+        public string Text { get; private set; }
 
 #if JHELP
         /// <summary>
@@ -78,7 +79,7 @@ namespace AIWolf.Lib
         /// The subject of the Content.
         /// </summary>
 #endif
-        public Agent Subject { get; internal set; }
+        public Agent Subject { get; private set; }
 
 #if JHELP
         /// <summary>
@@ -144,7 +145,224 @@ namespace AIWolf.Lib
         /// The list of the operands in the Content.
         /// </summary>
 #endif
-        public IList<Content> ContentList { get; }
+        public IList<Content> ContentList { get; private set; }
+
+#if JHELP
+        /// <summary>
+        /// Content中の被演算子に付加される日付
+        /// </summary>
+#else
+        /// <summary>
+        /// The date added to the operand int the Content.
+        /// </summary>
+#endif
+        public int Day { get; }
+
+        static readonly Regex regexAgent = new Regex(@"(Agent\[(\d+)\]|ANY)");
+
+        // Converts the string representation of Agent into Agent.
+        static Agent ToAgent(string input)
+        {
+            var m = regexAgent.Match(input);
+            if (m.Success)
+            {
+                if (m.Groups[1].ToString() == "ANY")
+                {
+                    return Agent.ANY;
+                }
+                else
+                {
+                    return Agent.GetAgent(int.Parse(m.Groups[2].ToString()));
+                }
+            }
+            return Agent.NONE;
+        }
+
+        static readonly Regex regexContents = new Regex(@"^[^\(\)]*(?:\(([^\(\)]*(((?<Open>\()[^\(\)]*)+((?<Close-Open>\))[^\(\)]*)+)*?(?(Open)(?!)))\)[^\(\)]*)*?$");
+
+        // Converts the string representaion of the sequence of contents into IList<Content>.
+        static IList<Content> GetContents(string input)
+        {
+            var m = regexContents.Match(input);
+            if (m.Success)
+            {
+                var contents = new List<Content>();
+                foreach (Capture c in m.Groups[1].Captures)
+                {
+                    contents.Add(new Content(c.Value));
+                }
+                return contents.AsReadOnly();
+            }
+            return null;
+        }
+
+        // Completes the subjects of the inner Contents.
+        void CompleteInnerSubject()
+        {
+            if (ContentList == null)
+            {
+                return;
+            }
+            ContentList = ContentList.Select(c =>
+            {
+                if (c.Subject == null)
+                {
+                    if (Operator == Operator.INQUIRE || Operator == Operator.REQUEST)
+                    {
+                        return c.CopyAndReplaceSubject(Target);
+                    }
+                    if (Subject != null)
+                    {
+                        return c.CopyAndReplaceSubject(Subject);
+                    }
+                }
+                c.CompleteInnerSubject();
+                return c;
+            }).ToList().AsReadOnly();
+        }
+
+        // Returns the copy of the Content whose Subject is replaced with newSubject.
+        Content CopyAndReplaceSubject(Agent newSubject)
+        {
+            Content c = new Content(this)
+            {
+                Subject = newSubject
+            };
+            c.CompleteInnerSubject();
+            c.NormalizeText();
+            return c;
+        }
+
+        // Normalize Text.
+        void NormalizeText()
+        {
+            switch (Topic)
+            {
+                case Topic.Skip:
+                    Text = Talk.SKIP;
+                    break;
+                case Topic.Over:
+                    Text = Talk.OVER;
+                    break;
+                case Topic.AGREE:
+                case Topic.DISAGREE:
+                    Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                + string.Join(" ", new string[] {
+                        Topic.ToString(),
+                        Utterance is Whisper ? "WHISPER" : "TALK",
+                        $"day{Utterance.Day}",
+                        $"ID:{Utterance.Idx}"
+                    });
+                    break;
+                case Topic.ESTIMATE:
+                case Topic.COMINGOUT:
+                    Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                + string.Join(" ", new string[] {
+                        Topic.ToString(),
+                        Target == Agent.NONE ? "ANY" : Target.ToString(),
+                        Role.ToString()
+                    });
+                    break;
+                case Topic.DIVINED:
+                case Topic.IDENTIFIED:
+                    Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                + string.Join(" ", new string[] {
+                        Topic.ToString(),
+                        Target == Agent.NONE ? "ANY" : Target.ToString(),
+                        Result.ToString()
+                    });
+                    break;
+                case Topic.ATTACK:
+                case Topic.ATTACKED:
+                case Topic.DIVINATION:
+                case Topic.GUARD:
+                case Topic.GUARDED:
+                case Topic.VOTE:
+                case Topic.VOTED:
+                    Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                + string.Join(" ", new string[] {
+                        Topic.ToString(),
+                        Target == Agent.NONE ? "ANY" : Target.ToString(),
+                    });
+                    break;
+                case Topic.OPERATOR:
+                    switch (Operator)
+                    {
+                        case Operator.REQUEST:
+                        case Operator.INQUIRE:
+                            Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                                        + string.Join(" ", new string[] {
+                                Operator.ToString(),
+                                Target == Agent.NONE ? "ANY" : Target.ToString(),
+                                $"({(ContentList[0]?.Subject == Target ? StripSubject(ContentList[0].Text) : ContentList[0]?.Text)})"
+                            });
+                            break;
+                        case Operator.BECAUSE:
+                        case Operator.XOR:
+                            Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                                        + string.Join(" ", new string[] {
+                                Operator.ToString(),
+                                $"({(ContentList[0]?.Subject == Subject ? StripSubject(ContentList[0].Text) : ContentList[0]?.Text)})",
+                                $"({(ContentList[1]?.Subject == Subject ? StripSubject(ContentList[1].Text) : ContentList[1]?.Text)})"
+                            });
+                            break;
+                        case Operator.AND:
+                        case Operator.OR:
+                            Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                                        + string.Join(" ", new string[] {
+                                Operator.ToString(),
+                                string.Join(" ", ContentList.Select(c => $"({(c.Subject == Subject ? StripSubject(c.Text) : c.Text)})").ToArray())
+                            });
+                            break;
+                        case Operator.NOT:
+                            Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                                        + string.Join(" ", new string[] {
+                                Operator.ToString(),
+                                $"({(ContentList[0].Subject == Subject ? StripSubject(ContentList[0].Text) : ContentList[0].Text)})"
+                            });
+                            break;
+                        case Operator.DAY:
+                            Text = (Subject == Agent.NONE ? "" : Subject == Agent.ANY ? "ANY " : $"{Subject.ToString()} ")
+                                        + string.Join(" ", new string[] {
+                                Operator.ToString(),
+                                Day.ToString(),
+                                $"({(ContentList[0].Subject == Subject ? StripSubject(ContentList[0].Text) : ContentList[0].Text)})"
+                            });
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        static readonly Regex regexStripSubject = new Regex(@"^(Agent\[\d+\]|ANY|)\s*(\p{Lu}+.*)$");
+
+#if JHELP
+        /// <summary>
+        /// 発話テキストから主語を除く
+        /// </summary>
+        /// <param name="input">発話テキスト</param>
+        /// <returns>主語が除かれたテキスト</returns>
+#else
+        /// <summary>
+        /// Remove subject from the uttered text.
+        /// </summary>
+        /// <param name="input">The uttered text.</param>
+        /// <returns>The text with no subject.</returns>
+#endif
+        public static string StripSubject(string input)
+        {
+            var m = regexStripSubject.Match(input);
+            if (m.Success)
+            {
+                return m.Groups[2].ToString();
+            }
+            return input;
+        }
 
 #if JHELP
         /// <summary>
@@ -168,6 +386,7 @@ namespace AIWolf.Lib
             Utterance = content.Utterance;
             Operator = content.Operator;
             ContentList = content.ContentList;
+            Day = content.Day;
         }
 
 #if JHELP
@@ -183,7 +402,6 @@ namespace AIWolf.Lib
 #endif
         public Content(ContentBuilder builder)
         {
-            Text = builder.Text;
             Topic = builder.Topic;
             Subject = builder.Subject;
             Target = builder.Target;
@@ -192,7 +410,25 @@ namespace AIWolf.Lib
             Utterance = builder.Utterance;
             Operator = builder.Operator;
             ContentList = builder.ContentList;
+            Day = builder.Day;
+            CompleteInnerSubject();
+            NormalizeText();
         }
+
+        static readonly string agentPattern = @"\s+(Agent\[\d+\]|ANY)";
+        static readonly string subjectPattern = @"^(Agent\[\d+\]|ANY|)\s*";
+        static readonly string talkPattern = @"\s+(TALK|WHISPER)\s+day(-?\d+)\s+ID:(-?\d+)";
+        static readonly string roleSpecPattern = @"\s+(BODYGUARD|FOX|FREEMASON|MEDIUM|POSSESSED|SEER|VILLAGER|WEREWOLF|HUMAN|ANY)";
+        static readonly string parenPattern = @"(\(.*\))";
+        static readonly string digitPattern = @"(\d+)";
+        static readonly Regex regexAgree = new Regex(subjectPattern + "(AGREE|DISAGREE)" + talkPattern + "$");
+        static readonly Regex regexEstimate = new Regex(subjectPattern + "(ESTIMATE|COMINGOUT)" + agentPattern + roleSpecPattern + "$");
+        static readonly Regex regexDivined = new Regex(subjectPattern + "(DIVINED|IDENTIFIED)" + agentPattern + roleSpecPattern + "$");
+        static readonly Regex regexAttack = new Regex(subjectPattern + "(ATTACK|ATTACKED|DIVINATION|GUARD|GUARDED|VOTE|VOTED)" + agentPattern + "$");
+        static readonly Regex regexRequest = new Regex(subjectPattern + "(REQUEST|INQUIRE)" + agentPattern + @"\s+" + parenPattern + "$");
+        static readonly Regex regexBecause = new Regex(subjectPattern + @"(BECAUSE|AND|OR|XOR|NOT|REQUEST)\s+" + parenPattern + "$");
+        static readonly Regex regexDay = new Regex(subjectPattern + @"DAY\s+" + digitPattern + @"\s+" + parenPattern + "$");
+        static readonly Regex regexSkip = new Regex("^(Skip|Over)$");
 
 #if JHELP
         /// <summary>
@@ -207,91 +443,78 @@ namespace AIWolf.Lib
 #endif
         public Content(string text)
         {
-            Text = text;
-            var sentence = GetSentence(Text);
-            if (sentence != null) // Complex sentence.
+            var trimmed = text.Trim();
+            var m = regexSkip.Match(trimmed);
+            if (m.Success)
+            {
+                Topic = (Topic)Enum.Parse(typeof(Topic), m.Groups[1].ToString());
+            }
+            else if ((m = regexAgree.Match(trimmed)).Success)
+            {
+                Subject = ToAgent(m.Groups[1].ToString());
+                Topic = (Topic)Enum.Parse(typeof(Topic), m.Groups[2].ToString());
+                if (m.Groups[3].ToString() == "TALK")
+                {
+                    Utterance = new Talk(int.Parse(m.Groups[4].ToString()), int.Parse(m.Groups[5].ToString()), 0, Agent.NONE, "");
+                }
+                else
+                {
+                    Utterance = new Whisper(int.Parse(m.Groups[4].ToString()), int.Parse(m.Groups[5].ToString()), 0, Agent.NONE, "");
+                }
+            }
+            else if ((m = regexEstimate.Match(trimmed)).Success)
+            {
+                Subject = ToAgent(m.Groups[1].ToString());
+                Topic = (Topic)Enum.Parse(typeof(Topic), m.Groups[2].ToString());
+                Target = ToAgent(m.Groups[3].ToString());
+                Role = (Role)Enum.Parse(typeof(Role), m.Groups[4].ToString());
+            }
+            else if ((m = regexDivined.Match(trimmed)).Success)
+            {
+                Subject = ToAgent(m.Groups[1].ToString());
+                Topic = (Topic)Enum.Parse(typeof(Topic), m.Groups[2].ToString());
+                Target = ToAgent(m.Groups[3].ToString());
+                Result = (Species)Enum.Parse(typeof(Species), m.Groups[4].ToString());
+            }
+            else if ((m = regexAttack.Match(trimmed)).Success)
+            {
+                Subject = ToAgent(m.Groups[1].ToString());
+                Topic = (Topic)Enum.Parse(typeof(Topic), m.Groups[2].ToString());
+                Target = ToAgent(m.Groups[3].ToString());
+            }
+            else if ((m = regexRequest.Match(trimmed)).Success)
             {
                 Topic = Topic.OPERATOR;
-                Operator = Operator.REQUEST;
-                ContentList = new List<Content> { new Content(sentence) }.AsReadOnly();
+                Subject = ToAgent(m.Groups[1].ToString());
+                Operator = (Operator)Enum.Parse(typeof(Operator), m.Groups[2].ToString());
+                Target = ToAgent(m.Groups[3].ToString());
+                ContentList = GetContents(m.Groups[4].ToString());
             }
-            else // Simple sentence.
+            else if ((m = regexBecause.Match(trimmed)).Success)
             {
-                var split = Text.Split();
-                var offset = 0;
-                if (split[0].StartsWith("Agent"))
+                Topic = Topic.OPERATOR;
+                Subject = ToAgent(m.Groups[1].ToString());
+                Operator = (Operator)Enum.Parse(typeof(Operator), m.Groups[2].ToString());
+                ContentList = GetContents(m.Groups[3].ToString());
+                if (Operator == Operator.REQUEST)
                 {
-                    Subject = Agent.GetAgent(GetInt(split[0]));
-                    offset = 1;
-                }
-                Topic = (Topic)Enum.Parse(typeof(Topic), split[0 + offset]);
-                if (split.Length >= 2 + offset && split[1 + offset].StartsWith("Agent"))
-                {
-                    Target = Agent.GetAgent(GetInt(split[1 + offset]));
-                }
-                switch (Topic)
-                {
-                    case Topic.Skip:
-                    case Topic.Over:
-                        break;
-                    case Topic.AGREE:
-                    case Topic.DISAGREE:
-                        if(split[1 + offset] == "TALK")
-                        {
-                            Utterance = new Talk(GetInt(split[3 + offset]), GetInt(split[2 + offset]));
-                        }
-                        else
-                        {
-                            Utterance = new Whisper(GetInt(split[3 + offset]), GetInt(split[2 + offset]));
-                        }
-                        break;
-                    case Topic.ESTIMATE:
-                    case Topic.COMINGOUT:
-                        Role = (Role)Enum.Parse(typeof(Role), split[2 + offset]);
-                        break;
-                    case Topic.DIVINED:
-                    case Topic.IDENTIFIED:
-                        Result = (Species)Enum.Parse(typeof(Species), split[2 + offset]);
-                        break;
-                    case Topic.ATTACK:
-                    case Topic.DIVINATION:
-                    case Topic.GUARD:
-                    case Topic.GUARDED:
-                    case Topic.VOTE:
-                        break;
-                    default:
-                        break;
+                    Target = ContentList[0].Subject == null ? Agent.ANY : ContentList[0].Subject;
                 }
             }
-        }
-
-        static readonly Regex regexGetInt = new Regex(@"-?[\d]+");
-
-        /// <summary>
-        /// Finds integer value from the given text.
-        /// </summary>
-        /// <param name="text">Text.</param>
-        /// <returns>Integer value if found, otherwise -1.</returns>
-        static int GetInt(string text)
-        {
-            var m = regexGetInt.Match(text);
-            if (m.Success)
+            else if ((m = regexDay.Match(trimmed)).Success)
             {
-                return int.Parse(m.Value);
+                Topic = Topic.OPERATOR;
+                Subject = ToAgent(m.Groups[1].ToString());
+                Operator = Operator.DAY;
+                Day = int.Parse(m.Groups[2].ToString());
+                ContentList = GetContents(m.Groups[3].ToString());
             }
-            return -1;
-        }
-
-        static readonly Regex regexGetSentence = new Regex(@"REQUEST\((.+?)\)");
-
-        static string GetSentence(string text)
-        {
-            var m = regexGetSentence.Match(text);
-            if (m.Success)
+            else
             {
-                return m.Groups[1].ToString();
+                Topic = Topic.Skip;
             }
-            return null;
+            CompleteInnerSubject();
+            NormalizeText();
         }
 
 #if JHELP
@@ -307,7 +530,7 @@ namespace AIWolf.Lib
         /// <param name="other">Content to compare with this content.</param>
         /// <returns>true if other equals this in text; otherwise, false.</returns>
 #endif
-        public bool Equals(Content other) => other == null ? false : this.Text == other.Text;
+        public bool Equals(Content other) => other == null ? false : other.Text == Text;
 
 #if JHELP
         /// <summary>
@@ -322,7 +545,7 @@ namespace AIWolf.Lib
         /// <param name="obj">Object to compare with this content.</param>
         /// <returns>true if other equals this in text; otherwise, false.</returns>
 #endif
-        public override bool Equals(object obj) => obj == null || this.GetType() != obj.GetType() ? false : this.Equals((Content)obj);
+        public override bool Equals(object obj) => obj is Content content ? Equals(content) : false;
 
 #if JHELP
         /// <summary>
@@ -450,6 +673,17 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
+        /// 投票先の報告
+        /// </summary>
+#else
+        /// <summary>
+        /// Report of a vote.
+        /// </summary>
+#endif
+        VOTED,
+
+#if JHELP
+        /// <summary>
         /// 襲撃先の表明
         /// </summary>
 #else
@@ -458,6 +692,17 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         ATTACK,
+
+#if JHELP
+        /// <summary>
+        /// 襲撃先の報告
+        /// </summary>
+#else
+        /// <summary>
+        /// Report of an Attack.
+        /// </summary>
+#endif
+        ATTACKED,
 
 #if JHELP
         /// <summary>
@@ -550,6 +795,17 @@ namespace AIWolf.Lib
 
 #if JHELP
         /// <summary>
+        /// 照会
+        /// </summary>
+#else
+        /// <summary>
+        /// Inquiry.
+        /// </summary>
+#endif
+        INQUIRE,
+
+#if JHELP
+        /// <summary>
         /// 行動の理由
         /// </summary>
 #else
@@ -558,6 +814,28 @@ namespace AIWolf.Lib
         /// </summary>
 #endif
         BECAUSE,
+
+#if JHELP
+        /// <summary>
+        /// 日付
+        /// </summary>
+#else
+        /// <summary>
+        /// DATE.
+        /// </summary>
+#endif
+        DAY,
+
+#if JHELP
+        /// <summary>
+        /// NOT
+        /// </summary>
+#else
+        /// <summary>
+        /// NOT.
+        /// </summary>
+#endif
+        NOT,
 
 #if JHELP
         /// <summary>
@@ -579,6 +857,17 @@ namespace AIWolf.Lib
         /// OR.
         /// </summary>
 #endif
-        OR
+        OR,
+
+#if JHELP
+        /// <summary>
+        /// XOR
+        /// </summary>
+#else
+        /// <summary>
+        /// XOR.
+        /// </summary>
+#endif
+        XOR
     }
 }
