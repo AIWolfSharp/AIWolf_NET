@@ -1,27 +1,31 @@
-[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0-beta/README-J.md)
+[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0/README-J.md)
 # AIWolf.NET
 ## .NET version of AIWolf platform
 
 1. TUTORIALS (sorry, in Japanese.)
 
-    * [C#î≈êlòTímî\ÉGÅ[ÉWÉFÉìÉgÇÃçÏÇËï˚Å`Visual Studioï“Å`ÅiAIWolf.NET 1.0.xî≈Åj](https://www.slideshare.net/takots/c-59927842)
-    * [.NET CoreÇ∆VS CodeÇ≈çÏÇÈêlòTímî\ÅiAIWolf.NET 1.0.xî≈Åj](http://www.slideshare.net/takots/net-corevs-code-71808207)
+    * [C#Áâà‰∫∫ÁãºÁü•ËÉΩ„Ç®„Éº„Ç∏„Çß„É≥„Éà„ÅÆ‰Ωú„ÇäÊñπÔΩûVisual StudioÁ∑®ÔΩûÔºàAIWolf.NET 1.0.xÁâàÔºâ](https://www.slideshare.net/takots/c-59927842)
+    * [.NET Core„Å®VS Code„Åß‰Ωú„Çã‰∫∫ÁãºÁü•ËÉΩÔºàAIWolf.NET 1.0.xÁâàÔºâ](http://www.slideshare.net/takots/net-corevs-code-71808207)
 
 1. DOWNLOADS
 
-    * ClientStarter: 
-[ClientStarter-2.0.0-beta.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/ClientStarter-2.0.0-beta.zip)
-    * ServerStarter: 
-[ServerStarter-2.0.0-beta.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/ServerStarter-2.0.0-beta.zip)
-    * GameStarter: 
-[GameStarter-2.0.0-beta.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/GameStarter-2.0.0-beta.zip)
-    * Reference manual: [AIWolf_NET_2.0.0-beta_ReferenceManual_E.zip](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0-beta/AIWolf_NET_2.0.0-beta_ReferenceManual_E.zip)
+    * ClientStarter with runtime: 
+[Linux 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-linux-x64.tgz)
+[macOS 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-osx-x64.zip)
+[Windows 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-win-x64.zip)
+[Windows 32bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-win-x86.zip)
+    * [ClientStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0.zip)
+    * [ServerStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ServerStarter-2.0.0.zip)
+    * [GameStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
+    * [Reference manual](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_E.zip)
 
 1. HISTORY and CHANGES
 
     * 1.0.0: The first release of library version.
     * 1.1.0: The first release of platform version including game server.
-    * 2.0.0: APIs are chenged.
+    * 2.0.0: 
+      * We change some APIs from version 1.
+      * We make this version compatible with the AIWolf protocol version 3.
 
 ---
-This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0-beta/LICENSE).
+This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0/LICENSE).
