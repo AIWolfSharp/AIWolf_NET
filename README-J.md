@@ -1,4 +1,4 @@
-[View in English](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0/README.md)
+[View in English](README.md)
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
 
@@ -19,7 +19,7 @@
     * [GameStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
     * [Reference manual](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_J.zip)
 
-1. 履歴と変更点
+1. 履歴と[変更点](CHANGES-J.md)
 
     * 1.0.0: 最初のリリース．
     * 1.1.0: ゲームサーバが加わったのに伴い，名称を「プラットフォーム」に変えました．
@@ -28,4 +28,4 @@
       * 人狼知能プロトコルバージョン3に対応しました．
 
 ---
-このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0-beta/LICENSE)を参照のこと.
+このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](LICENSE.md)を参照のこと.

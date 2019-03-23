@@ -1,4 +1,4 @@
-[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0/README-J.md)
+[View in Japanese](README-J.md)
 # AIWolf.NET
 ## .NET version of AIWolf platform
 
@@ -19,7 +19,7 @@
     * [GameStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
     * [Reference manual](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_E.zip)
 
-1. HISTORY and CHANGES
+1. HISTORY and [CHANGES](CHANGES.md)
 
     * 1.0.0: The first release of library version.
     * 1.1.0: The first release of platform version including game server.
@@ -28,4 +28,4 @@
       * We make this version compatible with the AIWolf protocol version 3.
 
 ---
-This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.0/LICENSE).
+This software is released under the MIT License, see [LICENSE](LICENSE.md).
