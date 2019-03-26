@@ -3,7 +3,7 @@
 
 1. TUTORIAL
 
-    * [How to create AIWolf agent in C#](https://www.slideshare.net/takots/how-to-createaiwolfagentinc200)
+    * [How to create an AIWolf agent in C#](https://www.slideshare.net/takots/how-to-createaiwolfagentinc200)
 
 1. DOWNLOADS
 
