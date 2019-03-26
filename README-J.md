@@ -2,10 +2,9 @@
 # AIWolf.NET
 ## .NET版人狼知能プラットフォーム
 
-1. チュートリアル（古いバージョン用です）
+1. チュートリアル
 
-    * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/c-59927842)
-    * [.NET CoreとVisual Studio Codeで作る人狼知能（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/net-corevs-code-71808207)
+    * [C#版人狼知能エージェントの作り方](https://www.slideshare.net/takots/how-to-createaiwolfagentinc200)
 
 1. ダウンロード
 

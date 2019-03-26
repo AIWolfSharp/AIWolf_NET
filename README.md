@@ -2,10 +2,9 @@
 # AIWolf.NET
 ## .NET version of AIWolf platform
 
-1. TUTORIALS (sorry, obsolete and in Japanese.)
+1. TUTORIALS
 
-    * [C#版人狼知能エージェントの作り方～Visual Studio編～（AIWolf.NET 1.0.x版）](https://www.slideshare.net/takots/c-59927842)
-    * [.NET CoreとVS Codeで作る人狼知能（AIWolf.NET 1.0.x版）](http://www.slideshare.net/takots/net-corevs-code-71808207)
+    * [How to create an AIWolf agent in C#](https://www.slideshare.net/takots/how-to-createaiwolfagentinc200)
 
 1. DOWNLOADS
 
