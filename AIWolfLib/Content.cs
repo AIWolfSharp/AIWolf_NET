@@ -205,13 +205,13 @@ namespace AIWolf.Lib
             }
             ContentList = ContentList.Select(c =>
             {
-                if (c.Subject == null)
+                if (c.Subject == Agent.NONE)
                 {
                     if (Operator == Operator.INQUIRE || Operator == Operator.REQUEST)
                     {
                         return c.CopyAndReplaceSubject(Target);
                     }
-                    if (Subject != null)
+                    if (Subject != Agent.NONE)
                     {
                         return c.CopyAndReplaceSubject(Subject);
                     }
