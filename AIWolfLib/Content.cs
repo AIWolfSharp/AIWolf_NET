@@ -498,7 +498,7 @@ namespace AIWolf.Lib
                 ContentList = GetContents(m.Groups[3].ToString());
                 if (Operator == Operator.REQUEST)
                 {
-                    Target = ContentList[0].Subject == null ? Agent.ANY : ContentList[0].Subject;
+                    Target = ContentList[0].Subject == Agent.NONE ? Agent.ANY : ContentList[0].Subject;
                 }
             }
             else if ((m = regexDay.Match(trimmed)).Success)
