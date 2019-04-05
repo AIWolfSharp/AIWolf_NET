@@ -32,6 +32,7 @@ namespace AIWolf.Lib
         /// Uncertain.
         /// </summary>
 #endif
+        [Obsolete]
         UNC,
 #if JHELP
         /// <summary>
@@ -42,7 +43,7 @@ namespace AIWolf.Lib
         /// Talk.
         /// </summary>
 #endif
-        TALK,
+        TALK = 1,
 #if JHELP
         /// <summary>
         /// 囁き
@@ -52,7 +53,7 @@ namespace AIWolf.Lib
         /// Whisper.
         /// </summary>
 #endif
-        WHISPER
+        WHISPER = 2
     }
 
 #if JHELP

@@ -205,13 +205,13 @@ namespace AIWolf.Lib
             }
             ContentList = ContentList.Select(c =>
             {
-                if (c.Subject == null)
+                if (c.Subject == Agent.NONE)
                 {
                     if (Operator == Operator.INQUIRE || Operator == Operator.REQUEST)
                     {
                         return c.CopyAndReplaceSubject(Target);
                     }
-                    if (Subject != null)
+                    if (Subject != Agent.NONE)
                     {
                         return c.CopyAndReplaceSubject(Subject);
                     }
@@ -498,7 +498,7 @@ namespace AIWolf.Lib
                 ContentList = GetContents(m.Groups[3].ToString());
                 if (Operator == Operator.REQUEST)
                 {
-                    Target = ContentList[0].Subject == null ? Agent.ANY : ContentList[0].Subject;
+                    Target = ContentList[0].Subject == Agent.NONE ? Agent.ANY : ContentList[0].Subject;
                 }
             }
             else if ((m = regexDay.Match(trimmed)).Success)
