@@ -51,3 +51,4 @@ regardless of their kind such as Java, .NET, Python, etc.
       introduce new constructors to specify the subjects of the utterances
       and make the existing constructors obsolete.
   * Sample player is not included in this version.
+* 2.0.1: Bugfixes in Content class.

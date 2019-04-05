@@ -9,13 +9,10 @@
 1. ダウンロード
 
     * ClientStarter with runtime:
-      * [Linux 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-linux-x64.tgz)
-      * [macOS 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-osx-x64.zip)
-      * [Windows 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-win-x64.zip)
-      * [Windows 32bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0-win-x86.zip)
-    * [ClientStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ClientStarter-2.0.0.zip)
-    * [ServerStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/ServerStarter-2.0.0.zip)
-    * [GameStarter (source)](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/GameStarter-2.0.0.zip)
+      * [Linux 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.1/ClientStarter-2.0.1-linux-x64.tgz)
+      * [macOS 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.1/ClientStarter-2.0.1-osx-x64.zip)
+      * [Windows 64bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.1/ClientStarter-2.0.1-win-x64.zip)
+      * [Windows 32bit](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.1/ClientStarter-2.0.1-win-x86.zip)
     * [Reference manual](https://github.com/AIWolfSharp/AIWolf_NET/releases/download/v2.0.0/AIWolf_NET_2.0.0_ReferenceManual_J.zip)
 
 1. 履歴と[変更点](CHANGES-J.md)
@@ -25,6 +22,7 @@
     * 2.0.0:
       * APIを変更しました．
       * 人狼知能プロトコルバージョン3に対応しました．
+    * 2.0.1: Contentクラスのバグフィックス．
 
 ---
 このソフトウェアは，MITライセンスのもとで公開されています．[LICENSE](LICENSE.md)を参照のこと.
