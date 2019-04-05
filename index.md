@@ -1,4 +1,4 @@
-[View in Japanese](README-J.md)
+[View in Japanese](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.1/README-J.md)
 # AIWolf.NET
 ## .NET version of AIWolf platform
 
@@ -25,4 +25,4 @@
     * 2.0.1: Bugfixes in Content class. 
 
 ---
-This software is released under the MIT License, see [LICENSE](LICENSE.md).
+This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.1/LICENSE.md).
