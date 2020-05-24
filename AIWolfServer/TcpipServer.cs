@@ -8,8 +8,6 @@
 //
 
 using AIWolf.Lib;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +21,7 @@ namespace AIWolf.Server
 {
     public class TcpipServer : IGameServer
     {
-        ILogger serverLogger;
+        NLog.Logger serverLogger = NLog.LogManager.GetCurrentClassLogger();
         Dictionary<TcpClient, Agent> connectionAgentMap = new Dictionary<TcpClient, Agent>();
         Dictionary<Agent, TcpClient> agentConnectionMap = new Dictionary<Agent, TcpClient>();
         Dictionary<Agent, string> nameMap = new Dictionary<Agent, string>();
@@ -69,10 +67,6 @@ namespace AIWolf.Server
             GameSetting = gameSetting;
             this.port = port;
             connectionLimit = limit;
-            //ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
-            ILoggerFactory loggerFactory = new LoggerFactory();
-            loggerFactory.AddProvider(new ConsoleLoggerProvider((text, logLevel) => logLevel >= LogLevel.Critical, true));
-            serverLogger = loggerFactory.CreateLogger(GetType().ToString());
         }
 
         /// <summary>
@@ -168,7 +162,7 @@ namespace AIWolf.Server
                 {
                     message = DataConverter.Serialize(new Packet(request, GameData.GetFinalGameInfo(agent)));
                 }
-                serverLogger.LogInformation("=>" + agent + ":" + message);
+                serverLogger.Info("=>" + agent + ":" + message);
 
                 TcpClient client = agentConnectionMap[agent];
                 StreamWriter sw = new StreamWriter(client.GetStream());
@@ -201,7 +195,7 @@ namespace AIWolf.Server
                 Send(agent, request);
 
                 string line = sr.ReadLine();
-                serverLogger.LogInformation("<=" + agent + ":" + line);
+                serverLogger.Info("<=" + agent + ":" + line);
 
                 if (line != null && line.Length == 0)
                 {
