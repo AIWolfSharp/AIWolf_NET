@@ -543,7 +543,7 @@ namespace AIWolf.Server
             var skipCounter = new Dictionary<Agent, int>();
             for (var turn = 0; turn < gameSetting.MaxTalkTurn; turn++)
             {
-                var talkList = new List<Talk>();
+                var continueTalk = false;
                 foreach (var agent in AliveAgentList.Shuffle())
                 {
                     var text = Lib.Talk.OVER;
@@ -574,19 +574,15 @@ namespace AIWolf.Server
                             text = Lib.Talk.OVER;
                         }
                     }
-                    talkList.Add(new Talk(gameData.NextTalkIdx, Day, turn, agent, text));
-                    if (text != Lib.Talk.OVER && text != Lib.Talk.SKIP)
-                    {
-                        skipCounter[agent] = 0;
-                    }
-                }
-                var continueTalk = false;
-                foreach (var talk in talkList)
-                {
+                    var talk = new Talk(gameData.NextTalkIdx, Day, turn, agent, text);
                     gameData.AddTalk(talk.Agent, talk);
                     if (GameLogger != null)
                     {
                         GameLogger.Log($"{Day},talk,{talk.Idx},{talk.Turn},{talk.Agent.AgentIdx},{talk.Text}");
+                    }
+                    if (text != Lib.Talk.OVER && text != Lib.Talk.SKIP)
+                    {
+                        skipCounter[agent] = 0;
                     }
                     if (talk.Text != Lib.Talk.OVER)
                     {
@@ -615,7 +611,7 @@ namespace AIWolf.Server
             var skipCounter = new Dictionary<Agent, int>();
             for (var turn = 0; turn < gameSetting.MaxWhisperTurn; turn++)
             {
-                var whisperList = new List<Whisper>();
+                var continueWhisper = false;
                 foreach (var agent in AliveWolfList.Shuffle())
                 {
                     var text = Lib.Talk.OVER;
@@ -646,19 +642,15 @@ namespace AIWolf.Server
                             text = Lib.Talk.OVER;
                         }
                     }
-                    whisperList.Add(new Whisper(gameData.NextWhisperIdx, Day, turn, agent, text));
-                    if (text != Lib.Talk.OVER && text != Lib.Talk.SKIP)
-                    {
-                        skipCounter[agent] = 0;
-                    }
-                }
-                var continueWhisper = false;
-                foreach (var whisper in whisperList)
-                {
+                    var whisper = new Whisper(gameData.NextWhisperIdx, Day, turn, agent, text);
                     gameData.AddWhisper(whisper.Agent, whisper);
                     if (GameLogger != null)
                     {
                         GameLogger.Log($"{Day},whisper,{whisper.Idx},{whisper.Turn},{ whisper.Agent.AgentIdx},{whisper.Text}");
+                    }
+                    if (text != Lib.Talk.OVER && text != Lib.Talk.SKIP)
+                    {
+                        skipCounter[agent] = 0;
                     }
                     if (whisper.Text != Lib.Talk.OVER)
                     {
