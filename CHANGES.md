@@ -52,6 +52,6 @@ regardless of their kind such as Java, .NET, Python, etc.
       and make the existing constructors obsolete.
   * Sample player is not included in this version.
 * 2.0.1: Bugfixes in Content class.
-* From 2.1.0, we release new version by library, tool.
+* After this, we release a new version for each library or tool.
 * AIWolfServer
   * 2.1.0: Change the utterance order random from simultanious like the official Java platform 0.6.x.
