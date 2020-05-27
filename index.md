@@ -23,6 +23,9 @@
       * We change some APIs from version 1.
       * We make this version compatible with the AIWolf protocol version 3.
     * 2.0.1: Bugfixes in Content class. 
+    * After this, we release a new version for each library or tool.
+    * AIWolfServer
+      * 2.1.0: Change the utterance order random from simultanious like the official Java platform 0.6.x.
 
 ---
 This software is released under the MIT License, see [LICENSE](https://github.com/AIWolfSharp/AIWolf_NET/blob/v2.0.1/LICENSE.md).
